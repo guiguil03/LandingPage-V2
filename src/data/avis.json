@@ -1,0 +1,36 @@
+{
+    "avis": [
+        {
+            "id": 1,
+            "nom": "Doe",
+            "prenom": "John",
+            "commentaire": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "image": "https://i.pravatar.cc/50?img=12"
+            
+        },
+        {
+            "id": 2,
+            "nom": "Guillaume",
+            "prenom": "Dupont",
+            "commentaire": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+            "image": "https://i.pravatar.cc/50?img=14"
+            
+        },
+        {
+            "id": 3,
+            "nom": "Doe",
+            "prenom": "John",
+            "commentaire": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "image": "https://i.pravatar.cc/100?img=10"
+            
+        },
+        {
+            "id": 4,
+            "nom": "Guillaume",
+            "prenom": "Dupont",
+            "commentaire": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+            "image": "https://i.pravatar.cc/100?img=11"
+            
+        }
+    ]
+}
