@@ -2,6 +2,8 @@ import './App.css'
 import Header from './components/Header'
 import Map from './components/map'
 import Grille from './components/Grille'
+import Footer from './components/footer'
+import Avis from './components/avis'
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <Header />
       <Map/>
       <Grille/>
+      <Avis/>
+      <Footer/>
     </div>
   )
 }
