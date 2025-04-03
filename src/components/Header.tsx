@@ -16,7 +16,7 @@ const Header: React.FC = () => {
             initial={{ x: -500, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className="flex justify-between items-center bg-gray-100 rounded-[15px] px-4 sm:px-6 py-2 w-full sm:w-[full]"
+            className="fixed top-0 z-50 mt-4 flex justify-between items-center bg-gray-100 bg-opacity-95 backdrop-blur-sm rounded-[15px] px-4 sm:px-6 py-3 w-[95%] max-w-7xl shadow-md transition-all duration-300"
           >
             <div className="flex items-center">
               <span className="text-xl sm:text-2xl font-bold flex items-center gap-2">
