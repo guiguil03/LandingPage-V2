@@ -2,35 +2,48 @@
     "avis": [
         {
             "id": 1,
-            "nom": "Doe",
-            "prenom": "John",
-            "commentaire": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "image": "https://i.pravatar.cc/50?img=12"
-            
+            "nom": "Martin",
+            "prenom": "Sophie",
+            "commentaire": "Grâce à Unify, j'ai trouvé une partenaire de course qui partage mon rythme et mes objectifs. Nous nous entraînons ensemble 3 fois par semaine maintenant, et j'ai amélioré mon temps de 10K de 7 minutes en seulement 2 mois !",
+            "image": "https://i.pravatar.cc/100?img=5",
+            "niveau": "intermédiaire",
+            "ville": "Lyon"
         },
         {
             "id": 2,
-            "nom": "Guillaume",
-            "prenom": "Dupont",
-            "commentaire": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-            "image": "https://i.pravatar.cc/50?img=14"
-            
+            "nom": "Dubois",
+            "prenom": "Thomas",
+            "commentaire": "En tant que débutant, je craignais de ne pas trouver de coureurs à mon niveau. Unify m'a mis en relation avec d'autres débutants dans mon quartier. L'application est intuitive et la communauté est vraiment bienveillante et motivante.",
+            "image": "https://i.pravatar.cc/100?img=14",
+            "niveau": "débutant",
+            "ville": "Paris"
         },
         {
             "id": 3,
-            "nom": "Doe",
-            "prenom": "John",
-            "commentaire": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "image": "https://i.pravatar.cc/100?img=10"
-            
+            "nom": "Leroy",
+            "prenom": "Emma",
+            "commentaire": "Je préparais mon premier semi-marathon et je cherchais des conseils. Sur Unify, j'ai rejoint un groupe local d'entraînement et j'ai même trouvé un coach qui m'a aidée à établir un plan personnalisé. J'ai terminé ma course en 1h52, un résultat dont je suis fière !",
+            "image": "https://i.pravatar.cc/100?img=9",
+            "niveau": "intermédiaire",
+            "ville": "Bordeaux"
         },
         {
             "id": 4,
-            "nom": "Guillaume",
-            "prenom": "Dupont",
-            "commentaire": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-            "image": "https://i.pravatar.cc/100?img=11"
-            
+            "nom": "Petit",
+            "prenom": "Lucas",
+            "commentaire": "Après une blessure, j'avais peur de reprendre la course. L'option 'retour de blessure' sur Unify m'a permis de trouver d'autres coureurs dans la même situation. Nous progressons ensemble à un rythme adapté, et l'application nous aide à suivre notre évolution sans risque.",
+            "image": "https://i.pravatar.cc/100?img=11",
+            "niveau": "avancé",
+            "ville": "Marseille"
+        },
+        {
+            "id": 5,
+            "nom": "Moreau",
+            "prenom": "Chloé",
+            "commentaire": "Je cours depuis 10 ans et j'avais du mal à trouver des partenaires de mon niveau. Unify a changé la donne ! J'ai rejoint un groupe d'athlètes confirmés et nous nous poussons mutuellement vers l'excellence. L'année dernière, nous avons tous amélioré nos records personnels !",
+            "image": "https://i.pravatar.cc/100?img=1",
+            "niveau": "avancé",
+            "ville": "Lille"
         }
     ]
 }
