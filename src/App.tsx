@@ -5,6 +5,7 @@ import Grille from './components/Grille'
 import Image from './components/image'
 import Avis from './components/avis'
 import Footer from './components/footer'
+import Abonnements from './components/Abonnements'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Header />
       <Map/>
       <Grille/>
+      <Abonnements/>
       <Avis/>
       <Image/>
       <Footer/>
