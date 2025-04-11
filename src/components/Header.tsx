@@ -20,6 +20,14 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    setIsMobileMenuOpen(false); // Fermer le menu mobile si ouvert
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <motion.header
       initial={{ opacity: 0 }}
@@ -36,7 +44,7 @@ const Header: React.FC = () => {
               duration: 0.6,
               ease: "easeOut"
             }}
-            className="fixed top-0 left-0 z-50 mt-4 ml-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-md rounded-[20px] px-4 sm:px-8 py-3 sm:py-4 w-[95%] max-w-7xl shadow-lg transition-all duration-300 border border-gray-100 h-16 sm:h-[70px]"
+            className="fixed top-0  z-50 mt-4 ml-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-md rounded-[20px] px-4 sm:px-8 py-3 sm:py-4 w-[95%] max-w-7xl shadow-lg transition-all duration-300 border border-gray-100 h-16 sm:h-[70px]"
           >
             <div className="flex items-center">
               <span className="font-bold flex items-center gap-2 sm:gap-3">
@@ -47,7 +55,10 @@ const Header: React.FC = () => {
             
             {/* Menu pour desktop */}
             <div className="hidden md:flex items-center gap-6 sm:gap-8">
-              <button className="text-gray-700 hover:text-red-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full">
+              <button 
+                onClick={() => scrollToSection('abonnements')}
+                className="text-gray-700 hover:text-red-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full cursor-pointer"
+              >
                 Nos Abonnements
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </button>
@@ -116,7 +127,10 @@ const Header: React.FC = () => {
             className="fixed top-20 left-4 z-40 w-[90%] max-w-md bg-white rounded-xl shadow-xl py-4 px-6 border border-gray-100"
           >
             <div className="flex flex-col gap-4">
-              <button className="text-gray-700 hover:text-red-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300">
+              <button 
+                onClick={() => scrollToSection('abonnements')}
+                className="text-gray-700 hover:text-red-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300 cursor-pointer"
+              >
                 Nos Abonnements
               </button>
               <button className="text-gray-700 hover:text-red-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300">
