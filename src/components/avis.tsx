@@ -8,7 +8,7 @@ interface AvisGridProps {
 }
 
 const Avis: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
-  const [avisData, setAvisData] = useState(externalAvis || data.avis);
+  const [avisData] = useState(externalAvis || data.avis);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [threshold, setThreshold] = useState(0);
 

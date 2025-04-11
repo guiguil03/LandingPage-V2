@@ -1,7 +1,5 @@
 import React from 'react';
-import phone from '../assets/Phone1.png';
 import course from '../assets/course.jpg';
-import test from '../assets/test.png';
 import iphone from '../assets/iPhone X.svg';
 import map from '../assets/Background.svg'
 import record from '../assets/Group 55.svg'
