@@ -1,4 +1,4 @@
-import React from 'react';
+
 import course from '../assets/course.jpg';
 import iphone from '../assets/iPhone X.svg';
 import map from '../assets/Background.svg'
