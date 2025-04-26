@@ -1,4 +1,4 @@
-import imgFooter from "../assets/FEMME_FORET_LOGO.png"
+import imgFooter from "../assets/femme.svg"
 
 export default function ImageSection() {
   return (

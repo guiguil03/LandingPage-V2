@@ -62,7 +62,9 @@ const Header: React.FC = () => {
                 Nos Abonnements
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </button>
-              <button className="text-gray-700 hover:text-red-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full">
+              <button 
+              onClick={() => scrollToSection('footer')}
+              className="text-gray-700 hover:text-red-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full">
                 Contactez-Nous
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </button>
