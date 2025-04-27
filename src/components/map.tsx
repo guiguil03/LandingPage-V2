@@ -4,24 +4,16 @@ import SignupModal from './inscription';
 
 export default function Map() {
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const openSignupModal = () => {
     setIsSignupModalOpen(true);
-    setIsMobileMenuOpen(false); // Fermer le menu mobile si ouvert
   };
 
   const closeSignupModal = () => {
     setIsSignupModalOpen(false);
   };
 
-  const scrollToSection = (sectionId: string) => {
-    setIsMobileMenuOpen(false); // Fermer le menu mobile si ouvert
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+
 
   return (
     <>
