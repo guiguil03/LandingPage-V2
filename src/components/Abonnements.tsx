@@ -93,45 +93,31 @@ const Abonnements: React.FC = () => {
           </motion.p>
         </div>
         
-        <div className="grid max-w-screen-lg gap-8 mx-auto lg:grid-cols-3">
+        <div className="grid max-w-screen-lg gap-8 mx-auto lg:grid-cols-2 lg:px-16">
           <PricingPlan 
-            title="Débutant" 
+            title="Freemium" 
             price="0€" 
             features={[
-              "Enregistrement des courses",
-              "Statistiques de base",
-              "Profil utilisateur",
-              "Visibilité limitée des autres coureurs",
-              "Support par email"
+              "Mise en relation de base avec d'autres coureurs",
+              "Participation à un nombre limité de défis communautaires",
+              "Statistiques de base (distance, durée, rythme)",
+              "Accès au fil social pour publier et interagir",
+              "Profil utilisateur personnalisable"
             ]}
             buttonText="Commencer gratuitement"
           />
           
           <PricingPlan 
             title="Premium" 
-            price="9,99€" 
+            price="4,99€" 
             features={[
-              "Toutes les fonctionnalités gratuites",
-              "Visibilité complète des coureurs",
-              "Statistiques avancées",
-              "Défis personnalisés",
-              "Groupes de course",
-              "Support prioritaire"
+              "Mise en relation basée sur des critères précis",
+              "Création de groupes privés ou thématiques",
+              "Statistiques avancées et suivi des performances",
+              "Défis exclusifs et plans d'entraînement personnalisés",
+              "Fonctionnalité 'ghost runner' pour courses virtuelles"
             ]}
             isPopular={true}
-          />
-          
-          <PricingPlan 
-            title="Pro" 
-            price="19,99€" 
-            features={[
-              "Toutes les fonctionnalités Premium",
-              "Coaching personnalisé",
-              "Plans d'entraînement sur mesure",
-              "Analyse vidéo de course",
-              "Accès aux événements exclusifs",
-              "Support dédié 24/7"
-            ]}
           />
         </div>
       </div>
