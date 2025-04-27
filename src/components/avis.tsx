@@ -1,6 +1,6 @@
   import React, { useState, useEffect } from 'react';
 import data from '../data/avis.json';
-import Avis from "../type/avis";
+import type { Avis } from "../type/avis";
 import { motion } from 'framer-motion';
 
 interface AvisGridProps {
@@ -8,7 +8,7 @@ interface AvisGridProps {
 }
 
 const Avis: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
-  const [avisData, setAvisData] = useState(externalAvis || data.avis);
+  const [avisData] = useState(externalAvis || data.avis);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [threshold, setThreshold] = useState(0);
 
@@ -25,7 +25,7 @@ const Avis: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
   useEffect(() => {
     const avisContainer = document.querySelector('.avis-container');
     if (avisContainer) {
-      setThreshold(avisContainer.offsetTop - 400); 
+      setThreshold((avisContainer as HTMLElement).offsetTop - 400); 
     }
   }, []);
 
