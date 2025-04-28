@@ -21,29 +21,29 @@ export default function Grille() {
           
         </div>
 
-        <div className='bg-white p-4 rounded-2xl shadow-md flex flex-col items-center justify-center  '>
-          <p className=' font-semibold text-center mb-2'>🇪🇺 Application disponible dans toute l'Europe</p>
+        <div className='bg-white p-4 rounded-2xl shadow-md flex flex-col items-center justify-center hover:shadow-lg transition-shadow duration-300'>
+          <p className='font-semibold text-center mb-2'>🇪🇺 Application disponible dans toute l'Europe</p>
         </div>
 
         <div className='  p-2 rounded-2xl shadow-md flex items-center justify-center sm:col-span-1'>
           <img src={map} alt='Application' className='' />
         </div>
 
-        <div className='bg-white p-4 rounded-2xl shadow-md flex items-center justify-center  '>
-          <img src={mapInter} alt='Application' className='w-auto h-auto' />
+        <div className='bg-white p-4 rounded-2xl shadow-md flex items-center justify-center hover:shadow-lg transition-shadow duration-300'>
+          <img src={mapInter} alt='Carte interactive' className='w-auto h-auto' />
         </div>
 
-        <div className='bg-white p-4 rounded-2xl shadow-md flex items-center justify-center '>
-          <p className='text-lg font-semibold'>🌍 Supportez par 20 langues</p>
+        <div className='bg-white p-4 rounded-2xl shadow-md flex items-center justify-center hover:shadow-lg transition-shadow duration-300 h-[200px]'>
+          <p className='text-lg font-semibold'>🌍 Disponible en français et en anglais</p>
         </div>
 
-        <div className='bg-white p-4 rounded-2xl shadow-md flex items-center justify-center  '>
-          <img src={course} alt='Visibilité' className='w-full h-full mt-2' />
+        <div className='bg-white p-4 rounded-2xl shadow-md flex items-center justify-center hover:shadow-lg transition-shadow duration-300 h-[200px]'>
+          <img src={course} alt='Partenaires de course' className='w-full h-full' />
         </div>
 
-        <div className='bg-white p-4 rounded-2xl shadow-md text-center flex flex-col justify-center  '>
-          <p className='text-lg font-semibold'>Ask questions across meetings</p>
-          <p className='text-sm mt-2'>Get updates on discussions</p>
+        <div className='bg-white p-4 rounded-2xl shadow-md text-center flex flex-col justify-center hover:shadow-lg transition-shadow duration-300 h-[200px]'>
+          <p className='text-lg font-semibold'>📱 Application mobile native</p>
+          <p className='text-sm mt-2'>Disponible sur iOS et Android</p>
         </div>
       </div>
     </div>

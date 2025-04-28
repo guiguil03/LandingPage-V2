@@ -72,13 +72,13 @@ const Abonnements: React.FC = () => {
   return (
     <section id="abonnements" className="py-16 bg-gray-50">
       <div className="container px-4 mx-auto">
-        <div className="max-w-2xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4"
+            className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-4"
           >
             Nos formules d'abonnement
           </motion.h2>
@@ -87,7 +87,7 @@ const Abonnements: React.FC = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-lg text-gray-600"
+            className="text-xl text-red-500 font-semibold"
           >
             Choisissez l'offre qui correspond le mieux à vos besoins et commencez à courir avec Unify dès aujourd'hui.
           </motion.p>
@@ -95,14 +95,13 @@ const Abonnements: React.FC = () => {
         
         <div className="grid max-w-screen-lg gap-8 mx-auto lg:grid-cols-2 lg:px-16">
           <PricingPlan 
-            title="Freemium" 
+            title="Freenium" 
             price="0€" 
             features={[
-              "Mise en relation de base avec d'autres coureurs",
-              "Participation à un nombre limité de défis communautaires",
-              "Statistiques de base (distance, durée, rythme)",
-              "Accès au fil social pour publier et interagir",
-              "Profil utilisateur personnalisable"
+              "Connexion entre coureurs de base",
+              "Accès à un nombre limité de défis communautaires",
+              "Statistiques essentielles (distance, durée, rythme)",
+              "Accès au fil social (publication, like, commentaires)"
             ]}
             buttonText="Commencer gratuitement"
           />
@@ -111,11 +110,12 @@ const Abonnements: React.FC = () => {
             title="Premium" 
             price="4,99€" 
             features={[
-              "Mise en relation basée sur des critères précis",
+              "Connexion entre coureurs avancé (filtres : rythme précis, objectifs, profils compatibles...)",
               "Création de groupes privés ou thématiques",
-              "Statistiques avancées et suivi des performances",
-              "Défis exclusifs et plans d'entraînement personnalisés",
-              "Fonctionnalité 'ghost runner' pour courses virtuelles"
+              "Défis exclusifs avec récompenses",
+              "Statistiques poussées et historiques",
+              "Accès à un coach virtuel ou à des plans d'entraînement personnalisés",
+              "Fonction \"ghost runner\" (courses virtuelles avec soi-même ou d'autres utilisateurs)"
             ]}
             isPopular={true}
           />
