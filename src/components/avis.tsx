@@ -1,4 +1,4 @@
-  import React, { useState, useEffect } from 'react';
+  import React, { useState } from 'react';
 import data from '../data/avis.json';
 import type { Avis } from "../type/avis";
 import { motion } from 'framer-motion';
@@ -9,37 +9,16 @@ interface AvisGridProps {
 
 const Avis: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
   const [avisData] = useState(externalAvis || data.avis);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [threshold, setThreshold] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const avisContainer = document.querySelector('.avis-container');
-    if (avisContainer) {
-      setThreshold((avisContainer as HTMLElement).offsetTop - 400); 
-    }
-  }, []);
 
   const avisElements = avisData.map((avis, index) => {
-    const opacity = scrollPosition > (threshold + index * 100) ? 1 : 0;
-    const translateY = scrollPosition > (threshold + index * 100) ? 0 : 100;
-
     return (
       <div key={index} className="avis-item-container relative mb-8 w-full px-4">
         <motion.div
           className="avis-item w-full"
-          initial={{ opacity: 0, translateY: 100 }}
-          animate={{ opacity, translateY }}
-          transition={{ duration: 0.5, delay: index * 0.5 }}
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5, delay: index * 0.2 }}
         >
           <div
             className={`mb-4 ${index % 2 === 0 ? "ml-auto" : "mr-auto"} w-full max-w-[600px] sm:max-w-[500px] md:max-w-[600px] bg-[#1E1E1E] text-white p-4 sm:p-6 rounded-3xl shadow-lg flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4`}
