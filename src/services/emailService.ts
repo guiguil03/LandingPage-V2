@@ -1,7 +1,6 @@
 import emailjs from '@emailjs/browser';
 
-// Configuration EmailJS avec les identifiants existants
-// Ces valeurs sont exactement celles de la capture d'écran
+
 const EMAILJS_SERVICE_ID = "service_l9fyqof";
 const EMAILJS_TEMPLATE_ID = "template_tfi6oam";
 const EMAILJS_PUBLIC_KEY = "gvSerVoB9ElFTT6TH";
@@ -32,31 +31,25 @@ export const sendWelcomeEmail = async (
 
     console.log('Début de tentative d\'envoi d\'email à:', email);
     
-    // Utiliser exactement le même format que celui montré dans la capture d'écran du test EmailJS
-    // emailjs.send("service_l9fyqof","template_tfi6oam",{
-    //   to_name: "guigui",
-    //   running_level: "debutant",
-    //   message: "bienvenuz",
-    //   to_email: "guillaumel1103@gmail.com",
-    //   from_name: "guilluame",
-    //   name: "guigui",
-    //   email: "guillaumel2811@gmail.com"
-    // });
+    // Configuration de l'email à envoyer
+    // L'email sera envoyé à partir de unify@gmail.com (configuré dans le service EmailJS)
+    // et sera reçu par l'utilisateur qui s'inscrit
     
     // Utiliser la méthode avec tous les paramètres explicites, y compris la clé publique
     const response = await emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
       {
-        to_name: firstName,
-        running_level: runningLevel,
-        message: "bienvenuz",
-        to_email: email.trim(),
-        from_name: "Unify",
-        name: firstName,
-        email: email.trim()
+        to_name: firstName,                 // Nom du destinataire (l'utilisateur inscrit)
+        running_level: runningLevel,        // Niveau de course de l'utilisateur
+        message: "bienvenue",               // Message de bienvenue
+        email: email.trim(),            // Email du destinataire (l'utilisateur inscrit)
+        from_name: "Unify Running",         // Nom de l'expéditeur
+        to_email: "unify@gmail.com",      // Email de l'expéditeur
+        reply_to: "unify@gmail.com",        // Adresse de réponse
+        name: firstName                    // Nom pour personnalisation
       },
-      EMAILJS_PUBLIC_KEY // Ajouter explicitement la clé publique ici
+      EMAILJS_PUBLIC_KEY // Clé publique EmailJS
     );
     
     console.log('Email envoyé avec succès!', response.status, response.text);
