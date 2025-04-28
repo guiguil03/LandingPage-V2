@@ -31,11 +31,7 @@ export const sendWelcomeEmail = async (
 
     console.log('Début de tentative d\'envoi d\'email à:', email);
     
-    // Configuration de l'email à envoyer
-    // L'email sera envoyé à partir de unify@gmail.com (configuré dans le service EmailJS)
-    // et sera reçu par l'utilisateur qui s'inscrit
-    
-    // Utiliser la méthode avec tous les paramètres explicites, y compris la clé publique
+   
     const response = await emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
@@ -44,7 +40,7 @@ export const sendWelcomeEmail = async (
         running_level: runningLevel,        // Niveau de course de l'utilisateur
         message: "bienvenue",               // Message de bienvenue
         email: email.trim(),            // Email du destinataire (l'utilisateur inscrit)
-        from_name: "Unify Running",         // Nom de l'expéditeur
+        from_name: "Unify",         // Nom de l'expéditeur
         to_email: "unify@gmail.com",      // Email de l'expéditeur
         reply_to: "unify@gmail.com",        // Adresse de réponse
         name: firstName                    // Nom pour personnalisation
