@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { motion } from "framer-motion";
-import { createUser } from "../hooks/Auth";
+import { createUser, checkEmailExists } from "../hooks/Auth";
+import { sendWelcomeEmail } from "../services/emailService";
 
 export interface UserFormData {
   firstName: string;
@@ -34,6 +35,12 @@ const initialFormData: UserFormData = {
 
 const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
   const [formData, setFormData] = useState<UserFormData>(initialFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [step, setStep] = useState(1);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const totalSteps = 2;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,38 +51,104 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
     });
   };
 
+  // Vérification de l'email lors du passage à l'étape suivante
+  const checkEmail = async () => {
+    if (formData.email.trim() === "") {
+      setErrorMessage("Veuillez entrer une adresse email.");
+      return false;
+    }
 
+    try {
+      const emailExists = await checkEmailExists(formData.email);
+      if (emailExists) {
+        setErrorMessage("Cet email est déjà utilisé. Veuillez en choisir un autre.");
+        return false;
+      }
+      setErrorMessage("");
+      return true;
+    } catch (error) {
+      console.error("Erreur lors de la vérification de l'email:", error);
+      setErrorMessage("Erreur lors de la vérification de l'email. Veuillez réessayer.");
+      return false;
+    }
+  };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [step, setStep] = useState(1);
-  const totalSteps = 2;
+  // Envoyer un email de bienvenue après l'inscription
+  const sendWelcomeEmailToUser = async (firstName: string, email: string, runningLevel: string) => {
+    try {
+      console.log('Tentative d\'envoi d\'email à:', email, 'pour:', firstName, 'niveau:', runningLevel);
+      const emailSent = await sendWelcomeEmail(firstName, email, runningLevel);
+      if (emailSent) {
+        console.log('Email de bienvenue envoyé avec succès à:', email);
+      } else {
+        console.warn('L\'email de bienvenue n\'a pas pu être envoyé à:', email);
+      }
+      return emailSent;
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi de l\'email de bienvenue:', error);
+      // Continuer malgré l'erreur d'envoi d'email
+      return false;
+    }
+  };
+
+  // Fermer l'alerte de succès et réinitialiser le formulaire
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false);
+    setSuccessMessage("");
+    onClose();
+    setFormData(initialFormData);
+    setStep(1);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (step < totalSteps) {
+      // Vérifier l'email avant de passer à l'étape suivante
+      if (step === 1) {
+        const isEmailValid = await checkEmail();
+        if (!isEmailValid) return;
+      }
       setStep(step + 1);
       return;
     }
     
     setIsSubmitting(true);
+    setErrorMessage("");
     try {
+      // Créer l'utilisateur dans la base de données
       await createUser(formData);
       
-      // Afficher un message de confirmation plus convivial
-      alert(`Merci pour votre inscription ${formData.firstName} ! Un email de confirmation a été envoyé à ${formData.email}.`);
+      // Envoyer un email de bienvenue
+      const emailSent = await sendWelcomeEmailToUser(
+        formData.firstName,
+        formData.email,
+        formData.runningLevel
+      );
       
-      // Fermer le modal et réinitialiser le formulaire
-      onClose();
-      setFormData(initialFormData);
-      setStep(1);
-    } catch (error) {
+      // Afficher un message de confirmation personnalisé
+      if (emailSent) {
+        setSuccessMessage(`Merci pour votre inscription ${formData.firstName} ! Nous avons hâte de vous voir courir avec Unify. Un email de bienvenue a été envoyé à ${formData.email}.`);
+      } else {
+        setSuccessMessage(`Merci pour votre inscription ${formData.firstName} ! Nous avons hâte de vous voir courir avec Unify.`);
+        console.warn('Affichage du message de succès sans confirmation d\'email');
+      }
+      setShowSuccessAlert(true);
+      
+    } catch (error: unknown) {
       console.error("Erreur lors de l'inscription:", error);
-      alert("Erreur lors de l'inscription. Veuillez réessayer.");
+      if (error instanceof Error) {
+        setErrorMessage(error.message || "Erreur lors de l'inscription. Veuillez réessayer.");
+      } else {
+        setErrorMessage("Erreur lors de l'inscription. Veuillez réessayer.");
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
+
+ 
+    
 
   const modalVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -107,6 +180,52 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
         }
       }}
     >
+      {showSuccessAlert ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="p-6 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl shadow-lg"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold">Inscription réussie !</h2>
+            <button 
+              onClick={handleCloseSuccessAlert}
+              className="text-white hover:text-gray-200 transition-colors focus:outline-none"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <div className="mb-6">
+            <p className="mb-4">{successMessage}</p>
+            <div className="space-y-2">
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <p>Vous pouvez dès maintenant vous connecter à l'application</p>
+              </div>
+              <div className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                <p>Consultez votre boîte mail pour plus d'informations</p>
+              </div>
+            </div>
+          </div>
+          
+          <button 
+            onClick={handleCloseSuccessAlert}
+            className="w-full bg-white text-red-600 py-3 px-6 rounded-lg hover:bg-gray-100 transition-all duration-300 font-medium shadow-md"
+          >
+            Fermer
+          </button>
+        </motion.div>
+      ) : (
       <motion.div
         initial="hidden"
         animate="visible"
@@ -148,6 +267,12 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 pt-2">
+          {errorMessage && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+              {errorMessage}
+            </div>
+          )}
+          
           {step === 1 && (
             <motion.div 
               initial="hidden"
@@ -278,6 +403,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
           </div>
         </form>
       </motion.div>
+      )}
     </Modal>
   );
 };

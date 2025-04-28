@@ -25,8 +25,8 @@ export default function Grille() {
           <p className=' font-semibold text-center mb-2'>🇪🇺 Application disponible dans toute l'Europe</p>
         </div>
 
-        <div className='  p-2 rounded-2xl shadow-md flex items-center justify-center'>
-          <img src={map} alt='Application' className='w-auto h-auto max-w-full' />
+        <div className='  p-2 rounded-2xl shadow-md flex items-center justify-center sm:col-span-1'>
+          <img src={map} alt='Application' className='' />
         </div>
 
         <div className='bg-white p-4 rounded-2xl shadow-md flex items-center justify-center  '>
