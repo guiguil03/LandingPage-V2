@@ -1,7 +1,6 @@
 import emailjs from '@emailjs/browser';
 
-// Configuration EmailJS avec les identifiants existants
-// Ces valeurs sont exactement celles de la capture d'écran
+
 const EMAILJS_SERVICE_ID = "service_l9fyqof";
 const EMAILJS_TEMPLATE_ID = "template_tfi6oam";
 const EMAILJS_PUBLIC_KEY = "gvSerVoB9ElFTT6TH";
@@ -50,8 +49,8 @@ export const sendWelcomeEmail = async (
       {
         to_name: firstName,
         running_level: runningLevel,
-        message: "bienvenuz",
-        to_email: email.trim(),
+        message: "bienvenue",
+        to_email: "unify@gmail.com",
         from_name: "Unify",
         name: firstName,
         email: email.trim()
