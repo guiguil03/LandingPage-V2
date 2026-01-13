@@ -57,20 +57,20 @@ const Header: React.FC = () => {
             <div className="hidden md:flex items-center gap-6 sm:gap-8">
               <button 
                 onClick={() => scrollToSection('abonnements')}
-                className="text-gray-700 hover:text-red-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full cursor-pointer"
+                className="text-gray-700 hover:text-primary-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full cursor-pointer"
               >
                 Nos Abonnements
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
               </button>
               <button 
               onClick={() => scrollToSection('footer')}
-              className="text-gray-700 hover:text-red-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full">
+              className="text-gray-700 hover:text-primary-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full">
                 Contactez-Nous
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
               </button>
               <button 
                 onClick={openSignupModal}
-                className="bg-gradient-to-r from-red-500 to-red-600 text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105 hover:from-red-600 hover:to-red-700 flex items-center gap-2"
+                className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105 hover:from-primary-600 hover:to-primary-700 flex items-center gap-2"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
             animate={{ x: 0 }}
             transition={{ duration: 1.5 }}
             onClick={openSignupModal}
-            className="bg-red-500 hover:bg-red-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-sm sm:text-lg transition-colors hover:shadow-md transform hover:scale-105"
+            className="bg-primary-500 hover:bg-primary-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-sm sm:text-lg transition-colors hover:shadow-md transform hover:scale-105"
           >
             Je me lance dans l'aventure !
           </motion.button>
@@ -131,16 +131,16 @@ const Header: React.FC = () => {
             <div className="flex flex-col gap-4">
               <button 
                 onClick={() => scrollToSection('abonnements')}
-                className="text-gray-700 hover:text-red-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300 cursor-pointer"
+                className="text-gray-700 hover:text-primary-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300 cursor-pointer"
               >
                 Nos Abonnements
               </button>
-              <button className="text-gray-700 hover:text-red-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300">
+              <button className="text-gray-700 hover:text-primary-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300">
                 Contactez-Nous
               </button>
               <button 
                 onClick={openSignupModal}
-                className="bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-full text-base font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105 hover:from-red-600 hover:to-red-700 flex items-center justify-center gap-2 mt-2"
+                className="bg-gradient-to-r from-primary-500 to-primary-600 text-white py-3 rounded-full text-base font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105 hover:from-primary-600 hover:to-primary-700 flex items-center justify-center gap-2 mt-2"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />

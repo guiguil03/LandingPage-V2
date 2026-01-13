@@ -165,7 +165,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
       isOpen={isOpen}
       onRequestClose={onClose}
       className="w-full max-w-md mx-auto bg-white rounded-xl shadow-2xl overflow-hidden"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+      overlayClassName="fixed inset-0 bg-dark bg-opacity-75 backdrop-blur-sm flex items-center justify-center p-4 z-50"
       style={{
         content: {
           position: 'relative',
@@ -185,7 +185,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
-          className="p-6 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl shadow-lg"
+          className="p-6 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl shadow-lg"
         >
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold">Inscription réussie !</h2>
@@ -220,7 +220,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
           
           <button 
             onClick={handleCloseSuccessAlert}
-            className="w-full bg-white text-red-600 py-3 px-6 rounded-lg hover:bg-gray-100 transition-all duration-300 font-medium shadow-md"
+            className="w-full bg-white text-primary-600 py-3 px-6 rounded-lg hover:bg-gray-100 transition-all duration-300 font-medium shadow-md"
           >
             Fermer
           </button>
@@ -232,7 +232,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
         variants={modalVariants}
         className="relative"
       >
-        <div className="flex justify-between items-center bg-gradient-to-r from-red-600 to-red-500 text-white p-5">
+        <div className="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-500 text-white p-5">
           <h2 className="text-2xl font-bold">Rejoignez UNIFY</h2>
           <button 
             onClick={onClose} 
@@ -248,7 +248,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
             {Array.from({ length: totalSteps }).map((_, index) => (
               <div key={index} className="flex flex-col items-center">
                 <div 
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${index + 1 <= step ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-600'}`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${index + 1 <= step ? 'bg-primary-500 text-white' : 'bg-gray-200 text-gray-600'}`}
                 >
                   {index + 1}
                 </div>
@@ -259,7 +259,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
             ))}
             <div className="absolute top-[108px] left-0 right-0 h-[2px] bg-gray-200 -z-10 mx-10">
               <div 
-                className="h-full bg-red-500 transition-all duration-300" 
+                className="h-full bg-primary-500 transition-all duration-300" 
                 style={{ width: `${(step - 1) / (totalSteps - 1) * 100}%` }}
               ></div>
             </div>
@@ -268,7 +268,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
 
         <form onSubmit={handleSubmit} className="p-6 pt-2">
           {errorMessage && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            <div className="mb-4 p-3 bg-primary-100 border border-primary-400 text-primary-700 rounded">
               {errorMessage}
             </div>
           )}
@@ -291,7 +291,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
                     onChange={handleChange}
                     required
                     placeholder="Votre prénom"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 pl-10"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 pl-10"
                   />
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
@@ -310,7 +310,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
                     onChange={handleChange}
                     required
                     placeholder="Votre nom"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 pl-10"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 pl-10"
                   />
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
@@ -329,7 +329,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
                     onChange={handleChange}
                     required
                     placeholder="votre.email@exemple.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 pl-10"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 pl-10"
                   />
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
@@ -356,7 +356,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
                     value={formData.runningLevel}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 pl-10 appearance-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 pl-10 appearance-none"
                   >
                     <option value="débutant">Débutant</option>
                     <option value="intermédiaire">Intermédiaire</option>
@@ -372,7 +372,7 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
               </div>
 
               <div className="mt-8 text-sm text-gray-600">
-                <p>En vous inscrivant, vous acceptez nos <a href="#" className="text-red-500 hover:underline">Conditions d'utilisation</a> et notre <a href="#" className="text-red-500 hover:underline">Politique de confidentialité</a>.</p>
+                <p>En vous inscrivant, vous acceptez nos <a href="#" className="text-primary-500 hover:underline">Conditions d'utilisation</a> et notre <a href="#" className="text-primary-500 hover:underline">Politique de confidentialité</a>.</p>
               </div>
             </motion.div>
           )}
@@ -382,14 +382,14 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
               <button 
                 type="button" 
                 onClick={() => setStep(step - 1)}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
               >
                 Retour
               </button>
             )}
             <button 
               type="submit" 
-              className={`${step > 1 ? 'ml-auto' : 'w-full'} bg-gradient-to-r from-red-600 to-red-500 text-white py-3 px-6 rounded-lg hover:from-red-700 hover:to-red-600 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:scale-[1.02] flex items-center justify-center`}
+              className={`${step > 1 ? 'ml-auto' : 'w-full'} bg-gradient-to-r from-primary-600 to-primary-500 text-white py-3 px-6 rounded-lg hover:from-primary-700 hover:to-primary-600 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:scale-[1.02] flex items-center justify-center`}
               disabled={isSubmitting}
             >
               {isSubmitting ? (

@@ -18,12 +18,12 @@ const PricingPlan: React.FC<PlanProps> = ({ title, price, features, isPopular = 
       viewport={{ once: true }}
       className={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow-lg ${
         isPopular 
-          ? 'border-red-500 bg-gradient-to-b from-red-50 to-white relative' 
+          ? 'border-primary-500 bg-gradient-to-b from-primary-100 to-white relative' 
           : 'border-gray-200 bg-white'
       }`}
     >
       {isPopular && (
-        <div className="absolute top-0 right-0 px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-bl-lg rounded-tr-lg">
+        <div className="absolute top-0 right-0 px-3 py-1 bg-primary-500 text-white text-xs font-semibold rounded-bl-lg rounded-tr-lg">
           Populaire
         </div>
       )}
@@ -58,7 +58,7 @@ const PricingPlan: React.FC<PlanProps> = ({ title, price, features, isPopular = 
       <button 
         className={`py-3 px-6 font-medium rounded-lg text-white ${
           isPopular 
-            ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700' 
+            ? 'bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700' 
             : 'bg-gray-800 hover:bg-gray-900'
         } transition-colors duration-300 transform hover:scale-105`}
       >
@@ -87,7 +87,7 @@ const Abonnements: React.FC = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl text-red-500 font-semibold"
+            className="text-xl text-primary-500 font-semibold"
           >
             Choisissez l'offre qui correspond le mieux à vos besoins et commencez à courir avec Unify dès aujourd'hui.
           </motion.p>

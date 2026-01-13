@@ -25,7 +25,7 @@ const Avis: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
           >
             <div className="flex-shrink-0">
               <img 
-                className="w-16 h-16 sm:w-12 sm:h-12 object-cover rounded-full border-2 border-red-500 shadow-md" 
+                className="w-16 h-16 sm:w-12 sm:h-12 object-cover rounded-full border-2 border-primary-500 shadow-md" 
                 src={avis.image} 
                 alt={avis.nom} 
               />
@@ -43,7 +43,7 @@ const Avis: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
   return (
     <div className='w-full bg-gray-100 py-8 sm:py-12 flex flex-col items-center'> 
       <div className='w-full max-w-7xl p-4 sm:p-6 mb-6 sm:mb-8 bg-white rounded-2xl shadow-md flex flex-col items-center'>
-        <p className='avis-container text-2xl sm:text-3xl font-semibold text-center'>Vous avez adopté la course avec <span className="text-red-500 font-bold text-3xl sm:text-5xl"> Unify</span></p>
+        <p className='avis-container text-2xl sm:text-3xl font-semibold text-center'>Vous avez adopté la course avec <span className="text-primary-500 font-bold text-3xl sm:text-5xl"> Unify</span></p>
       </div>
       <div className='w-full max-w-7xl px-4 sm:px-6 flex flex-col items-center'>
         <h2 className='text-xl sm:text-2xl font-bold mb-6 sm:mb-10 text-center'>Avis de nos clients</h2>
