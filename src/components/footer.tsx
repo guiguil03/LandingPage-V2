@@ -1,5 +1,5 @@
 // Footer component
-import Logo from "../assets/logo.svg"
+import Logo from "../assets/logo.png"
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaAppStore, FaGooglePlay } from 'react-icons/fa';
 
 export default function Footer() {

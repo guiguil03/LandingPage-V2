@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { motion } from "framer-motion";
 import { createUser, checkEmailExists } from "../hooks/Auth";
 import { sendWelcomeEmail } from "../services/emailService";
+import Logo from "../assets/logo.png";
 
 export interface UserFormData {
   firstName: string;
@@ -233,7 +234,10 @@ const SignupModal = ({ isOpen, onClose }: SignupModalProps) => {
         className="relative"
       >
         <div className="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-500 text-white p-5">
-          <h2 className="text-2xl font-bold">Rejoignez UNIFY</h2>
+          <div className="flex items-center gap-3">
+            <img src={Logo} alt="Logo Unify" className="h-8 w-8 object-contain" />
+            <h2 className="text-2xl font-bold">Rejoignez UNIFY</h2>
+          </div>
           <button 
             onClick={onClose} 
             className="text-2xl hover:text-gray-200 transition-colors focus:outline-none"

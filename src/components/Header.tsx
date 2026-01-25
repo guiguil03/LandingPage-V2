@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Logo from '../assets/logo.svg';
+import Logo from '../assets/logo.png';
 import SignupModal from './inscription';
 
 const Header: React.FC = () => {

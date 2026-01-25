@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Logo from '../assets/logo.png';
 
 interface PlanProps {
   title: string;
@@ -59,7 +60,7 @@ const PricingPlan: React.FC<PlanProps> = ({ title, price, features, isPopular = 
         className={`py-3 px-6 font-medium rounded-lg text-white ${
           isPopular 
             ? 'bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700' 
-            : 'bg-gray-800 hover:bg-gray-900'
+            : 'bg-primary-700 hover:bg-primary-800'
         } transition-colors duration-300 transform hover:scale-105`}
       >
         {buttonText}
@@ -73,15 +74,20 @@ const Abonnements: React.FC = () => {
     <section id="abonnements" className="py-16 bg-gray-50">
       <div className="container px-4 mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <motion.h2 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-4"
+            className="flex items-center justify-center gap-4 mb-4"
           >
-            Nos formules d'abonnement
-          </motion.h2>
+            <img src={Logo} alt="Logo Unify" className="h-12 w-12 md:h-16 md:w-16 object-contain" />
+            <motion.h2 
+              className="text-3xl sm:text-5xl font-extrabold text-gray-900"
+            >
+              Nos formules d'abonnement
+            </motion.h2>
+          </motion.div>
           <motion.p 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

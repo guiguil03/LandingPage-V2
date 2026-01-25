@@ -2,6 +2,7 @@
 import data from '../data/avis.json';
 import type { Avis } from "../type/avis";
 import { motion } from 'framer-motion';
+import Logo from '../assets/logo.png';
 
 interface AvisGridProps {
   avis?: Avis[];
@@ -43,7 +44,10 @@ const Avis: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
   return (
     <div className='w-full bg-gray-100 py-8 sm:py-12 flex flex-col items-center'> 
       <div className='w-full max-w-7xl p-4 sm:p-6 mb-6 sm:mb-8 bg-white rounded-2xl shadow-md flex flex-col items-center'>
-        <p className='avis-container text-2xl sm:text-3xl font-semibold text-center'>Vous avez adopté la course avec <span className="text-primary-500 font-bold text-3xl sm:text-5xl"> Unify</span></p>
+        <div className='flex items-center gap-3 mb-2'>
+          <img src={Logo} alt="Logo Unify" className="h-10 w-10 md:h-12 md:w-12 object-contain" />
+          <p className='avis-container text-2xl sm:text-3xl font-semibold text-center'>Vous avez adopté la course avec <span className="text-primary-500 font-bold text-3xl sm:text-5xl"> Unify</span></p>
+        </div>
       </div>
       <div className='w-full max-w-7xl px-4 sm:px-6 flex flex-col items-center'>
         <h2 className='text-xl sm:text-2xl font-bold mb-6 sm:mb-10 text-center'>Avis de nos clients</h2>

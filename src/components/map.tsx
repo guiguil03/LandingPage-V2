@@ -21,10 +21,12 @@ export default function Map() {
         <div className="absolute inset-0 bg-gradient-to-r from-dark to-primary-600 opacity-70"></div>
         <div className="absolute inset-0 flex flex-col items-start justify-center p-4 md:p-12 lg:pl-24">
           <div className="text-left w-full md:w-3/4 lg:w-2/3">
-            <h1 className="mb-6 md:mb-12 text-2xl md:text-4xl font-bold leading-tight text-white">
-              POURQUOI CHOISIR UNIFY,<br />
-              ET PAS LES AUTRES
-            </h1>
+            <div className="flex items-center gap-4 mb-6">
+              <h1 className="text-2xl md:text-4xl font-bold leading-tight text-white">
+                POURQUOI CHOISIR UNIFY,<br />
+                ET PAS LES AUTRES
+              </h1>
+            </div>
             <p className="text-white text-sm md:text-base lg:text-lg mb-8 md:mb-12">
               Unify est une application de running social qui révolutionne la façon dont les coureurs se connectent. En plus de permettre l'enregistrement de vos courses, Unify vous aide à rencontrer d'autres passionnés de course à pied en fonction de votre niveau, de vos centres d'intérêt et bien plus encore. Avec un focus sur l'aspect social et la visibilité des autres utilisateurs, Unify transforme chaque course en une opportunité de partager, d'échanger et de tisser des liens.
             </p>

@@ -8,14 +8,19 @@ export default {
     extend: {
       colors: {
         primary: {
-          100: '#E8E9FC',
-          400: '#9FA2F8',
-          500: '#7D80F4',
-          600: '#5C5FF0',
-          700: '#3B3EEC',
+          50: '#F5F3FF',
+          100: '#EDE9FE',
+          200: '#DDD6FE',
+          300: '#C4B5FD',
+          400: '#A78BFA',
+          500: '#8B6FC7',
+          600: '#7C3AED',
+          700: '#6D28D9',
+          800: '#5B21B6',
+          900: '#4C1D95',
         },
-        dark: '#201a41',
-        secondary: '#201a41',
+        dark: '#0F0A1A',
+        secondary: '#0F0A1A',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
