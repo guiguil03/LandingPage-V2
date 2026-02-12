@@ -28,7 +28,7 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
     cards.forEach((card) => {
       gsap.set(card, {
         yPercent: 150,
-        opacity: 0,
+        opacity: 1,
         scale: 0.92,
       });
     });
@@ -38,11 +38,10 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        // Each card gets ~500px of scroll distance + a little buffer at end
         end: `+=${totalCards * 500 + 200}`,
         pin: true,
-        scrub: 0.8,
-        anticipatePin: 1,
+        scrub: 2, // higher = smoother / less reactive to scroll
+        pinSpacing: true,
       },
     });
 
@@ -58,7 +57,6 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
         {
           yPercent: 0,
           y: stackOffsetY,
-          opacity: 1,
           rotation: rotation,
           scale: 1,
           duration: 1,
@@ -118,34 +116,34 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
         ref={stackAreaRef}
         className="flex-1 relative flex items-center justify-center px-4"
       >
-        <div className="relative w-full max-w-[600px] h-[180px] sm:h-[160px]">
+        <div className="relative w-full max-w-[775px] h-[260px]">
           {avisData.map((avis, index) => (
             <div
               key={avis.id ?? index}
               ref={(el) => {
                 cardsRef.current[index] = el;
               }}
-              className="absolute inset-x-0 top-0 w-full bg-[#1E1E1E] text-white p-4 sm:p-6 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4"
+              className="absolute inset-x-0 top-0 w-full max-w-[775px] bg-[#353331] border border-[#2E2E2E] rounded-[40px] flex flex-col justify-end items-center px-6 py-8 sm:px-12 sm:py-12"
               style={{
                 zIndex: index + 1,
                 willChange: "transform, opacity",
               }}
             >
-              <div className="flex-shrink-0">
+              {/* Avatar + Name */}
+              <div className="w-full flex flex-row items-center gap-2.5 mb-5">
                 <img
-                  className="w-16 h-16 sm:w-12 sm:h-12 object-cover rounded-full border-2 border-primary-500 shadow-md"
+                  className="w-[56px] h-[56px] sm:w-[77px] sm:h-[77px] object-cover rounded-full flex-shrink-0"
                   src={avis.image}
                   alt={avis.nom}
                 />
-              </div>
-              <div className="flex flex-col text-center sm:text-left">
-                <p className="font-bold text-lg sm:text-base md:text-lg">
+                <p className="font-normal text-base sm:text-[23px] sm:leading-[35px] text-[#FBFBFB]">
                   {avis.prenom} {avis.nom}
                 </p>
-                <p className="text-sm text-gray-300 mt-2 sm:mt-1 line-clamp-6 sm:line-clamp-none">
-                  &ldquo;{avis.commentaire}&rdquo;
-                </p>
               </div>
+              {/* Comment */}
+              <p className="w-full font-normal text-sm sm:text-[19.5px] sm:leading-[32px] text-[#858585]">
+                &ldquo;{avis.commentaire}&rdquo;
+              </p>
             </div>
           ))}
         </div>
