@@ -3,7 +3,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import data from "../data/avis.json";
 import type { Avis } from "../type/avis";
-import Logo from "../assets/logo.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
