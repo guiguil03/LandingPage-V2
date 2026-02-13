@@ -33,6 +33,27 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
       });
     });
 
+    // Refresh ScrollTrigger once all images above are loaded & layout is stable
+    const refreshOnReady = () => ScrollTrigger.refresh();
+    const imgLoadPromises = Array.from(document.images)
+      .filter((img) => !img.complete)
+      .map(
+        (img) =>
+          new Promise((r) => {
+            img.onload = r;
+            img.onerror = r;
+          })
+      );
+    if (imgLoadPromises.length) {
+      Promise.all(imgLoadPromises).then(refreshOnReady);
+    } else {
+      requestAnimationFrame(() => requestAnimationFrame(refreshOnReady));
+    }
+
+    // Also refresh whenever the page layout shifts (e.g. Framer Motion animations above)
+    const ro = new ResizeObserver(() => ScrollTrigger.refresh());
+    ro.observe(document.body);
+
     // Create master timeline pinned to the section
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -40,8 +61,9 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
         start: "top top",
         end: `+=${totalCards * 500 + 200}`,
         pin: true,
-        scrub: 2, // higher = smoother / less reactive to scroll
+        scrub: 1,
         pinSpacing: true,
+        invalidateOnRefresh: true,
       },
     });
 
@@ -82,6 +104,7 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
     tl.to({}, { duration: 0.5 });
 
     return () => {
+      ro.disconnect();
       tl.scrollTrigger?.kill();
       tl.kill();
     };
@@ -93,20 +116,18 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
       className="relative h-screen w-full bg-gray-100 overflow-hidden flex flex-col"
     >
       {/* Title */}
-      <div className="pt-10 sm:pt-14 pb-4 sm:pb-6 flex flex-col items-center px-4 flex-shrink-0">
-        <div className="w-full max-w-3xl p-4 sm:p-6 bg-white rounded-2xl shadow-md flex flex-col items-center">
-          <div className="flex items-center gap-3">
-            <img
-              src={Logo}
-              alt="Logo Unify"
-              className="h-10 w-10 md:h-12 md:w-12 object-contain"
-            />
-            <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
-              Vous avez adopté la course avec{" "}
-              <span className="text-primary-500 font-bold text-2xl sm:text-4xl md:text-5xl">
-                Unify
-              </span>
-            </p>
+      <div className="pt-10 sm:pt-16 pb-4 sm:pb-6 flex flex-col items-center px-4 flex-shrink-0">
+        <div className="w-full max-w-[560px] flex flex-col items-center text-center">
+          <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
+            Vous avez adopté
+          </span>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <span className="font-bold text-3xl sm:text-[52px] sm:leading-[65px] tracking-tight text-[#353331]">
+              la course avec
+            </span>
+            <span className="font-bold text-3xl sm:text-[50px] sm:leading-[59px] tracking-tight text-white bg-[#353331] px-3 py-0.5 rounded-xl">
+              UNIFY
+            </span>
           </div>
         </div>
       </div>

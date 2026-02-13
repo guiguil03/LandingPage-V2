@@ -1,4 +1,3 @@
-// Footer component
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import {
@@ -10,137 +9,188 @@ import {
   FaGooglePlay,
 } from "react-icons/fa";
 
+const FooterLink = ({
+  children,
+  href,
+  external = false,
+}: {
+  children: React.ReactNode;
+  href: string;
+  external?: boolean;
+}) => {
+  const className =
+    "group relative inline-block w-fit text-[15px] text-white/50 hover:text-white transition-colors duration-300 py-1";
+
+  const inner = (
+    <>
+      {children}
+      <span className="absolute left-0 bottom-0 h-px w-0 bg-primary-500 transition-all duration-500 ease-out group-hover:w-full" />
+    </>
+  );
+
+  if (external) {
+    return (
+      <a href={href} className={className}>
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={href} className={className}>
+      {inner}
+    </Link>
+  );
+};
+
+const SocialLink = ({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) => (
+  <a
+    href={href}
+    aria-label={label}
+    className="group relative w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-primary-500 hover:bg-primary-500/10 transition-all duration-300"
+  >
+    {children}
+  </a>
+);
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      id="footer"
-      className="w-full text-white py-12 border-t border-gray-800"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
-        {/* Logo and Copyright */}
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center mb-3">
-            <img
-              src={Logo}
-              alt="Logo Unify"
-              className="h-10 sm:h-14 w-auto object-contain"
-            />
-            <span className="text-2xl font-extrabold ml-3 text-primary-500">
-              UNIFY
-            </span>
-          </div>
-          <p className="text-sm text-gray-400">
-            Votre communauté de course à pied
-          </p>
-        </div>
-
-        {/* Menu */}
-        <div className="flex flex-col space-y-3">
-          <h3 className="text-lg font-bold mb-2 text-white">Menu</h3>
-          <a
-            href="#"
-            className="text-sm text-gray-400 hover:text-primary-500 transition-colors duration-300"
-          >
-            Accueil
-          </a>
-          <a
-            href="#"
-            className="text-sm text-gray-400 hover:text-primary-500 transition-colors duration-300"
-          >
-            À propos
-          </a>
-          <a
-            href="#"
-            className="text-sm text-gray-400 hover:text-primary-500 transition-colors duration-300"
-          >
-            Nos abonnements
-          </a>
-          <a
-            href="#"
-            className="text-sm text-gray-400 hover:text-primary-500 transition-colors duration-300"
-          >
-            Contact
-          </a>
-        </div>
-
-        {/* Social Media & App Store */}
-        <div className="flex flex-col space-y-3">
-          <h3 className="text-lg font-bold mb-2 text-white">Suivez-nous</h3>
-          <div className="flex space-x-4 mb-6">
-            <a
-              href="#"
-              className="text-gray-400 hover:text-primary-500 transition-colors duration-300"
-            >
-              <FaInstagram size={20} />
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-primary-500 transition-colors duration-300"
-            >
-              <FaLinkedin size={20} />
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-primary-500 transition-colors duration-300"
-            >
-              <FaTiktok size={20} />
-            </a>
-            <a
-              href="mailto:contact@unify.com"
-              className="text-gray-400 hover:text-primary-500 transition-colors duration-300"
-            >
-              <FaEnvelope size={20} />
-            </a>
+    <footer id="footer" className="w-full text-white bg-[#353331]">
+      {/* ── Brand Statement ── */}
+      <div className="border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-16 pb-12 md:pt-24 md:pb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-4 mb-3">
+              <img
+                src={Logo}
+                alt="Logo Unify"
+                className="h-12 sm:h-16 w-auto object-contain"
+              />
+              <h2 className="text-[clamp(2.5rem,7vw,6rem)] font-extrabold tracking-[-0.04em] leading-[0.9] text-white">
+                UNIFY<span className="text-primary-500">.</span>
+              </h2>
+            </div>
+            <p className="text-white/30 text-base sm:text-lg max-w-sm leading-relaxed mt-4 md:mt-6">
+              La communauté qui transforme chaque foulée en connexion.
+            </p>
           </div>
 
-          <h3 className="text-lg font-bold mb-2 text-white">Télécharger</h3>
-          <div className="flex flex-col space-y-2">
-            <a
-              href="#"
-              className="flex items-center bg-dark text-white px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-300"
-            >
-              <FaAppStore className="mr-2" size={18} />
-              <span className="text-xs">App Store</span>
-            </a>
-            <a
-              href="#"
-              className="flex items-center bg-dark text-white px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-300"
-            >
-              <FaGooglePlay className="mr-2" size={18} />
-              <span className="text-xs">Google Play</span>
-            </a>
+          {/* Social icons — desktop: aligned right */}
+          <div className="flex items-center gap-3">
+            <SocialLink href="https://instagram.com" label="Instagram">
+              <FaInstagram size={16} />
+            </SocialLink>
+            <SocialLink href="https://linkedin.com" label="LinkedIn">
+              <FaLinkedin size={16} />
+            </SocialLink>
+            <SocialLink href="https://tiktok.com" label="TikTok">
+              <FaTiktok size={16} />
+            </SocialLink>
+            <SocialLink href="mailto:contact@unify-run.com" label="Email">
+              <FaEnvelope size={16} />
+            </SocialLink>
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="w-full border-t border-gray-800 mt-10 pt-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-xs text-gray-500 mb-4 sm:mb-0">
-            © {currentYear} UNIFY — Tous droits réservés
-          </p>
-          <div className="flex space-x-6">
-            <Link
-              to="/conditions-generales"
-              className="text-xs text-gray-500 hover:text-white transition-colors duration-300"
-            >
-              Conditions d'utilisation
-            </Link>
-            <Link
-              to="/mentions-legales"
-              className="text-xs text-gray-500 hover:text-white transition-colors duration-300"
-            >
-              Mentions légales
-            </Link>
-            <Link
-              to="/politique-de-confidentialite"
-              className="text-xs text-gray-500 hover:text-white transition-colors duration-300"
-            >
+      {/* ── Links Grid ── */}
+      <div className="border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-10 md:py-14 grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-16">
+          {/* Navigation */}
+          <nav className="flex flex-col gap-2.5">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white/20 mb-2">
+              Navigation
+            </span>
+            <FooterLink href="#" external>
+              Accueil
+            </FooterLink>
+            <FooterLink href="#" external>
+              À propos
+            </FooterLink>
+            <FooterLink href="#abonnements" external>
+              Nos abonnements
+            </FooterLink>
+            <FooterLink href="#footer" external>
+              Contact
+            </FooterLink>
+          </nav>
+
+          {/* Legal */}
+          <nav className="flex flex-col gap-2.5">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white/20 mb-2">
+              Légal
+            </span>
+            <FooterLink href="/conditions-generales">
+              Conditions d&apos;utilisation
+            </FooterLink>
+            <FooterLink href="/mentions-legales">Mentions légales</FooterLink>
+            <FooterLink href="/politique-de-confidentialite">
               Politique de confidentialité
-            </Link>
+            </FooterLink>
+          </nav>
+
+          {/* Download — mobile only */}
+          <div className="flex flex-col gap-3 md:hidden col-span-2">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white/20 mb-1">
+              Télécharger
+            </span>
+            <div className="flex gap-3">
+              <a
+                href="#"
+                className="flex items-center gap-2 bg-white/[0.05] border border-white/10 text-white/70 px-4 py-2.5 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300"
+              >
+                <FaAppStore size={18} />
+                <span className="text-sm">App Store</span>
+              </a>
+              <a
+                href="#"
+                className="flex items-center gap-2 bg-white/[0.05] border border-white/10 text-white/70 px-4 py-2.5 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300"
+              >
+                <FaGooglePlay size={18} />
+                <span className="text-sm">Google Play</span>
+              </a>
+            </div>
           </div>
+        </div>
+      </div>
+
+      {/* ── Bottom Bar ── */}
+      <div className="border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-2">
+          <p className="text-xs text-white/20">
+            &copy; {currentYear} UNIFY &mdash; Tous droits réservés
+          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="text-xs text-white/20 hover:text-white/60 transition-colors duration-300 flex items-center gap-1.5"
+          >
+            Retour en haut
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              className="rotate-180"
+            >
+              <path
+                d="M6 2.5v7M3 6.5l3 3 3-3"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </footer>
