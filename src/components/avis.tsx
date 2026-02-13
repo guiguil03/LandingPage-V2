@@ -119,7 +119,7 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
       <div className="pt-10 sm:pt-16 pb-4 sm:pb-6 flex flex-col items-center px-4 flex-shrink-0">
         <div className="w-full max-w-[560px] flex flex-col items-center text-center">
           <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
-            Vous avez adopté
+            Ils ont adopté
           </span>
           <div className="flex items-center justify-center gap-2 flex-wrap">
             <span className="font-bold text-3xl sm:text-[52px] sm:leading-[65px] tracking-tight text-[#353331]">
