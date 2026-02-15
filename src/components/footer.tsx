@@ -19,7 +19,7 @@ const FooterLink = ({
   external?: boolean;
 }) => {
   const className =
-    "group relative inline-block w-fit text-[15px] text-white/50 hover:text-white transition-colors duration-300 py-1";
+    "group relative inline-block w-fit text-[15px] text-white hover:text-white transition-colors duration-300 py-1";
 
   const inner = (
     <>
@@ -55,7 +55,7 @@ const SocialLink = ({
   <a
     href={href}
     aria-label={label}
-    className="group relative w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-primary-500 hover:bg-primary-500/10 transition-all duration-300"
+    className="group relative w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white hover:text-white hover:border-primary-500 hover:bg-primary-500/10 transition-all duration-300"
   >
     {children}
   </a>
@@ -80,7 +80,7 @@ export default function Footer() {
                 UNIFY<span className="text-primary-500">.</span>
               </h2>
             </div>
-            <p className="text-white/30 text-base sm:text-lg max-w-sm leading-relaxed mt-4 md:mt-6">
+            <p className="text-white text-base sm:text-lg max-w-sm leading-relaxed mt-4 md:mt-6">
               La communauté qui transforme chaque foulée en connexion.
             </p>
           </div>

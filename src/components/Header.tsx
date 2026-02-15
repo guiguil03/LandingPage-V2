@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Logo from '../assets/logo.png';
-import SignupModal from './inscription';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Logo from "../assets/logo.png";
+import SignupModal from "./inscription";
 
 const Header: React.FC = () => {
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
@@ -9,23 +9,36 @@ const Header: React.FC = () => {
 
   const openSignupModal = () => {
     setIsSignupModalOpen(true);
-    setIsMobileMenuOpen(false); // Fermer le menu mobile si ouvert
+    setIsMobileMenuOpen(false);
   };
 
   const closeSignupModal = () => {
     setIsSignupModalOpen(false);
   };
-  
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const scrollToSection = (sectionId: string) => {
-    setIsMobileMenuOpen(false); // Fermer le menu mobile si ouvert
+    setIsMobileMenuOpen(false);
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      section.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.15, delayChildren: 0.4 } },
+  };
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
   };
 
   return (
@@ -33,126 +46,189 @@ const Header: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="w-full py-4"
+      className="relative w-full h-screen bg-[#353331] overflow-hidden"
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-center w-full">
-          <motion.nav
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ 
-              duration: 0.6,
-              ease: "easeOut"
-            }}
-            className="fixed top-0  z-50 mt-4 ml-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-md rounded-[20px] px-4 sm:px-8 py-3 sm:py-4 w-[95%] max-w-7xl shadow-lg transition-all duration-300 border border-gray-100 h-16 sm:h-[70px]"
-          >
-            <div className="flex items-center">
-              <span className="font-bold flex items-center gap-2 sm:gap-3">
-                <img src={Logo} alt="Logo Unify" className="h-10 sm:h-14 w-auto object-contain" />
-                <span className="text-xl sm:text-3xl font-extrabold">UNIFY</span>
-              </span>
-            </div>
-            
-            {/* Menu pour desktop */}
-            <div className="hidden md:flex items-center gap-6 sm:gap-8">
-              <button 
-                onClick={() => scrollToSection('abonnements')}
-                className="text-gray-700 hover:text-primary-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full cursor-pointer"
-              >
-                Nos Abonnements
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
-              </button>
-              <button 
-              onClick={() => scrollToSection('footer')}
-              className="text-gray-700 hover:text-primary-600 text-sm sm:text-base font-medium relative group transition-all duration-300 flex items-center h-full">
-                Contactez-Nous
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300 group-hover:w-full"></span>
-              </button>
-              <button 
-                onClick={openSignupModal}
-                className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105 hover:from-primary-600 hover:to-primary-700 flex items-center gap-2"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-                S'inscrire
-              </button>
-            </div>
-            
-            {/* Bouton hamburger pour mobile */}
-            <button 
-              onClick={toggleMobileMenu} 
-              className="md:hidden flex flex-col justify-center items-center gap-1.5 p-2 focus:outline-none"
-              aria-label="Menu"
-            >
-              <span className={`block w-6 h-0.5 bg-gray-800 transition-all duration-300 ${isMobileMenuOpen ? 'transform rotate-45 translate-y-2' : ''}`}></span>
-              <span className={`block w-6 h-0.5 bg-gray-800 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-              <span className={`block w-6 h-0.5 bg-gray-800 transition-all duration-300 ${isMobileMenuOpen ? 'transform -rotate-45 -translate-y-2' : ''}`}></span>
-            </button>
-          </motion.nav>
-        </div>
-
+      {/* ── Navbar (relative, not sticky) ── */}
+      <div className="relative z-50 px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
+        {/* Left — Logo + Title + dot */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          className="mt-16 sm:mt-32 mb-16 sm:mb-32 max-w-2xl text-left text-white"
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-3"
         >
-          <motion.h1
-            initial={{ x: 500 }}
-            animate={{ x: 0 }}
-            transition={{ duration: 1.5 }}
-            className="text-3xl sm:text-5xl font-bold mb-8 sm:mb-12 leading-tight"
-          >
-            VOTRE MOTIVATION, VOS PARTENAIRES, VOS PARCOURS : TOUS RÉUNIS !
-          </motion.h1>
-          <motion.button
-            initial={{ x: 500 }}
-            animate={{ x: 0 }}
-            transition={{ duration: 1.5 }}
-            onClick={openSignupModal}
-            className="bg-primary-500 hover:bg-primary-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-sm sm:text-lg transition-colors hover:shadow-md transform hover:scale-105"
-          >
-            Je me lance dans l'aventure !
-          </motion.button>
+          <img
+            src={Logo}
+            alt="Logo Unify"
+            className="h-9 sm:h-11 w-auto object-contain"
+          />
+          <span className="text-xl sm:text-2xl font-extrabold text-white tracking-[-0.02em]">
+            UNIFY<span className="text-primary-500">.</span>
+          </span>
         </motion.div>
+
+        {/* Right — Nav links (desktop) */}
+        <motion.nav
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="hidden md:flex items-center gap-6"
+        >
+          <button
+            onClick={() => scrollToSection("abonnements")}
+            className="text-white/70 hover:text-white text-sm font-medium transition-colors duration-200 cursor-pointer"
+          >
+            Abonnements
+          </button>
+          <button
+            onClick={() => scrollToSection("footer")}
+            className="text-white/70 hover:text-white text-sm font-medium transition-colors duration-200 cursor-pointer"
+          >
+            Contact
+          </button>
+          <button
+            onClick={openSignupModal}
+            className="bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.08] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer"
+          >
+            S'inscrire
+          </button>
+        </motion.nav>
+
+        {/* Right — Hamburger (mobile) */}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          onClick={toggleMobileMenu}
+          className="md:hidden flex flex-col justify-center items-center gap-1.5 p-2"
+          aria-label="Menu"
+        >
+          <span
+            className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
+              isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+            }`}
+          />
+          <span
+            className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
+              isMobileMenuOpen ? "opacity-0" : ""
+            }`}
+          />
+          <span
+            className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
+              isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+            }`}
+          />
+        </motion.button>
       </div>
 
-      {/* Menu mobile */}
+      {/* ── Hero Content ── */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 h-[calc(100%-80px)] flex flex-col justify-center px-6 sm:px-12 lg:px-24 max-w-6xl"
+      >
+        <motion.h1
+          variants={fadeUp}
+          className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl"
+        >
+          Trouve ton
+          <br />
+          <span className="text-white/40">crew de runners.</span>
+        </motion.h1>
+
+        <motion.p
+          variants={fadeUp}
+          className="mt-6 sm:mt-8 text-white text-base sm:text-lg max-w-md leading-relaxed"
+        >
+          Trouvez des partenaires à votre rythme, partagez vos parcours et
+          rejoignez la communauté qui vous ressemble.
+        </motion.p>
+
+        <motion.div
+          variants={fadeUp}
+          className="mt-8 sm:mt-10 flex items-center gap-4"
+        >
+          <button
+            onClick={openSignupModal}
+            className="group bg-white text-[#353331] font-semibold text-sm sm:text-base px-7 py-3.5 rounded-2xl hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2.5"
+          >
+            Rejoindre Unify
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="translate-x-0 group-hover:translate-x-1 transition-transform duration-300"
+            >
+              <path
+                d="M3 8h10M9 4l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            onClick={() => scrollToSection("abonnements")}
+            className="text-white hover:text-white/70 text-sm sm:text-base font-medium transition-colors duration-200"
+          >
+            Voir les offres
+          </button>
+        </motion.div>
+      </motion.div>
+
+      {/* ── Scroll indicator ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] uppercase tracking-[0.2em] text-white/20">
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          className="w-px h-8 bg-gradient-to-b from-white/20 to-transparent"
+        />
+      </motion.div>
+
+      {/* ── Mobile Menu ── */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-20 left-4 z-40 w-[90%] max-w-md bg-white rounded-xl shadow-xl py-4 px-6 border border-gray-100"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-20 right-6 z-40 w-56 bg-[#2a2826] rounded-2xl shadow-xl py-2 px-2 border border-white/[0.06]"
           >
-            <div className="flex flex-col gap-4">
-              <button 
-                onClick={() => scrollToSection('abonnements')}
-                className="text-gray-700 hover:text-primary-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300 cursor-pointer"
-              >
-                Nos Abonnements
-              </button>
-              <button className="text-gray-700 hover:text-primary-600 text-base font-medium py-2 border-b border-gray-100 transition-all duration-300">
-                Contactez-Nous
-              </button>
-              <button 
-                onClick={openSignupModal}
-                className="bg-gradient-to-r from-primary-500 to-primary-600 text-white py-3 rounded-full text-base font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105 hover:from-primary-600 hover:to-primary-700 flex items-center justify-center gap-2 mt-2"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-                S'inscrire
-              </button>
-            </div>
+            <button
+              onClick={() => scrollToSection("abonnements")}
+              className="w-full text-left text-white hover:text-white text-sm font-medium py-2.5 px-4 rounded-xl hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
+            >
+              Abonnements
+            </button>
+            <button
+              onClick={() => scrollToSection("footer")}
+              className="w-full text-left text-white hover:text-white text-sm font-medium py-2.5 px-4 rounded-xl hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
+            >
+              Contact
+            </button>
+            <div className="h-px bg-white/[0.06] my-1 mx-3" />
+            <button
+              onClick={openSignupModal}
+              className="w-full bg-primary-500 hover:bg-primary-400 text-white text-sm font-medium py-2.5 px-4 rounded-xl transition-colors duration-200 mt-1 cursor-pointer"
+            >
+              S'inscrire
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Modal d'inscription */}
       <SignupModal isOpen={isSignupModalOpen} onClose={closeSignupModal} />
     </motion.header>
   );

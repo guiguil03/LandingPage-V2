@@ -3,7 +3,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import data from "../data/avis.json";
 import type { Avis } from "../type/avis";
-import Logo from "../assets/logo.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -162,7 +161,7 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
                 </p>
               </div>
               {/* Comment */}
-              <p className="w-full font-normal text-sm sm:text-[19.5px] sm:leading-[32px] text-[#858585]">
+              <p className="w-full font-normal text-sm sm:text-[19.5px] sm:leading-[32px] text-white">
                 &ldquo;{avis.commentaire}&rdquo;
               </p>
             </div>
