@@ -161,7 +161,7 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
                 </p>
               </div>
               {/* Comment */}
-              <p className="w-full font-normal text-sm sm:text-[19.5px] sm:leading-[32px] text-[#858585]">
+              <p className="w-full font-normal text-sm sm:text-[19.5px] sm:leading-[32px] text-white">
                 &ldquo;{avis.commentaire}&rdquo;
               </p>
             </div>

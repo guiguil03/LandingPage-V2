@@ -13,7 +13,7 @@ import ScrollToTop from "./components/ScrollToTop";
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-black pt-24">
+    <div className="min-h-screen bg-[#353331]">
       <Header />
       <Map />
       <Grille />
