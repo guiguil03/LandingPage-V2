@@ -16,8 +16,8 @@ const premiumFeatures: { label: string; highlight?: string }[] = [
   { label: "Rencontres illimitées", highlight: "illimitées" },
   { label: "Partage de position" },
   {
-    label: "Vérification d'identité (avancé : badge)",
-    highlight: "(avancé : badge)",
+    label: "Vérification d'identité avancée badge exclusif",
+    highlight: "badge exclusif",
   },
   { label: "Assistance" },
   { label: "Statistiques avancées" },
@@ -136,7 +136,7 @@ const Abonnements: React.FC = () => {
                   {f.highlight ? (
                     <>
                       {f.label.replace(f.highlight, "")}
-                      <span className="underline decoration-[#7D80F4] decoration-2 underline-offset-2 [text-shadow:0_0_4px_#7D80F4]">
+                      <span className="inline-block text-white bg-[#7D80F4] px-2 py-0.5 rounded-xl shadow-[0_8px_24px_rgba(125,128,244,0.35)]">
                         {f.highlight}
                       </span>
                     </>
