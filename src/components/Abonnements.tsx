@@ -47,14 +47,14 @@ const Abonnements: React.FC = () => {
         </motion.div>
 
         {/* ── Cards ── */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto items-start">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto items-stretch">
           {/* GRATUIT */}
           <motion.div
             initial={{ opacity: 0, y: 40, rotate: 0 }}
             whileInView={{ opacity: 1, y: 0, rotate: -1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: false, margin: "-100px" }}
-            className="bg-white/[0.04] border border-white/[0.08] rounded-[32px] p-6 sm:p-8 hover:rotate-0 hover:bg-white/[0.06] transition-all duration-500"
+            className="bg-[#7D80F4] border border-white/[0.08] rounded-[32px] p-6 sm:p-8 flex flex-col"
           >
             <div className="mb-5">
               <h3 className="text-2xl sm:text-3xl font-bold text-white">
@@ -64,7 +64,7 @@ const Abonnements: React.FC = () => {
 
             <div className="h-px bg-white/[0.06] mb-5" />
 
-            <ul className="space-y-2.5 mb-6">
+            <ul className="space-y-2 mb-0">
               {freemiumFeatures.map((f, i) => (
                 <li
                   key={i}
@@ -75,7 +75,19 @@ const Abonnements: React.FC = () => {
               ))}
             </ul>
 
-            <button className="w-full py-3.5 rounded-2xl text-[15px] font-semibold text-white border border-white/[0.08] hover:border-white/20 hover:text-white transition-all duration-300">
+            {/* Ghost features — blurred to hint at premium-only */}
+            <div className="space-y-2 mt-2 select-none" aria-hidden>
+              {["Accès aux groupes privés", "Statistiques avancées", "Coaching", "Accès aux évènements"].map((f, i) => (
+                <p
+                  key={i}
+                  className="text-[15px] text-white/60 leading-relaxed pl-4 blur-[5px]"
+                >
+                  {f}
+                </p>
+              ))}
+            </div>
+
+            <button className="w-full py-3.5 rounded-2xl text-[15px] font-semibold text-white bg-transparent border border-white/20 hover:border-white/40 transition-all duration-300 mt-auto">
               Commencer gratuitement
             </button>
           </motion.div>
@@ -86,17 +98,17 @@ const Abonnements: React.FC = () => {
             whileInView={{ opacity: 1, y: 0, rotate: 1.5 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: false, margin: "-100px" }}
-            className="bg-white/[0.04] border border-white/[0.08] rounded-[32px] p-6 sm:p-8 hover:rotate-0 hover:bg-white/[0.06] transition-all duration-500"
+            className="bg-[#201A41] border border-white/[0.08] rounded-[32px] p-6 sm:p-8 flex flex-col"
           >
             <div className="flex items-baseline justify-between mb-5">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#7D80F4]">
                 Premium
               </h3>
               <div className="flex items-baseline gap-1">
                 <span className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
                   4,99€
                 </span>
-                <span className="text-sm font-semibold text-primary-500">
+                <span className="text-sm font-semibold text-white">
                   /mois
                 </span>
               </div>
@@ -115,7 +127,7 @@ const Abonnements: React.FC = () => {
               ))}
             </ul>
 
-            <button className="w-full py-3.5 rounded-2xl text-[15px] font-semibold text-white bg-primary-500 hover:bg-primary-600 transition-colors duration-300">
+            <button className="w-full py-3.5 rounded-2xl text-[15px] font-semibold text-[#353331] bg-[#D5CFFB] hover:bg-[#D5CFFB]/85 transition-colors duration-300 mt-auto">
               Passer Premium
             </button>
           </motion.div>

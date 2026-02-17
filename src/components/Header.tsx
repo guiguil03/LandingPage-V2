@@ -136,7 +136,7 @@ const Header: React.FC = () => {
           >
             Trouve ton
             <br />
-            <span className="text-[#A9A0F3]">crew de runners.</span>
+            <span className="text-[#7D80F4]">crew de runners.</span>
           </motion.h1>
 
           <motion.p
