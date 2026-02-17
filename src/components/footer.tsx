@@ -85,8 +85,17 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Social icons — desktop: aligned right */}
-          <div className="flex items-center gap-3">
+          {/* CTA + Social icons — desktop: aligned right */}
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent("openSignupModal"))
+              }
+              className="bg-primary-500 hover:bg-primary-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all duration-200"
+            >
+              M&apos;avertir de la sortie
+            </button>
+            <div className="flex items-center gap-3">
             <SocialLink href="https://instagram.com" label="Instagram">
               <FaInstagram size={16} />
             </SocialLink>
@@ -99,6 +108,7 @@ export default function Footer() {
             <SocialLink href="mailto:contact@unify-run.com" label="Email">
               <FaEnvelope size={16} />
             </SocialLink>
+            </div>
           </div>
         </div>
       </div>

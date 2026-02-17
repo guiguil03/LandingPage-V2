@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../assets/logo.png";
 import SignupModal from "./inscription";
@@ -19,6 +19,15 @@ const Header: React.FC = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  useEffect(() => {
+    const handler = () => {
+      setIsSignupModalOpen(true);
+      setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("openSignupModal", handler);
+    return () => window.removeEventListener("openSignupModal", handler);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     setIsMobileMenuOpen(false);
@@ -88,7 +97,7 @@ const Header: React.FC = () => {
           </button>
           <button
             onClick={openSignupModal}
-            className="bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.08] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer"
+            className="bg-[#EAE3F4] hover:bg-[#E0D8ED] text-[#353331] text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer"
           >
             S'inscrire
           </button>
@@ -153,7 +162,7 @@ const Header: React.FC = () => {
           >
             <button
               onClick={openSignupModal}
-              className="group bg-white text-[#353331] font-semibold text-sm sm:text-base px-7 py-3.5 rounded-2xl hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2.5"
+              className="group bg-[#EAE3F4] text-[#353331] font-semibold text-sm sm:text-base px-7 py-3.5 rounded-2xl hover:bg-[#E0D8ED] transition-colors duration-200 flex items-center gap-2.5"
             >
               Rejoindre Unify
               <svg
