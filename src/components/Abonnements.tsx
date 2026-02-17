@@ -76,8 +76,16 @@ const Abonnements: React.FC = () => {
             </ul>
 
             {/* Ghost features — hidden on mobile to save space */}
-            <div className="hidden sm:block space-y-2 mt-2 select-none" aria-hidden>
-              {["Accès aux groupes privés", "Statistiques avancées", "Coaching", "Accès aux évènements"].map((f, i) => (
+            <div
+              className="hidden sm:block space-y-2 mt-2 select-none"
+              aria-hidden
+            >
+              {[
+                "Accès aux groupes privés",
+                "Statistiques avancées",
+                "Coaching",
+                "Accès aux évènements",
+              ].map((f, i) => (
                 <p
                   key={i}
                   className="text-[15px] text-white/60 leading-relaxed pl-4 blur-[5px]"
