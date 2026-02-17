@@ -126,56 +126,85 @@ const Header: React.FC = () => {
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 h-[calc(100%-80px)] flex flex-col justify-center px-6 sm:px-12 lg:px-24 max-w-6xl"
+        className="relative z-10 h-[calc(100%-80px)] flex items-center px-6 sm:px-12 lg:px-24 w-full"
       >
-        <motion.h1
-          variants={fadeUp}
-          className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl"
-        >
-          Trouve ton
-          <br />
-          <span className="text-white/40">crew de runners.</span>
-        </motion.h1>
+        {/* Left — Text */}
+        <div className="flex-1">
+          <motion.h1
+            variants={fadeUp}
+            className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl"
+          >
+            Trouve ton
+            <br />
+            <span className="text-[#A9A0F3]">crew de runners.</span>
+          </motion.h1>
 
-        <motion.p
-          variants={fadeUp}
-          className="mt-6 sm:mt-8 text-white text-base sm:text-lg max-w-md leading-relaxed"
-        >
-          Trouvez des partenaires à votre rythme, partagez vos parcours et
-          rejoignez la communauté qui vous ressemble.
-        </motion.p>
+          <motion.p
+            variants={fadeUp}
+            className="mt-6 sm:mt-8 text-white text-base sm:text-lg max-w-md leading-relaxed"
+          >
+            Trouvez des partenaires à votre rythme, partagez vos parcours et
+            rejoignez la communauté qui vous ressemble.
+          </motion.p>
 
+          <motion.div
+            variants={fadeUp}
+            className="mt-8 sm:mt-10 flex items-center gap-4"
+          >
+            <button
+              onClick={openSignupModal}
+              className="group bg-white text-[#353331] font-semibold text-sm sm:text-base px-7 py-3.5 rounded-2xl hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2.5"
+            >
+              Rejoindre Unify
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                className="translate-x-0 group-hover:translate-x-1 transition-transform duration-300"
+              >
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={() => scrollToSection("abonnements")}
+              className="text-white hover:text-white/70 text-sm sm:text-base font-medium transition-colors duration-200"
+            >
+              Voir les offres
+            </button>
+          </motion.div>
+        </div>
+
+        {/* Right — Mockup (hidden on small mobile, visible from sm) */}
         <motion.div
           variants={fadeUp}
-          className="mt-8 sm:mt-10 flex items-center gap-4"
+          className="hidden lg:block flex-shrink-0 ml-16 xl:ml-24"
         >
-          <button
-            onClick={openSignupModal}
-            className="group bg-white text-[#353331] font-semibold text-sm sm:text-base px-7 py-3.5 rounded-2xl hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2.5"
-          >
-            Rejoindre Unify
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              className="translate-x-0 group-hover:translate-x-1 transition-transform duration-300"
-            >
-              <path
-                d="M3 8h10M9 4l4 4-4 4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={() => scrollToSection("abonnements")}
-            className="text-white hover:text-white/70 text-sm sm:text-base font-medium transition-colors duration-200"
-          >
-            Voir les offres
-          </button>
+          <picture>
+            <source
+              srcSet="/img/mockup-lg.webp"
+              media="(min-width: 1280px)"
+              type="image/webp"
+            />
+            <source
+              srcSet="/img/mockup-md.webp"
+              media="(min-width: 1024px)"
+              type="image/webp"
+            />
+            <img
+              src="/img/mockup-sm.webp"
+              alt="Unify app mockup"
+              loading="eager"
+              decoding="async"
+              className="h-[70vh] max-h-[700px] w-auto object-contain drop-shadow-2xl"
+            />
+          </picture>
         </motion.div>
       </motion.div>
 

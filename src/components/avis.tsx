@@ -21,7 +21,9 @@ const SectionTitle = () => (
         <span className="font-bold text-3xl sm:text-[52px] sm:leading-[65px] tracking-tight text-[#353331]">
           la course avec
         </span>
-        <span className="font-bold text-3xl sm:text-[50px] sm:leading-[59px] tracking-tight text-white bg-[#353331] px-3 py-0.5 rounded-xl">
+        <span
+          className="font-bold text-3xl sm:text-[50px] sm:leading-[59px] tracking-tight text-white bg-[#7D80F4] px-3 py-0.5 rounded-xl shadow-[0_8px_24px_rgba(125,128,244,0.35)]"
+        >
           UNIFY
         </span>
       </div>
@@ -142,11 +144,11 @@ const MobileStack: React.FC<{ items: Avis[] }> = ({ items }) => {
             duration: 0.35,
             ease: "power2.out",
           },
-          0.15
+          0.15,
         );
       });
     },
-    [items.length]
+    [items.length],
   );
 
   // Dismiss top card (swipe / tap / auto)
@@ -170,7 +172,7 @@ const MobileStack: React.FC<{ items: Avis[] }> = ({ items }) => {
       flyOff(newOrder);
       resetAuto();
     },
-    [flyOff, resetAuto]
+    [flyOff, resetAuto],
   );
 
   // Init
@@ -284,7 +286,7 @@ const DesktopStack: React.FC<{ items: Avis[] }> = ({ items }) => {
           new Promise((r) => {
             img.onload = r;
             img.onerror = r;
-          })
+          }),
       );
     if (imgLoadPromises.length) {
       Promise.all(imgLoadPromises).then(refreshOnReady);
@@ -321,7 +323,7 @@ const DesktopStack: React.FC<{ items: Avis[] }> = ({ items }) => {
           duration: 1,
           ease: "power2.out",
         },
-        i * 1.1
+        i * 1.1,
       );
 
       if (i > 0) {
