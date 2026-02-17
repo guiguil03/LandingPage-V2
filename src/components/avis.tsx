@@ -397,7 +397,7 @@ const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
 
   if (isDesktop) {
     return (
-      <div className="bg-gray-100">
+      <div className="relative z-10 bg-gray-100">
         <DesktopStack items={avisData} />
       </div>
     );

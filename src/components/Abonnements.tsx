@@ -58,8 +58,8 @@ const Abonnements: React.FC = () => {
     const mq = window.matchMedia("(min-width: 768px)");
     if (!mq.matches) return;
 
-    gsap.set(gratuit, { y: 450, rotation: 0, willChange: "transform" });
-    gsap.set(premium, { y: 450, rotation: 0, willChange: "transform" });
+    gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
+    gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
 
     const refreshOnReady = () => ScrollTrigger.refresh();
     requestAnimationFrame(() => requestAnimationFrame(refreshOnReady));
@@ -73,15 +73,14 @@ const Abonnements: React.FC = () => {
         start: "top top",
         end: `+=${PIN_SCROLL_DISTANCE}`,
         pin: true,
-        scrub: 1,
+        scrub: 0.5,
         pinSpacing: true,
         invalidateOnRefresh: true,
       },
     });
 
     tl.to(gratuit, { y: 0, rotation: -1, duration: 1, ease: "power2.out" }, 0);
-    tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0.1);
-    tl.to({}, { duration: 0.5 });
+    tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0);
 
     return () => {
       ro.disconnect();
@@ -94,9 +93,9 @@ const Abonnements: React.FC = () => {
     <section
       id="abonnements"
       ref={sectionRef}
-      className="relative h-screen flex flex-col justify-center py-6 sm:py-10 md:py-16 overflow-visible"
+      className="relative z-0 h-screen flex flex-col justify-center py-6 sm:py-10 md:py-16 overflow-visible"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 w-full">
+      <div className="max-w-5xl mx-auto px-4 sm:px-8 w-full overflow-visible min-h-0">
         {/* ── Heading ── */}
         <div className="text-center mb-4 sm:mb-8 md:mb-12">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-white">
@@ -108,7 +107,7 @@ const Abonnements: React.FC = () => {
         </div>
 
         {/* ── Cards ── */}
-        <div className="grid md:grid-cols-2 gap-3 sm:gap-6 md:gap-8 max-w-4xl mx-auto items-stretch overflow-visible">
+        <div className="grid md:grid-cols-2 gap-3 sm:gap-6 md:gap-8 max-w-4xl mx-auto items-start overflow-visible md:pb-[300px]">
           {/* GRATUIT */}
           <div ref={gratuitRef} className="min-h-0 overflow-visible">
           {isDesktop ? (
