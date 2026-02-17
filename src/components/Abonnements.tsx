@@ -10,17 +10,20 @@ const freemiumFeatures = [
   "Assistance",
 ];
 
-const premiumFeatures = [
-  "Matching instantané",
-  "Modes de connexion (F/H/Mixte)",
-  "Rencontres illimitées",
-  "Partage de position",
-  "Vérification d'identité (avancé : badge)",
-  "Accès aux groupes privés",
-  "Statistiques avancées",
-  "Coaching",
-  "Accès aux évènements",
-  "Assistance",
+const premiumFeatures: { label: string; highlight?: string }[] = [
+  { label: "Matching instantané" },
+  { label: "Modes de connexion (F/H/Mixte)" },
+  { label: "Rencontres illimitées", highlight: "illimitées" },
+  { label: "Partage de position" },
+  {
+    label: "Vérification d'identité (avancé : badge)",
+    highlight: "(avancé : badge)",
+  },
+  { label: "Assistance" },
+  { label: "Statistiques avancées" },
+  { label: "Coaching" },
+  { label: "Accès aux évènements" },
+  { label: "Accès aux groupes privés" },
 ];
 
 const Abonnements: React.FC = () => {
@@ -130,7 +133,16 @@ const Abonnements: React.FC = () => {
                   key={i}
                   className="text-[13px] sm:text-[15px] text-white leading-snug sm:leading-relaxed pl-3 sm:pl-4 relative before:absolute before:left-0 before:top-[8px] sm:before:top-[10px] before:w-1.5 before:h-px before:bg-primary-500/60"
                 >
-                  {f}
+                  {f.highlight ? (
+                    <>
+                      {f.label.replace(f.highlight, "")}
+                      <span className="underline decoration-[#7D80F4] decoration-2 underline-offset-2 [text-shadow:0_0_4px_#7D80F4]">
+                        {f.highlight}
+                      </span>
+                    </>
+                  ) : (
+                    f.label
+                  )}
                 </li>
               ))}
             </ul>
