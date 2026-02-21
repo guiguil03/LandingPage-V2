@@ -2,8 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SmoothScroll from "./components/SmoothScroll";
 import Header from "./components/Header";
-import Map from "./components/map";
-import Grille from "./components/Grille";
+import PourquoiUnify from "./components/PourquoiUnify";
 import Avis from "./components/avis";
 import Footer from "./components/footer";
 import Abonnements from "./components/Abonnements";
@@ -14,8 +13,7 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-[#353331]">
       <Header />
-      <Map />
-      <Grille />
+      <PourquoiUnify />
       <Abonnements />
       <Avis />
       <Footer />
