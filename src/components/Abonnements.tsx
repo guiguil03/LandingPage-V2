@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -36,18 +35,6 @@ const Abonnements: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const gratuitRef = useRef<HTMLDivElement>(null);
   const premiumRef = useRef<HTMLDivElement>(null);
-  const [isDesktop, setIsDesktop] = useState(() =>
-    typeof window !== "undefined" ? window.matchMedia("(min-width: 768px)").matches : false
-  );
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const handler = (e: MediaQueryListEvent | MediaQueryList) =>
-      setIsDesktop(e.matches);
-    handler(mq);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -110,7 +97,6 @@ const Abonnements: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-3 sm:gap-6 md:gap-8 max-w-4xl mx-auto items-start overflow-visible md:pb-[300px]">
           {/* GRATUIT */}
           <div ref={gratuitRef} className="min-h-0 overflow-visible">
-          {isDesktop ? (
             <div className="bg-[#7D80F4] border border-white/[0.08] rounded-2xl sm:rounded-[32px] p-4 sm:p-6 md:p-8 flex flex-col h-full">
               <div className="mb-2 sm:mb-5">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
@@ -128,20 +114,14 @@ const Abonnements: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <div
-                className="hidden sm:block space-y-2 mt-2 select-none"
-                aria-hidden
-              >
+              <div className="hidden sm:block space-y-2 mt-2 select-none" aria-hidden>
                 {[
                   "Accès aux groupes privés",
                   "Statistiques avancées",
                   "Coaching",
                   "Accès aux évènements",
                 ].map((f, i) => (
-                  <p
-                    key={i}
-                    className="text-[15px] text-white/60 leading-relaxed pl-4 blur-[5px]"
-                  >
+                  <p key={i} className="text-[15px] text-white/60 leading-relaxed pl-4 blur-[5px]">
                     {f}
                   </p>
                 ))}
@@ -150,58 +130,10 @@ const Abonnements: React.FC = () => {
                 Commencer gratuitement
               </button>
             </div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 40, rotate: 0 }}
-              whileInView={{ opacity: 1, y: 0, rotate: -1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: false, margin: "-100px" }}
-              className="bg-[#7D80F4] border border-white/[0.08] rounded-2xl sm:rounded-[32px] p-4 sm:p-6 md:p-8 flex flex-col h-full"
-            >
-              <div className="mb-2 sm:mb-5">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                  Gratuit
-                </h3>
-              </div>
-              <div className="h-px bg-white/[0.06] mb-2 sm:mb-5" />
-              <ul className="space-y-1 sm:space-y-2 mb-0">
-                {freemiumFeatures.map((f, i) => (
-                  <li
-                    key={i}
-                    className="text-[13px] sm:text-[15px] text-white leading-snug sm:leading-relaxed pl-3 sm:pl-4 relative before:absolute before:left-0 before:top-[8px] sm:before:top-[10px] before:w-1.5 before:h-px before:bg-white/40"
-                  >
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div
-                className="hidden sm:block space-y-2 mt-2 select-none"
-                aria-hidden
-              >
-                {[
-                  "Accès aux groupes privés",
-                  "Statistiques avancées",
-                  "Coaching",
-                  "Accès aux évènements",
-                ].map((f, i) => (
-                  <p
-                    key={i}
-                    className="text-[15px] text-white/60 leading-relaxed pl-4 blur-[5px]"
-                  >
-                    {f}
-                  </p>
-                ))}
-              </div>
-              <button className="w-full py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl text-[13px] sm:text-[15px] font-semibold text-white bg-transparent border border-white/20 hover:border-white/40 transition-all duration-300 mt-3 sm:mt-auto">
-                Commencer gratuitement
-              </button>
-            </motion.div>
-          )}
           </div>
 
           {/* PREMIUM */}
           <div ref={premiumRef} className="min-h-0 overflow-visible">
-          {isDesktop ? (
             <div className="bg-[#201A41] border border-white/[0.08] rounded-2xl sm:rounded-[32px] p-4 sm:p-6 md:p-8 flex flex-col h-full">
               <div className="flex items-baseline justify-between mb-2 sm:mb-5">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#7D80F4]">
@@ -240,52 +172,6 @@ const Abonnements: React.FC = () => {
                 Passer Premium
               </button>
             </div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 40, rotate: 0 }}
-              whileInView={{ opacity: 1, y: 0, rotate: 1.5 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: false, margin: "-100px" }}
-              className="bg-[#201A41] border border-white/[0.08] rounded-2xl sm:rounded-[32px] p-4 sm:p-6 md:p-8 flex flex-col h-full"
-            >
-              <div className="flex items-baseline justify-between mb-2 sm:mb-5">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#7D80F4]">
-                  Premium
-                </h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
-                    4,99€
-                  </span>
-                  <span className="text-xs sm:text-sm font-semibold text-white">
-                    /mois
-                  </span>
-                </div>
-              </div>
-              <div className="h-px bg-white/[0.06] mb-2 sm:mb-5" />
-              <ul className="space-y-1 sm:space-y-2 mb-3 sm:mb-6">
-                {premiumFeatures.map((f, i) => (
-                  <li
-                    key={i}
-                    className="text-[13px] sm:text-[15px] text-white leading-snug sm:leading-relaxed pl-3 sm:pl-4 relative before:absolute before:left-0 before:top-[8px] sm:before:top-[10px] before:w-1.5 before:h-px before:bg-primary-500/60"
-                  >
-                    {f.highlight ? (
-                      <>
-                        {f.label.replace(f.highlight, "")}
-                        <span className="inline-block text-white bg-[#7D80F4] px-2 py-0.5 rounded-xl shadow-[0_8px_24px_rgba(125,128,244,0.35)]">
-                          {f.highlight}
-                        </span>
-                      </>
-                    ) : (
-                      f.label
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <button className="w-full py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl text-[13px] sm:text-[15px] font-semibold text-[#353331] bg-[#D5CFFB] hover:bg-[#D5CFFB]/85 transition-colors duration-300 mt-auto">
-                Passer Premium
-              </button>
-            </motion.div>
-          )}
           </div>
         </div>
       </div>

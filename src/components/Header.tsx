@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../assets/logo.png";
 import SignupModal from "./inscription";
 
@@ -37,35 +36,12 @@ const Header: React.FC = () => {
     }
   };
 
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.15, delayChildren: 0.4 } },
-  };
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
-  };
-
   return (
-    <motion.header
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="relative w-full h-screen bg-[#353331] overflow-hidden"
-    >
-      {/* ── Navbar (relative, not sticky) ── */}
+    <header className="relative w-full h-screen bg-[#353331] overflow-hidden">
+      {/* ── Navbar ── */}
       <div className="relative z-50 px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
-        {/* Left — Logo + Title + dot */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center gap-3"
-        >
+        {/* Left — Logo + Title */}
+        <div className="flex items-center gap-3">
           <img
             src={Logo}
             alt="Logo Unify"
@@ -74,15 +50,10 @@ const Header: React.FC = () => {
           <span className="text-xl sm:text-2xl font-extrabold text-white tracking-[-0.02em]">
             UNIFY<span className="text-primary-500">.</span>
           </span>
-        </motion.div>
+        </div>
 
         {/* Right — Nav links (desktop) */}
-        <motion.nav
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="hidden md:flex items-center gap-6"
-        >
+        <nav className="hidden md:flex items-center gap-6">
           <button
             onClick={() => scrollToSection("abonnements")}
             className="text-white/70 hover:text-white text-sm font-medium transition-colors duration-200 cursor-pointer"
@@ -101,13 +72,10 @@ const Header: React.FC = () => {
           >
             S'inscrire
           </button>
-        </motion.nav>
+        </nav>
 
         {/* Right — Hamburger (mobile) */}
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <button
           onClick={toggleMobileMenu}
           className="md:hidden flex flex-col justify-center items-center gap-1.5 p-2"
           aria-label="Menu"
@@ -127,39 +95,25 @@ const Header: React.FC = () => {
               isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
             }`}
           />
-        </motion.button>
+        </button>
       </div>
 
       {/* ── Hero Content ── */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 h-[calc(100%-80px)] flex items-center px-6 sm:px-12 lg:px-24 w-full"
-      >
+      <div className="relative z-10 h-[calc(100%-80px)] flex items-center px-6 sm:px-12 lg:px-24 w-full">
         {/* Left — Text */}
         <div className="flex-1">
-          <motion.h1
-            variants={fadeUp}
-            className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl"
-          >
+          <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl">
             Trouve ton
             <br />
             <span className="text-[#7D80F4]">crew de runners.</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={fadeUp}
-            className="mt-6 sm:mt-8 text-white text-base sm:text-lg max-w-md leading-relaxed"
-          >
+          <p className="mt-6 sm:mt-8 text-white text-base sm:text-lg max-w-md leading-relaxed">
             Trouvez des partenaires à votre rythme, partagez vos parcours et
             rejoignez la communauté qui vous ressemble.
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={fadeUp}
-            className="mt-8 sm:mt-10 flex items-center gap-4"
-          >
+          <div className="mt-8 sm:mt-10 flex items-center gap-4">
             <button
               onClick={openSignupModal}
               className="group bg-[#EAE3F4] text-[#353331] font-semibold text-sm sm:text-base px-7 py-3.5 rounded-2xl hover:bg-[#E0D8ED] transition-colors duration-200 flex items-center gap-2.5"
@@ -187,14 +141,11 @@ const Header: React.FC = () => {
             >
               Voir les offres
             </button>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Right — Mockup (hidden on small mobile, visible from sm) */}
-        <motion.div
-          variants={fadeUp}
-          className="hidden lg:block flex-shrink-0 ml-16 xl:ml-24"
-        >
+        {/* Right — Mockup */}
+        <div className="hidden lg:block flex-shrink-0 ml-16 xl:ml-24">
           <picture>
             <source
               srcSet="/img/mockup-lg.webp"
@@ -214,44 +165,36 @@ const Header: React.FC = () => {
               className="h-[70vh] max-h-[700px] w-auto object-contain drop-shadow-2xl"
             />
           </picture>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* ── Mobile Menu ── */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-20 right-6 z-40 w-56 bg-[#2a2826] rounded-2xl shadow-xl py-2 px-2 border border-white/[0.06]"
+      {isMobileMenuOpen && (
+        <div className="absolute top-20 right-6 z-40 w-56 bg-[#2a2826] rounded-2xl shadow-xl py-2 px-2 border border-white/[0.06]">
+          <button
+            onClick={() => scrollToSection("abonnements")}
+            className="w-full text-left text-white text-sm font-medium py-2.5 px-4 rounded-xl hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
           >
-            <button
-              onClick={() => scrollToSection("abonnements")}
-              className="w-full text-left text-white hover:text-white text-sm font-medium py-2.5 px-4 rounded-xl hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
-            >
-              Abonnements
-            </button>
-            <button
-              onClick={() => scrollToSection("footer")}
-              className="w-full text-left text-white hover:text-white text-sm font-medium py-2.5 px-4 rounded-xl hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
-            >
-              Contact
-            </button>
-            <div className="h-px bg-white/[0.06] my-1 mx-3" />
-            <button
-              onClick={openSignupModal}
-              className="w-full bg-primary-500 hover:bg-primary-400 text-white text-sm font-medium py-2.5 px-4 rounded-xl transition-colors duration-200 mt-1 cursor-pointer"
-            >
-              S'inscrire
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Abonnements
+          </button>
+          <button
+            onClick={() => scrollToSection("footer")}
+            className="w-full text-left text-white text-sm font-medium py-2.5 px-4 rounded-xl hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
+          >
+            Contact
+          </button>
+          <div className="h-px bg-white/[0.06] my-1 mx-3" />
+          <button
+            onClick={openSignupModal}
+            className="w-full bg-primary-500 hover:bg-primary-400 text-white text-sm font-medium py-2.5 px-4 rounded-xl transition-colors duration-200 mt-1 cursor-pointer"
+          >
+            S'inscrire
+          </button>
+        </div>
+      )}
 
       <SignupModal isOpen={isSignupModalOpen} onClose={closeSignupModal} />
-    </motion.header>
+    </header>
   );
 };
 

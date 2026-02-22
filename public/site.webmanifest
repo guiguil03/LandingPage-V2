@@ -1,0 +1,23 @@
+{
+  "name": "Unify",
+  "short_name": "Unify",
+  "description": "L'application de running social",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#353331",
+  "theme_color": "#7D80F4",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

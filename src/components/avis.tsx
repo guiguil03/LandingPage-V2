@@ -380,34 +380,21 @@ const DesktopStack: React.FC<{ items: Avis[] }> = ({ items }) => {
 };
 
 /* ═══════════════════════════════════════════
-   MAIN COMPONENT — switches on breakpoint
+   MAIN COMPONENT — CSS show/hide (no conditional rendering)
    ═══════════════════════════════════════════ */
 const AvisComponent: React.FC<AvisGridProps> = ({ avis: externalAvis }) => {
   const [avisData] = useState(externalAvis || data.avis);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const handler = (e: MediaQueryListEvent | MediaQueryList) =>
-      setIsDesktop(e.matches);
-    handler(mq);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  if (isDesktop) {
-    return (
-      <div className="relative z-10 bg-gray-100">
-        <DesktopStack items={avisData} />
-      </div>
-    );
-  }
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col">
-      <SectionTitle />
-      <MobileStack items={avisData} />
-    </div>
+    <>
+      <div className="hidden md:block relative z-10 bg-gray-100">
+        <DesktopStack items={avisData} />
+      </div>
+      <div className="md:hidden bg-gray-100 min-h-screen flex flex-col">
+        <SectionTitle />
+        <MobileStack items={avisData} />
+      </div>
+    </>
   );
 };
 
