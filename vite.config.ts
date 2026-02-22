@@ -45,4 +45,16 @@ ${urls}
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), sitemapPlugin()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-gsap': ['gsap'],
+          'vendor-firebase': ['firebase/app', 'firebase/firestore', 'firebase/auth'],
+          'vendor-ui': ['react-icons', 'react-modal'],
+        },
+      },
+    },
+  },
 })
