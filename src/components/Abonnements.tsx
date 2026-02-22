@@ -84,41 +84,39 @@ const Abonnements: React.FC = () => {
     <section
       id="abonnements"
       ref={sectionRef}
-      className="relative z-0 h-screen flex flex-col justify-center py-6 sm:py-10 md:py-16 overflow-visible"
+      className="relative z-0 h-screen flex flex-col justify-center overflow-visible px-5 sm:px-8 py-10 md:py-16"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 w-full overflow-visible min-h-0">
+      <div className="max-w-5xl mx-auto w-full overflow-visible">
         {/* ── Heading ── */}
-        <div className="text-center mb-4 sm:mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-white">
+        <div className="text-center mb-6 md:mb-12">
+          <h2 className="text-2xl md:text-5xl font-bold tracking-tight text-white">
             Rejoins le mouvement
           </h2>
-          <p className="mt-2 sm:mt-4 text-white text-sm sm:text-base md:text-lg">
+          <p className="mt-1.5 md:mt-3 text-white/70 text-xs md:text-lg">
             Gratuit pour commencer, Premium pour aller plus loin.
           </p>
         </div>
 
         {/* ── Cards ── */}
-        <div className="grid md:grid-cols-2 gap-3 sm:gap-6 md:gap-8 max-w-4xl mx-auto items-start overflow-visible md:pb-[300px]">
+        <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-3 md:gap-8 max-w-4xl mx-auto w-full md:pb-[300px] overflow-visible">
           {/* GRATUIT */}
-          <div ref={gratuitRef} className="min-h-0 overflow-visible">
-            <div className="bg-[#7D80F4] border border-white/[0.08] rounded-2xl sm:rounded-[32px] p-4 sm:p-6 md:p-8 flex flex-col h-full">
-              <div className="mb-2 sm:mb-5">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                  Gratuit
-                </h3>
-              </div>
-              <div className="h-px bg-white/[0.06] mb-2 sm:mb-5" />
-              <ul className="space-y-1 sm:space-y-2 mb-0">
+          <div ref={gratuitRef} className="overflow-visible">
+            <div className="bg-[#7D80F4] border border-white/[0.08] rounded-2xl md:rounded-3xl p-4 md:p-8 flex flex-col h-full">
+              <h3 className="text-base md:text-3xl font-bold text-white mb-2 md:mb-4">
+                Gratuit
+              </h3>
+              <div className="h-px bg-white/[0.06] mb-2 md:mb-4" />
+              <ul className="space-y-1 md:space-y-2.5 mb-3 md:mb-0">
                 {freemiumFeatures.map((f, i) => (
                   <li
                     key={i}
-                    className="text-[13px] sm:text-[15px] text-white leading-snug sm:leading-relaxed pl-3 sm:pl-4 relative before:absolute before:left-0 before:top-[8px] sm:before:top-[10px] before:w-1.5 before:h-px before:bg-white/40"
+                    className="text-[11px] md:text-[15px] text-white leading-snug pl-3 md:pl-4 relative before:absolute before:left-0 before:top-[6px] md:before:top-[9px] before:w-1.5 before:h-px before:bg-white/40"
                   >
                     {f}
                   </li>
                 ))}
               </ul>
-              <div className="hidden sm:block space-y-2 mt-2 select-none" aria-hidden>
+              <div className="hidden min-[400px]:block space-y-2 mt-2 mb-4 select-none" aria-hidden>
                 {[
                   "Accès aux groupes privés",
                   "Statistiques avancées",
@@ -130,39 +128,39 @@ const Abonnements: React.FC = () => {
                   </p>
                 ))}
               </div>
-              <button className="w-full py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl text-[13px] sm:text-[15px] font-semibold text-white bg-transparent border border-white/20 hover:border-white/40 transition-all duration-300 mt-3 sm:mt-auto">
+              <button className="w-full py-2 md:py-3 rounded-xl md:rounded-2xl text-[11px] md:text-[14px] font-semibold text-white bg-transparent border border-white/20 hover:border-white/40 transition-all duration-300 mt-auto">
                 Commencer gratuitement
               </button>
             </div>
           </div>
 
           {/* PREMIUM */}
-          <div ref={premiumRef} className="min-h-0 overflow-visible">
-            <div className="bg-[#201A41] border border-white/[0.08] rounded-2xl sm:rounded-[32px] p-4 sm:p-6 md:p-8 flex flex-col h-full">
-              <div className="flex items-baseline justify-between mb-2 sm:mb-5">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#7D80F4]">
+          <div ref={premiumRef} className="overflow-visible">
+            <div className="bg-[#201A41] border border-white/[0.08] rounded-2xl md:rounded-3xl p-4 md:p-8 flex flex-col h-full">
+              <div className="flex items-baseline justify-between mb-2 md:mb-4">
+                <h3 className="text-base md:text-3xl font-bold text-[#7D80F4]">
                   Premium
                 </h3>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
+                  <span className="text-xl md:text-5xl font-bold tracking-tight text-white">
                     4,99€
                   </span>
-                  <span className="text-xs sm:text-sm font-semibold text-white">
+                  <span className="text-[10px] md:text-xs font-semibold text-white/60">
                     /mois
                   </span>
                 </div>
               </div>
-              <div className="h-px bg-white/[0.06] mb-2 sm:mb-5" />
-              <ul className="space-y-1 sm:space-y-2 mb-3 sm:mb-6">
+              <div className="h-px bg-white/[0.06] mb-2 md:mb-4" />
+              <ul className="space-y-1 md:space-y-2.5 mb-3 md:mb-6">
                 {premiumFeatures.map((f, i) => (
                   <li
                     key={i}
-                    className="text-[13px] sm:text-[15px] text-white leading-snug sm:leading-relaxed pl-3 sm:pl-4 relative before:absolute before:left-0 before:top-[8px] sm:before:top-[10px] before:w-1.5 before:h-px before:bg-primary-500/60"
+                    className="text-[11px] md:text-[15px] text-white leading-snug pl-3 md:pl-4 relative before:absolute before:left-0 before:top-[6px] md:before:top-[9px] before:w-1.5 before:h-px before:bg-primary-500/60"
                   >
                     {f.highlight ? (
                       <>
                         {f.label.replace(f.highlight, "")}
-                        <span className="inline-block text-white bg-[#7D80F4] px-2 py-0.5 rounded-xl shadow-[0_8px_24px_rgba(125,128,244,0.35)]">
+                        <span className="inline-block text-white bg-[#7D80F4] px-1.5 py-0.5 rounded-lg text-[11px] md:text-[13px] shadow-[0_8px_24px_rgba(125,128,244,0.35)]">
                           {f.highlight}
                         </span>
                       </>
@@ -172,7 +170,7 @@ const Abonnements: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl text-[13px] sm:text-[15px] font-semibold text-[#353331] bg-[#D5CFFB] hover:bg-[#D5CFFB]/85 transition-colors duration-300 mt-auto">
+              <button className="w-full py-2 md:py-3 rounded-xl md:rounded-2xl text-[11px] md:text-[14px] font-semibold text-[#353331] bg-[#D5CFFB] hover:bg-[#D5CFFB]/85 transition-colors duration-300 mt-auto">
                 Passer Premium
               </button>
             </div>
