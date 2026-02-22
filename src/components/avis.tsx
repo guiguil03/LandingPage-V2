@@ -271,73 +271,79 @@ const DesktopStack: React.FC<{ items: Avis[] }> = ({ items }) => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
-    const totalCards = cards.length;
+    const mm = gsap.matchMedia();
 
-    cards.forEach((card) => {
-      gsap.set(card, { yPercent: 150, opacity: 1, scale: 0.92 });
-    });
+    mm.add("(min-width: 768px)", () => {
+      const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
+      const totalCards = cards.length;
 
-    const refreshOnReady = () => ScrollTrigger.refresh();
-    const imgLoadPromises = Array.from(document.images)
-      .filter((img) => !img.complete)
-      .map(
-        (img) =>
-          new Promise((r) => {
-            img.onload = r;
-            img.onerror = r;
-          }),
-      );
-    if (imgLoadPromises.length) {
-      Promise.all(imgLoadPromises).then(refreshOnReady);
-    } else {
-      requestAnimationFrame(() => requestAnimationFrame(refreshOnReady));
-    }
+      cards.forEach((card) => {
+        gsap.set(card, { yPercent: 150, opacity: 1, scale: 0.92 });
+      });
 
-    const ro = new ResizeObserver(() => ScrollTrigger.refresh());
-    ro.observe(document.body);
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: `+=${totalCards * 500 + 200}`,
-        pin: true,
-        scrub: 1,
-        pinSpacing: true,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    cards.forEach((card, i) => {
-      const rotation = i % 2 === 0 ? -2.5 : 2.5;
-      const stackOffsetY = -i * 6;
-
-      tl.to(
-        card,
-        {
-          yPercent: 0,
-          y: stackOffsetY,
-          rotation: rotation,
-          scale: 1,
-          duration: 1,
-          ease: "power2.out",
-        },
-        i * 1.1,
-      );
-
-      if (i > 0) {
-        tl.to(cards[i - 1], { scale: 0.97, duration: 0.3 }, i * 1.1);
+      const imgLoadPromises = Array.from(document.images)
+        .filter((img) => !img.complete)
+        .map(
+          (img) =>
+            new Promise((r) => {
+              img.onload = r;
+              img.onerror = r;
+            }),
+        );
+      if (imgLoadPromises.length) {
+        Promise.all(imgLoadPromises).then(() => ScrollTrigger.refresh());
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
       }
+
+      const ro = new ResizeObserver(() => ScrollTrigger.refresh());
+      ro.observe(document.body);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${totalCards * 500 + 200}`,
+          pin: true,
+          scrub: 1,
+          pinSpacing: true,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      cards.forEach((card, i) => {
+        const rotation = i % 2 === 0 ? -2.5 : 2.5;
+        const stackOffsetY = -i * 6;
+
+        tl.to(
+          card,
+          {
+            yPercent: 0,
+            y: stackOffsetY,
+            rotation: rotation,
+            scale: 1,
+            duration: 1,
+            ease: "power2.out",
+          },
+          i * 1.1,
+        );
+
+        if (i > 0) {
+          tl.to(cards[i - 1], { scale: 0.97, duration: 0.3 }, i * 1.1);
+        }
+      });
+
+      tl.to({}, { duration: 0.5 });
+
+      return () => {
+        ro.disconnect();
+        tl.scrollTrigger?.kill();
+        tl.kill();
+        cards.forEach((card) => gsap.set(card, { clearProps: "all" }));
+      };
     });
 
-    tl.to({}, { duration: 0.5 });
-
-    return () => {
-      ro.disconnect();
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    };
+    return () => mm.revert();
   }, [items]);
 
   return (

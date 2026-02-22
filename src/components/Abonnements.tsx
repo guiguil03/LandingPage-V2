@@ -42,38 +42,42 @@ const Abonnements: React.FC = () => {
     const premium = premiumRef.current;
     if (!section || !gratuit || !premium) return;
 
-    const mq = window.matchMedia("(min-width: 768px)");
-    if (!mq.matches) return;
+    const mm = gsap.matchMedia();
 
-    gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
-    gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
+    mm.add("(min-width: 768px)", () => {
+      gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
+      gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
 
-    const refreshOnReady = () => ScrollTrigger.refresh();
-    requestAnimationFrame(() => requestAnimationFrame(refreshOnReady));
+      requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
 
-    const ro = new ResizeObserver(() => ScrollTrigger.refresh());
-    ro.observe(document.body);
+      const ro = new ResizeObserver(() => ScrollTrigger.refresh());
+      ro.observe(document.body);
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: `+=${PIN_SCROLL_DISTANCE}`,
-        pin: true,
-        scrub: 0.5,
-        pinSpacing: true,
-        invalidateOnRefresh: true,
-      },
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${PIN_SCROLL_DISTANCE}`,
+          pin: true,
+          scrub: 0.5,
+          pinSpacing: true,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      tl.to(gratuit, { y: 0, rotation: -1, duration: 1, ease: "power2.out" }, 0);
+      tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0);
+
+      return () => {
+        ro.disconnect();
+        tl.scrollTrigger?.kill();
+        tl.kill();
+        gsap.set(gratuit, { clearProps: "all" });
+        gsap.set(premium, { clearProps: "all" });
+      };
     });
 
-    tl.to(gratuit, { y: 0, rotation: -1, duration: 1, ease: "power2.out" }, 0);
-    tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0);
-
-    return () => {
-      ro.disconnect();
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    };
+    return () => mm.revert();
   }, []);
 
   return (
