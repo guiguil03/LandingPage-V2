@@ -1,9 +1,5 @@
 import React from "react";
-
-const imgRunner =
-  "https://www.figma.com/api/mcp/asset/35b66831-e358-4585-b170-5a9eae2c6db1";
-const imgTexture =
-  "https://www.figma.com/api/mcp/asset/49c27a5c-01f3-4ea5-9d39-cf8a23d60f4b";
+import imgRunner from "../assets/runner.png";
 
 const PourquoiUnify: React.FC = () => {
   const textContent = (
@@ -35,13 +31,6 @@ const PourquoiUnify: React.FC = () => {
 
   return (
     <section className="relative bg-[#353331] overflow-hidden min-h-[400px]">
-      {/* Texture overlay */}
-      <img
-        alt=""
-        aria-hidden
-        className="absolute inset-0 w-full h-full object-cover opacity-[0.04] pointer-events-none select-none"
-        src={imgTexture}
-      />
 
       {/* Desktop layout */}
       <div className="hidden md:flex relative z-10 min-h-[585px] items-center">
@@ -54,11 +43,7 @@ const PourquoiUnify: React.FC = () => {
         >
           <img
             alt="Coureur Unify"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            style={{
-              filter:
-                "drop-shadow(-12.822px 12.822px 0px #a9a0f3) drop-shadow(-12.822px 12.822px 0px #7D80F4)",
-            }}
+            className="absolute inset-0 w-full h-full object-contain object-right-bottom"
             src={imgRunner}
           />
         </div>
@@ -72,11 +57,7 @@ const PourquoiUnify: React.FC = () => {
         >
           <img
             alt="Coureur Unify"
-            className="w-full h-auto object-cover"
-            style={{
-              filter:
-                "drop-shadow(-8px 8px 0px #a9a0f3) drop-shadow(-8px 8px 0px #7D80F4)",
-            }}
+            className="w-full h-auto"
             src={imgRunner}
           />
         </div>
