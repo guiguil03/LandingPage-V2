@@ -96,10 +96,10 @@ export default function Footer() {
               M&apos;avertir de la sortie
             </button>
             <div className="flex items-center gap-3">
-            <SocialLink href="https://instagram.com" label="Instagram">
+            <SocialLink href="https://www.instagram.com/unify_run" label="Instagram">
               <FaInstagram size={16} />
             </SocialLink>
-            <SocialLink href="https://linkedin.com" label="LinkedIn">
+            <SocialLink href="https://www.linkedin.com/company/unifyconnect/" label="LinkedIn">
               <FaLinkedin size={16} />
             </SocialLink>
             <SocialLink href="https://tiktok.com" label="TikTok">
