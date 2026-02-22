@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import logo from "../assets/logo.png";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -84,15 +85,23 @@ const Abonnements: React.FC = () => {
     <section
       id="abonnements"
       ref={sectionRef}
-      className="relative z-0 min-h-screen md:h-screen flex flex-col justify-center overflow-visible px-5 sm:px-8 py-10 md:py-16"
+      className="relative z-0 min-h-screen md:h-screen flex flex-col justify-center overflow-visible px-5 sm:px-8 py-10 md:py-16 bg-gray-100"
     >
       <div className="max-w-5xl mx-auto w-full overflow-visible min-h-0">
         {/* ── Heading ── */}
         <div className="text-center mb-6 md:mb-12">
-          <h2 className="text-2xl md:text-5xl font-bold tracking-tight text-white">
-            Rejoins le mouvement
-          </h2>
-          <p className="mt-1.5 md:mt-3 text-white/70 text-xs md:text-lg">
+          <div className="flex flex-col items-center text-center">
+            <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
+              Rejoins le
+            </span>
+            <div className="flex items-center justify-center gap-2 flex-wrap">
+              <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
+                mouvement
+              </span>
+              <img src={logo} alt="Unify" className="h-10 sm:h-14 w-auto" />
+            </div>
+          </div>
+          <p className="mt-1.5 md:mt-3 text-[#353331]/60 text-xs md:text-lg">
             Gratuit pour commencer, Premium pour aller plus loin.
           </p>
         </div>
