@@ -349,7 +349,7 @@ const DesktopStack: React.FC<{ items: Avis[] }> = ({ items }) => {
   return (
     <div
       ref={sectionRef}
-      className="relative h-screen w-full overflow-hidden flex flex-col"
+      className="relative min-h-screen w-full overflow-hidden flex flex-col"
     >
       <SectionTitle />
 

@@ -34,7 +34,7 @@ const PourquoiUnify: React.FC = () => {
   );
 
   return (
-    <section className="relative bg-[#353331] overflow-hidden" style={{ minHeight: "585px" }}>
+    <section className="relative bg-[#353331] overflow-hidden min-h-[400px]">
       {/* Texture overlay */}
       <img
         alt=""
@@ -44,7 +44,7 @@ const PourquoiUnify: React.FC = () => {
       />
 
       {/* Desktop layout */}
-      <div className="hidden md:flex relative z-10 h-[585px] items-center">
+      <div className="hidden md:flex relative z-10 min-h-[585px] items-center">
         <div className="pl-[104px] flex-1 max-w-[52%]">
           {textContent}
         </div>

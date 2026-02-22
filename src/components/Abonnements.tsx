@@ -84,9 +84,9 @@ const Abonnements: React.FC = () => {
     <section
       id="abonnements"
       ref={sectionRef}
-      className="relative z-0 h-screen flex flex-col justify-center overflow-visible px-5 sm:px-8 py-10 md:py-16"
+      className="relative z-0 min-h-screen md:h-screen flex flex-col justify-center overflow-visible px-5 sm:px-8 py-10 md:py-16"
     >
-      <div className="max-w-5xl mx-auto w-full overflow-visible">
+      <div className="max-w-5xl mx-auto w-full overflow-visible min-h-0">
         {/* ── Heading ── */}
         <div className="text-center mb-6 md:mb-12">
           <h2 className="text-2xl md:text-5xl font-bold tracking-tight text-white">

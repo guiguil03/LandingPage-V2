@@ -37,9 +37,9 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="relative w-full h-screen bg-[#353331] overflow-hidden">
+    <header className="relative w-full min-h-screen bg-[#353331] overflow-hidden flex flex-col">
       {/* ── Navbar ── */}
-      <div className="relative z-50 px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
+      <div className="relative z-50 w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
         <div className="flex items-center gap-3">
           <img
@@ -99,7 +99,7 @@ const Header: React.FC = () => {
       </div>
 
       {/* ── Hero Content ── */}
-      <div className="relative z-10 h-[calc(100%-80px)] flex items-center px-6 sm:px-12 lg:px-24 w-full">
+      <div className="relative z-10 flex-1 flex items-center px-6 sm:px-12 lg:px-24 w-full">
         {/* Left — Text */}
         <div className="flex-1">
           <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl">
