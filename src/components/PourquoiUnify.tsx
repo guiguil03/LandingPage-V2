@@ -1,5 +1,6 @@
 import React from "react";
 import imgRunner from "../assets/runner.png";
+import imgFond from "../assets/fond.png";
 
 const PourquoiUnify: React.FC = () => {
   const textContent = (
@@ -31,6 +32,12 @@ const PourquoiUnify: React.FC = () => {
 
   return (
     <section className="relative bg-[#353331] overflow-hidden min-h-[400px]">
+      <img
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover opacity-80 pointer-events-none select-none"
+        src={imgFond}
+      />
 
       {/* Desktop layout */}
       <div className="hidden md:flex relative z-10 min-h-[585px] items-center">
