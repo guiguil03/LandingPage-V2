@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SmoothScroll from "./components/SmoothScroll";
 import Header from "./components/Header";
 import PourquoiUnify from "./components/PourquoiUnify";
+import BentoGrid from "./components/BentoGrid";
 import Avis from "./components/avis";
 import Footer from "./components/footer";
 import Abonnements from "./components/Abonnements";
@@ -14,6 +15,7 @@ function HomePage() {
     <div className="min-h-screen bg-[#353331]">
       <Header />
       <PourquoiUnify />
+      <BentoGrid />
       <Abonnements />
       <Avis />
       <Footer />
