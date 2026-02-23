@@ -1,15 +1,15 @@
 import React from "react";
 
-// Figma assets — expire dans 7 jours, à remplacer par des fichiers locaux
-const imgIPhone = "https://www.figma.com/api/mcp/asset/abe86435-3916-4344-8a69-8f8666589796";
-const imgArtHur = "https://www.figma.com/api/mcp/asset/00644d55-91aa-4724-a37b-549a5d655e2f";
-const imgMaaathilda = "https://www.figma.com/api/mcp/asset/c58991c4-c6f2-4329-a892-c47bb66029dc";
-const imgMap = "https://www.figma.com/api/mcp/asset/a49cafa3-773b-4b35-b42e-de9c215b9756";
-const imgHandshake = "https://www.figma.com/api/mcp/asset/1564d98f-ec63-49f3-828a-8ff19423471e";
-const imgShield = "https://www.figma.com/api/mcp/asset/f0c03534-2a5d-4d9c-a262-b3729913d2e1";
-const imgAssistance = "https://www.figma.com/api/mcp/asset/d8cf827d-fe0a-4d44-b2bd-7053371665be";
-const imgPin1 = "https://www.figma.com/api/mcp/asset/e4aa388e-13bb-4b9f-ba48-8255a9489b84";
-const imgPin2 = "https://www.figma.com/api/mcp/asset/9d2df4f7-120a-4aa0-ba42-6cc856ef3651";
+// TODO: remplacer par des fichiers locaux
+const imgIPhone = "";
+const imgArtHur = "";
+const imgMaaathilda = "";
+const imgMap = "";
+const imgHandshake = "";
+const imgShield = "";
+const imgAssistance = "";
+const imgPin1 = "";
+const imgPin2 = "";
 
 function ProfileRow({
   img,
