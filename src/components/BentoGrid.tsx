@@ -11,7 +11,6 @@ import imgMapSm from "../assets/map-sm.jpg";
 import imgMapLg from "../assets/map.jpg";
 const imgArtHur = imgArtHurLocal;
 const imgMaaathilda = imgMaaathildaLocal;
-const imgMap = "";
 const imgHandshake = imgMatchmaking;
 const imgShield = "";
 const imgPin1 = imgArtHurLocal;
