@@ -162,7 +162,7 @@ const Header: React.FC = () => {
           </div>
         </div>
         {/* Mockup centré en bas */}
-        <div className="flex-1 flex items-end justify-center mt-12">
+        <div className="flex-1 flex items-end justify-center mt-12 pb-8">
           <img
             src="/img/mockup-sm.webp"
             alt="Unify app mockup"
