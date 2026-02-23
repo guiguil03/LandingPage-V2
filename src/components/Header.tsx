@@ -28,11 +28,12 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("openSignupModal", handler);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (sectionId: string, extraOffset = 0) => {
     setIsMobileMenuOpen(false);
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      const top = section.getBoundingClientRect().top + window.scrollY + extraOffset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
 
@@ -55,7 +56,7 @@ const Header: React.FC = () => {
         {/* Right — Nav links (desktop) */}
         <nav className="hidden md:flex items-center gap-6">
           <button
-            onClick={() => scrollToSection("abonnements")}
+            onClick={() => scrollToSection("abonnements", 800)}
             className="text-white/70 hover:text-white text-sm font-medium transition-colors duration-200 cursor-pointer"
           >
             Abonnements
@@ -122,7 +123,7 @@ const Header: React.FC = () => {
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
-            <button onClick={() => scrollToSection("abonnements")} className="text-white hover:text-white/70 font-medium transition-colors duration-200">
+            <button onClick={() => scrollToSection("abonnements", 800)} className="text-white hover:text-white/70 font-medium transition-colors duration-200">
               Voir les offres
             </button>
           </div>
@@ -156,7 +157,7 @@ const Header: React.FC = () => {
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
-            <button onClick={() => scrollToSection("abonnements")} className="text-white/70 text-sm font-medium">
+            <button onClick={() => scrollToSection("abonnements", 800)} className="text-white/70 text-sm font-medium">
               Voir les offres
             </button>
           </div>
@@ -177,7 +178,7 @@ const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="absolute top-20 right-6 z-40 w-56 bg-[#2a2826] rounded-2xl shadow-xl py-2 px-2 border border-white/[0.06]">
           <button
-            onClick={() => scrollToSection("abonnements")}
+            onClick={() => scrollToSection("abonnements", 800)}
             className="w-full text-left text-white text-sm font-medium py-2.5 px-4 rounded-xl hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
           >
             Abonnements
