@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../assets/logo.png";
 import SignupModal from "./inscription";
 
 const Header: React.FC = () => {
