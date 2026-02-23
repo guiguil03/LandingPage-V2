@@ -45,19 +45,34 @@ const run: Record<string, string> = {
 const W = 390;
 const H = 844;
 
-// Phone frame bezels
-const FRAME_X      = 14;   // left + right bezel
+// Phone frame bezels — uniform iPhone-like proportions
+const FRAME_X      = 16;   // left + right bezel (matches top for visual uniformity)
 const FRAME_TOP    = 16;   // top bezel
-const FRAME_BOTTOM = 26;   // bottom bezel (room for USB-C)
-const PHONE_W      = W + FRAME_X * 2;         // 418
-const PHONE_H      = H + FRAME_TOP + FRAME_BOTTOM; // 886
-const FRAME_R      = 54;   // outer corner radius
-const SCREEN_R     = 44;   // screen corner radius
+const FRAME_BOTTOM = 28;   // bottom bezel (USB-C area)
 
-// Dynamic Island
-const DI_W   = 126;
-const DI_H   = 37;
-const DI_TOP = 13; // from top of screen area
+// Extra canvas padding on each side (no longer used for button protrusion, kept for centering)
+const BTN_PAD      = 6;
+
+// Phone body shape
+const PHONE_BODY_W = W + FRAME_X * 2;                  // 422
+const PHONE_BODY_H = H + FRAME_TOP + FRAME_BOTTOM;     // 888
+
+// Extra transparent zone at canvas top — prevents sub-pixel clip from overflow-hidden
+const TOP_PAD = 12;
+
+// Render canvas
+const PHONE_W = PHONE_BODY_W + BTN_PAD * 2;            // 434
+const PHONE_H = PHONE_BODY_H + TOP_PAD;                // 900
+
+// Corner radii — FRAME_R = SCREEN_R + FRAME_X keeps bezel thickness consistent at corners
+const SCREEN_R = 55;   // matches iPhone 55pt screen corner radius
+const FRAME_R  = SCREEN_R + FRAME_X;  // 71 — outer body corner
+
+// Dynamic Island — scaled from iPhone 16 Pro (402pt) to our 390pt screen
+// Apple spec: 126×37pt at 402pt width → 390/402 ≈ 0.97 scale factor
+const DI_W   = 122;  // 126 × 390/402
+const DI_H   = 34;   // 37 × 390/402, rounded for crispness
+const DI_TOP = 11;   // slight offset from screen top
 
 // Convert Figma inset percentages → absolute px style (within W×H canvas)
 function pos(tPct: number, rPct: number, bPct: number, lPct: number): React.CSSProperties {
@@ -119,6 +134,7 @@ function GenreScreen({
               return (
                 <button
                   key={id}
+                  tabIndex={-1}
                   onClick={() => setSelected(id as "male" | "female" | "other")}
                   onMouseEnter={() => setHovered(id)}
                   onMouseLeave={() => setHovered(null)}
@@ -139,6 +155,7 @@ function GenreScreen({
           </div>
 
           <button
+            tabIndex={-1}
             onClick={() => { if (selected) onNext(); }}
             onMouseEnter={() => setBtnHovered(true)}
             onMouseLeave={() => { setBtnHovered(false); setBtnActive(false); }}
@@ -228,6 +245,7 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
       <img alt="" src={run.g23} style={pos(44.84, 45.62, 50.86, 39.05)} />
 
       <button
+        tabIndex={-1}
         onClick={triggerDimReset}
         onMouseEnter={() => setBtnHovered(true)}
         onMouseLeave={() => { setBtnHovered(false); setBtnActive(false); }}
@@ -255,95 +273,52 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
 }
 
 // ─── iPhone 17 Pro chrome ─────────────────────────────────────────────────────
+// Body left/right edges sit BTN_PAD px inset from the canvas edges
+// so that side-buttons can protrude leftward / rightward beyond the body.
+const bodyLeft  = BTN_PAD;
+const bodyRight = BTN_PAD; // used as css `right` value
+
 function PhoneChrome() {
   return (
     <>
-      {/* Main body — Black Titanium finish */}
+      {/* ── Main body ── */}
       <div style={{
         position: "absolute",
-        inset: 0,
+        top: TOP_PAD,
+        left: bodyLeft,
+        right: bodyRight,
+        bottom: 0,
         borderRadius: FRAME_R,
-        background: "linear-gradient(150deg, #2c2c2e 0%, #1c1c1e 45%, #131315 100%)",
+        background: "linear-gradient(160deg, #2c2c2e 0%, #1c1c1e 50%, #111113 100%)",
         boxShadow: [
           "inset 0 0 0 0.5px rgba(255,255,255,0.10)",
-          "inset 0 1px 0 rgba(255,255,255,0.07)",
-          "inset 0 -1px 0 rgba(0,0,0,0.4)",
-          "0 0 0 1px rgba(0,0,0,0.55)",
-          "0 24px 64px rgba(0,0,0,0.55)",
+          "inset 0 1px 0 rgba(255,255,255,0.08)",
+          "inset 0 -1px 0 rgba(0,0,0,0.45)",
+          "0 0 0 1px rgba(0,0,0,0.6)",
         ].join(", "),
       }} />
 
-      {/* Left-edge specular highlight */}
+      {/* ── 3. Edge specular highlights — after body, naturally on top ── */}
       <div style={{
         position: "absolute",
-        top: FRAME_R * 0.6,
-        bottom: FRAME_R * 0.6,
-        left: 0,
+        top: TOP_PAD + FRAME_R * 0.55,
+        bottom: FRAME_R * 0.55,
+        left: bodyLeft,
         width: 1,
-        background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.14) 25%, rgba(255,255,255,0.07) 75%, transparent)",
+        background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.16) 25%, rgba(255,255,255,0.08) 75%, transparent)",
+        pointerEvents: "none",
+      }} />
+      <div style={{
+        position: "absolute",
+        top: TOP_PAD + FRAME_R * 0.55,
+        bottom: FRAME_R * 0.55,
+        right: bodyRight,
+        width: 1,
+        background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.09) 25%, rgba(255,255,255,0.05) 75%, transparent)",
         pointerEvents: "none",
       }} />
 
-      {/* Right-edge specular highlight */}
-      <div style={{
-        position: "absolute",
-        top: FRAME_R * 0.6,
-        bottom: FRAME_R * 0.6,
-        right: 0,
-        width: 1,
-        background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.07) 25%, rgba(255,255,255,0.04) 75%, transparent)",
-        pointerEvents: "none",
-      }} />
-
-      {/* Action button — left side */}
-      <div style={{
-        position: "absolute",
-        top: FRAME_TOP + 42,
-        left: 2,
-        width: FRAME_X - 2,
-        height: 36,
-        borderRadius: "3px 2px 2px 3px",
-        background: "linear-gradient(to left, #252527, #2e2e30)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), -1px 0 0 rgba(255,255,255,0.04)",
-      }} />
-
-      {/* Volume Up — left side */}
-      <div style={{
-        position: "absolute",
-        top: FRAME_TOP + 104,
-        left: 2,
-        width: FRAME_X - 2,
-        height: 60,
-        borderRadius: "3px 2px 2px 3px",
-        background: "linear-gradient(to left, #252527, #2e2e30)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), -1px 0 0 rgba(255,255,255,0.04)",
-      }} />
-
-      {/* Volume Down — left side */}
-      <div style={{
-        position: "absolute",
-        top: FRAME_TOP + 178,
-        left: 2,
-        width: FRAME_X - 2,
-        height: 60,
-        borderRadius: "3px 2px 2px 3px",
-        background: "linear-gradient(to left, #252527, #2e2e30)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), -1px 0 0 rgba(255,255,255,0.04)",
-      }} />
-
-      {/* Power / Side button — right side */}
-      <div style={{
-        position: "absolute",
-        top: FRAME_TOP + 126,
-        right: 2,
-        width: FRAME_X - 2,
-        height: 74,
-        borderRadius: "2px 3px 3px 2px",
-        background: "linear-gradient(to right, #252527, #2e2e30)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), 1px 0 0 rgba(255,255,255,0.04)",
-      }} />
-
-      {/* USB-C port */}
+      {/* ── 4. Bottom details ── */}
       <div style={{
         position: "absolute",
         bottom: 9,
@@ -354,30 +329,14 @@ function PhoneChrome() {
         background: "#0a0a0c",
         boxShadow: "inset 0 2px 3px rgba(0,0,0,0.95), 0 1px 0 rgba(255,255,255,0.05)",
       }} />
-
-      {/* Speaker dots — left of USB-C */}
-      <div style={{ position: "absolute", bottom: 11, left: PHONE_W / 2 - 82, display: "flex", gap: 4 }}>
+      <div style={{ position: "absolute", bottom: 11, left: PHONE_W / 2 - 86, display: "flex", gap: 4 }}>
         {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} style={{
-            width: 4,
-            height: 6,
-            borderRadius: 2,
-            background: "#0c0c0e",
-            boxShadow: "inset 0 1px 2px rgba(0,0,0,0.9)",
-          }} />
+          <div key={i} style={{ width: 4, height: 6, borderRadius: 2, background: "#0c0c0e", boxShadow: "inset 0 1px 2px rgba(0,0,0,0.9)" }} />
         ))}
       </div>
-
-      {/* Speaker dots — right of USB-C */}
-      <div style={{ position: "absolute", bottom: 11, left: PHONE_W / 2 + 50, display: "flex", gap: 4 }}>
+      <div style={{ position: "absolute", bottom: 11, left: PHONE_W / 2 + 54, display: "flex", gap: 4 }}>
         {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} style={{
-            width: 4,
-            height: 6,
-            borderRadius: 2,
-            background: "#0c0c0e",
-            boxShadow: "inset 0 1px 2px rgba(0,0,0,0.9)",
-          }} />
+          <div key={i} style={{ width: 4, height: 6, borderRadius: 2, background: "#0c0c0e", boxShadow: "inset 0 1px 2px rgba(0,0,0,0.9)" }} />
         ))}
       </div>
     </>
@@ -416,7 +375,8 @@ export default function AppMockup({ className }: { className?: string }) {
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-visible ${className ?? ""}`}
+      aria-hidden="true"
+      className={`relative overflow-hidden ${className ?? ""}`}
       style={{ aspectRatio: `${PHONE_W} / ${PHONE_H}` }}
     >
       <div
@@ -437,12 +397,15 @@ export default function AppMockup({ className }: { className?: string }) {
         <div
           style={{
             position: "absolute",
-            top: FRAME_TOP,
-            left: FRAME_X,
+            top: TOP_PAD + FRAME_TOP,
+            left: BTN_PAD + FRAME_X,
             width: W,
             height: H,
             borderRadius: SCREEN_R,
             overflow: "hidden",
+            background: "#000",
+            willChange: "transform",
+            boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.9)",
           }}
         >
           {/* Slide container: genre → run */}
@@ -481,8 +444,8 @@ export default function AppMockup({ className }: { className?: string }) {
         <div
           style={{
             position: "absolute",
-            top: FRAME_TOP + DI_TOP,
-            left: FRAME_X + (W - DI_W) / 2,
+            top: TOP_PAD + FRAME_TOP + DI_TOP,
+            left: BTN_PAD + FRAME_X + (W - DI_W) / 2,
             width: DI_W,
             height: DI_H,
             borderRadius: DI_H / 2,

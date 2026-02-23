@@ -7,11 +7,15 @@ import imgAssistanceLg from "../assets/assistance-lg.jpg";
 import imgMatchmaking from "../assets/matchmaking.png";
 import imgArtHurLocal from "../assets/arthur.png";
 import imgMaaathildaLocal from "../assets/mathilda.png";
+import imgQuentinLocal from "../assets/quentin.png";
+import imgLaureLocal from "../assets/Laure.png";
 import imgMapSm from "../assets/map-sm.jpg";
 import imgMapLg from "../assets/map.jpg";
 import imgShieldLocal from "../assets/shield.png";
 const imgArtHur = imgArtHurLocal;
 const imgMaaathilda = imgMaaathildaLocal;
+const imgQuentin = imgQuentinLocal;
+const imgLaure = imgLaureLocal;
 const imgHandshake = imgMatchmaking;
 const imgShield = imgShieldLocal;
 const imgPin1 = imgArtHurLocal;
@@ -146,8 +150,8 @@ const BentoGrid: React.FC = () => {
             Tu choisis<br />avec qui tu cours.
           </h3>
           <div className="flex-1 relative mt-4 min-h-[260px] -mb-8">
-            <div className="absolute inset-0 flex items-end justify-center overflow-hidden">
-              <AppMockup className="h-full translate-y-[20%]" />
+            <div className="absolute inset-x-0 bottom-0 -top-4 flex items-end justify-center overflow-hidden">
+              <AppMockup className="h-full translate-y-[22%]" />
             </div>
           </div>
         </div>
@@ -166,6 +170,8 @@ const BentoGrid: React.FC = () => {
           <div className="bg-[#eae3f4] rounded-xl overflow-hidden divide-y divide-[#d4cce8]">
             <ProfileRow img={imgArtHur} name="Art_hur" distance="350 m" />
             <ProfileRow img={imgMaaathilda} name="Maaathilda" distance="1.2 km" />
+            <ProfileRow img={imgQuentin} name="Quentin" distance="2.4 km" />
+            <ProfileRow img={imgLaure} name="Laure" distance="3.1 km" />
           </div>
           <span className="text-[#7d80f4] font-extrabold text-sm">Autour de vous</span>
         </div>

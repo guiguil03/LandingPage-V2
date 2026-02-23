@@ -100,7 +100,7 @@ const Header: React.FC = () => {
       {/* ── Hero Content ── */}
 
       {/* Desktop */}
-      <div className="hidden lg:flex relative z-10 flex-1 items-center px-12 xl:px-24 w-full">
+      <div className="hidden lg:flex relative z-10 flex-1 items-center px-12 xl:px-24 w-full max-w-[1600px] mx-auto">
         <div className="flex-1">
           <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl">
             Ta prochaine course
