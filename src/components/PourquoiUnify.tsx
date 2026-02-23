@@ -6,9 +6,11 @@ const PourquoiUnify: React.FC = () => {
   const textContent = (
     <div className="flex flex-col gap-6 md:max-w-[480px]">
       <h2 className="text-white text-3xl md:text-[29px] font-black uppercase leading-tight tracking-tight">
-        Pourquoi choisir Unify
+        La dernière appli de running
         <br />
-        et pas les autres ?
+        dont tu auras besoin.
+        <br />
+        <span className="opacity-50">Promis.</span>
       </h2>
       <p className="text-[#fbfbfb] text-[15px] leading-relaxed">
         Unify est une application de running social qui révolutionne la façon

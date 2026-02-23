@@ -103,20 +103,19 @@ const Header: React.FC = () => {
       <div className="hidden lg:flex relative z-10 flex-1 items-center px-12 xl:px-24 w-full">
         <div className="flex-1">
           <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl">
-            Trouve ton
+            Ta prochaine course
             <br />
-            <span className="text-[#7D80F4]">crew de runners.</span>
+            <span className="text-[#7D80F4]">commence ici.</span>
           </h1>
           <p className="mt-8 text-white text-lg max-w-md leading-relaxed">
-            Trouvez des partenaires à votre rythme, partagez vos parcours et
-            rejoignez la communauté qui vous ressemble.
+            Match instantané avec des coureurs à ton niveau. Rejoins-les maintenant.
           </p>
           <div className="mt-10 flex items-center gap-4">
             <button
               onClick={openSignupModal}
               className="group bg-[#EAE3F4] text-[#353331] font-semibold px-7 py-3.5 rounded-2xl hover:bg-[#E0D8ED] transition-colors duration-200 flex items-center gap-2.5"
             >
-              Rejoindre Unify
+              Je m'inscris
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-1 transition-transform duration-300">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -139,18 +138,18 @@ const Header: React.FC = () => {
       <div className="flex lg:hidden relative z-10 flex-1 flex-col px-6 pt-16 pb-0 w-full">
         <div className="flex flex-col gap-5">
           <h1 className="text-[2.6rem] font-bold tracking-[-0.03em] leading-[0.95] text-white">
-            Trouve ton<br />
-            <span className="text-[#7D80F4]">crew de runners.</span>
+            Ta prochaine course<br />
+            <span className="text-[#7D80F4]">commence ici.</span>
           </h1>
           <p className="text-white/80 text-sm leading-relaxed max-w-xs">
-            Trouvez des partenaires à votre rythme, partagez vos parcours et rejoignez la communauté qui vous ressemble.
+            Match instantané avec des coureurs à ton niveau. Rejoins-les maintenant.
           </p>
           <div className="flex items-center gap-3">
             <button
               onClick={openSignupModal}
               className="group bg-[#EAE3F4] text-[#353331] font-semibold text-sm px-5 py-3 rounded-2xl hover:bg-[#E0D8ED] transition-colors duration-200 flex items-center gap-2"
             >
-              Rejoindre Unify
+              Je m'inscris
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-1 transition-transform duration-300">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

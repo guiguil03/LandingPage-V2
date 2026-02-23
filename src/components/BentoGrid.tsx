@@ -1,13 +1,18 @@
 import React from "react";
 
+import imgAssistanceSm from "../assets/assistance-sm.jpg";
+import imgAssistanceLg from "../assets/assistance-lg.jpg";
+import imgArtHurLocal from "../assets/arthur.png";
+import imgMaaathildaLocal from "../assets/mathilda.png";
+import imgMapLocal from "../assets/bentomap.png";
+
 // TODO: remplacer par des fichiers locaux
 const imgIPhone = "";
-const imgArtHur = "";
-const imgMaaathilda = "";
-const imgMap = "";
+const imgArtHur = imgArtHurLocal;
+const imgMaaathilda = imgMaaathildaLocal;
+const imgMap = imgMapLocal;
 const imgHandshake = "";
 const imgShield = "";
-const imgAssistance = "";
 const imgPin1 = "";
 const imgPin2 = "";
 
@@ -128,11 +133,10 @@ const BentoGrid: React.FC = () => {
 
         {/* 6. Assistance — colonne droite, bas */}
         <div className="rounded-[30px] overflow-hidden relative flex items-end p-6 min-h-[160px] md:min-h-0">
-          <img
-            src={imgAssistance}
-            alt="Assistance"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          <picture className="absolute inset-0 w-full h-full">
+            <source srcSet={imgAssistanceLg} media="(min-width: 768px)" />
+            <img src={imgAssistanceSm} alt="Assistance" className="w-full h-full object-cover" />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <h3 className="relative z-10 text-white font-medium text-[22px]">Assistance</h3>
         </div>
