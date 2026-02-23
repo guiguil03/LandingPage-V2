@@ -46,7 +46,11 @@ ${urls}
 export default defineConfig({
   plugins: [react(), sitemapPlugin()],
   build: {
-    assetsInlineLimit: 8192, // inline assets < 8KB as base64 (logo.png = 4.3KB)
+    assetsInlineLimit(filePath) {
+      // Never inline the logo — iOS Safari renders base64 PNG with a black flash
+      if (filePath.includes('logo.png')) return 0
+      return 8192
+    },
     rollupOptions: {
       output: {
         manualChunks: {
