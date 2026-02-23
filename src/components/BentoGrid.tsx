@@ -4,13 +4,11 @@ import imgAssistanceSm from "../assets/assistance-sm.jpg";
 import imgAssistanceLg from "../assets/assistance-lg.jpg";
 import imgArtHurLocal from "../assets/arthur.png";
 import imgMaaathildaLocal from "../assets/mathilda.png";
-import imgMapLocal from "../assets/bentomap.png";
-
 // TODO: remplacer par des fichiers locaux
 const imgIPhone = "";
 const imgArtHur = imgArtHurLocal;
 const imgMaaathilda = imgMaaathildaLocal;
-const imgMap = imgMapLocal;
+const imgMap = "";
 const imgHandshake = "";
 const imgShield = "";
 const imgPin1 = "";
