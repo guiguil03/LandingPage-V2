@@ -46,10 +46,10 @@ ${urls}
 export default defineConfig({
   plugins: [react(), sitemapPlugin()],
   build: {
-    assetsInlineLimit(filePath) {
+    assetsInlineLimit: (filePath: string, content: Buffer) => {
       // Never inline the logo — iOS Safari renders base64 PNG with a black flash
-      if (filePath.includes('logo.png')) return 0
-      return 8192
+      if (filePath.includes('logo.png')) return false
+      return content.length < 8192
     },
     rollupOptions: {
       output: {
