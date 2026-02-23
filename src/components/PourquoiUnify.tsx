@@ -23,7 +23,10 @@ const PourquoiUnify: React.FC = () => {
         <button className="bg-[#7D80F4] text-white font-semibold text-[15px] px-12 py-[10px] rounded-full hover:bg-[#7D80F4]/85 transition-colors duration-300">
           Télécharger
         </button>
-        <button className="border border-white/60 text-white font-semibold text-[15px] px-12 py-[10px] rounded-full hover:bg-white/10 transition-colors duration-300">
+        <button
+          onClick={() => document.getElementById("bento")?.scrollIntoView({ behavior: "smooth" })}
+          className="border border-white/60 text-white font-semibold text-[15px] px-12 py-[10px] rounded-full hover:bg-white/10 transition-colors duration-300"
+        >
           En savoir plus
         </button>
       </div>

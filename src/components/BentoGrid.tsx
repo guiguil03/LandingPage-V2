@@ -33,7 +33,7 @@ function ProfileRow({
 
 const BentoGrid: React.FC = () => {
   return (
-    <section className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col">
+    <section id="bento" className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col">
       {/* Desktop: grid 3 colonnes, Mobile: stack */}
       <div
         className="grid gap-3 grid-cols-1 md:grid-cols-3 flex-1 min-h-0"
