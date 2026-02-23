@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Logo from "../assets/logo.png";
 import SignupModal from "./inscription";
 
 const Header: React.FC = () => {
@@ -42,10 +43,9 @@ const Header: React.FC = () => {
       <div className="w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
         <div className="flex items-center gap-3">
-          <svg className="h-9 sm:h-11 w-auto" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="20" cy="20" r="18" stroke="#7D80F4" strokeWidth="3"/>
-            <path d="M12 28 L20 12 L28 28" stroke="#7D80F4" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <div className="h-9 sm:h-11 w-8 sm:w-10 shrink-0">
+            <img src={Logo} alt="Logo Unify" className="h-full w-auto object-contain" />
+          </div>
           <span className="text-xl sm:text-2xl font-extrabold text-white tracking-[-0.02em]">
             UNIFY<span className="text-primary-500">.</span>
           </span>
@@ -130,7 +130,7 @@ const Header: React.FC = () => {
           <picture>
             <source srcSet="/img/mockup-lg.webp" media="(min-width: 1280px)" type="image/webp" />
             <source srcSet="/img/mockup-md.webp" media="(min-width: 1024px)" type="image/webp" />
-            <img src="/img/mockup-sm.webp" alt="Unify app mockup" loading="eager" decoding="async" className="h-[70vh] max-h-[700px] w-auto object-contain " />
+            <img src="/img/mockup-sm.webp" alt="Unify app mockup" loading="eager" decoding="async" className="h-[70vh] max-h-[700px] w-auto object-contain" />
           </picture>
         </div>
       </div>
@@ -167,7 +167,7 @@ const Header: React.FC = () => {
             alt="Unify app mockup"
             loading="eager"
             decoding="async"
-            className="h-[52vh] w-auto object-contain object-bottom "
+            className="h-[52vh] w-auto object-contain object-bottom"
           />
         </div>
       </div>
