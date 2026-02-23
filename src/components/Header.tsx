@@ -5,6 +5,11 @@ import SignupModal from "./inscription";
 const Header: React.FC = () => {
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [heroHeight, setHeroHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    setHeroHeight(window.innerHeight);
+  }, []);
 
   const openSignupModal = () => {
     setIsSignupModalOpen(true);
@@ -38,7 +43,10 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="relative w-full h-[100lvh] bg-[#353331] overflow-hidden flex flex-col">
+    <header
+      className="relative w-full bg-[#353331] overflow-hidden flex flex-col"
+      style={{ height: heroHeight ? `${heroHeight}px` : '100lvh' }}
+    >
       {/* ── Navbar ── */}
       <div className="relative z-50 w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
