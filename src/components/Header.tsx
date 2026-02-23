@@ -38,7 +38,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="relative w-full min-h-screen bg-[#353331] overflow-hidden flex flex-col">
+    <header className="relative w-full min-h-screen bg-[#353331] flex flex-col">
       {/* ── Navbar ── */}
       <div className="relative z-50 w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
@@ -47,6 +47,9 @@ const Header: React.FC = () => {
             src={Logo}
             alt="Logo Unify"
             className="h-9 sm:h-11 w-auto object-contain"
+            decoding="sync"
+            fetchPriority="high"
+            style={{ backgroundColor: '#353331' }}
           />
           <span className="text-xl sm:text-2xl font-extrabold text-white tracking-[-0.02em]">
             UNIFY<span className="text-primary-500">.</span>

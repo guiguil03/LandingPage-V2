@@ -75,6 +75,8 @@ export default function Footer() {
                 src={Logo}
                 alt="Logo Unify"
                 className="h-12 sm:h-16 w-auto object-contain"
+                decoding="sync"
+                style={{ backgroundColor: '#353331' }}
               />
               <h2 className="text-[clamp(2.5rem,7vw,6rem)] font-extrabold tracking-[-0.04em] leading-[0.9] text-white">
                 UNIFY<span className="text-primary-500">.</span>

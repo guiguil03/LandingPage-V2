@@ -98,7 +98,7 @@ const Abonnements: React.FC = () => {
               <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
                 mouvement
               </span>
-              <img src={logo} alt="Unify" className="h-10 sm:h-14 w-auto" />
+              <img src={logo} alt="Unify" className="h-10 sm:h-14 w-auto" decoding="sync" style={{ backgroundColor: '#f3f4f6' }} />
             </div>
           </div>
           <p className="mt-1.5 md:mt-3 text-[#353331]/60 text-xs md:text-lg">
