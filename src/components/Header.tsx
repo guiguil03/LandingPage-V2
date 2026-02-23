@@ -100,7 +100,7 @@ const Header: React.FC = () => {
       {/* ── Hero Content ── */}
 
       {/* Desktop */}
-      <div className="hidden lg:flex relative z-10 flex-1 items-center px-12 xl:px-24 w-full">
+      <div className="hidden lg:flex flex-1 items-center px-12 xl:px-24 w-full">
         <div className="flex-1">
           <h1 className="text-[clamp(2.5rem,8vw,7rem)] font-bold tracking-[-0.03em] leading-[0.95] text-white max-w-3xl">
             Trouve ton
@@ -130,13 +130,13 @@ const Header: React.FC = () => {
           <picture>
             <source srcSet="/img/mockup-lg.webp" media="(min-width: 1280px)" type="image/webp" />
             <source srcSet="/img/mockup-md.webp" media="(min-width: 1024px)" type="image/webp" />
-            <img src="/img/mockup-sm.webp" alt="Unify app mockup" loading="eager" decoding="async" className="h-[70vh] max-h-[700px] w-auto object-contain drop-shadow-2xl" />
+            <img src="/img/mockup-sm.webp" alt="Unify app mockup" loading="eager" decoding="async" className="h-[70vh] max-h-[700px] w-auto object-contain " />
           </picture>
         </div>
       </div>
 
       {/* Mobile */}
-      <div className="flex lg:hidden relative z-10 flex-1 flex-col px-6 pt-16 pb-0 w-full">
+      <div className="flex lg:hidden flex-1 flex-col px-6 pt-16 pb-0 w-full">
         <div className="flex flex-col gap-5">
           <h1 className="text-[2.6rem] font-bold tracking-[-0.03em] leading-[0.95] text-white">
             Trouve ton<br />
@@ -167,7 +167,7 @@ const Header: React.FC = () => {
             alt="Unify app mockup"
             loading="eager"
             decoding="async"
-            className="h-[52vh] w-auto object-contain object-bottom drop-shadow-2xl"
+            className="h-[52vh] w-auto object-contain object-bottom "
           />
         </div>
       </div>
