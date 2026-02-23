@@ -50,7 +50,7 @@ const BentoGrid: React.FC = () => {
           }}
         >
           <h3 className="text-white font-black uppercase text-[28px] leading-tight shrink-0">
-            Modes de<br />connexion
+            Tu choisis<br />avec qui tu cours.
           </h3>
           <div className="flex-1 relative mt-4 min-h-[260px]">
             <img
@@ -70,7 +70,7 @@ const BentoGrid: React.FC = () => {
           }}
         >
           <h3 className="text-white font-black uppercase text-[22px] leading-tight">
-            Nombre de rencontre<br />limitée à 2
+            Matche en<br />quelques secondes.
           </h3>
           <div className="bg-[#eae3f4] rounded-xl overflow-hidden divide-y divide-[#d4cce8]">
             <ProfileRow img={imgArtHur} name="Art_hur" />
@@ -101,7 +101,7 @@ const BentoGrid: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[rgba(53,51,49,0.7)] via-transparent to-transparent" />
           <h3 className="relative z-10 text-white font-black uppercase text-[28px] leading-tight">
-            Partage de position
+            Vois qui court<br />en ce moment.
           </h3>
           {/* Pins sur la carte */}
           <div className="relative z-10 flex-1">
