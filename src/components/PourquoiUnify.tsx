@@ -57,17 +57,15 @@ const PourquoiUnify: React.FC = () => {
       </div>
 
       {/* Mobile layout */}
-      <div className="flex md:hidden flex-col relative z-10 py-14 px-6 gap-10">
-        {textContent}
-        <div
-          className="relative w-full"
-        >
-          <img
-            alt="Coureur Unify"
-            className="w-full h-auto"
-            src={imgRunner}
-          />
+      <div className="flex md:hidden flex-col relative z-10 pt-14 pb-6 gap-6">
+        <div className="px-6">
+          {textContent}
         </div>
+        <img
+          alt="Coureur Unify"
+          className="w-full h-auto object-contain object-right ml-auto"
+          src={imgRunner}
+        />
       </div>
     </section>
   );
