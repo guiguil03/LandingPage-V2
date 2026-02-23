@@ -75,16 +75,16 @@ const genders = [
   { id: "other"  as const, label: "Autre",  src: imgGroup67 },
 ];
 
-function GenreScreen({ onNext }: { onNext: () => void }) {
-  const [selected,   setSelected]   = useState<"male" | "female" | "other" | null>(null);
+function GenreScreen({
+  selected, setSelected, onNext,
+}: {
+  selected: "male" | "female" | "other" | null;
+  setSelected: (v: "male" | "female" | "other" | null) => void;
+  onNext: () => void;
+}) {
   const [hovered,    setHovered]    = useState<"male" | "female" | "other" | null>(null);
   const [btnHovered, setBtnHovered] = useState(false);
   const [btnActive,  setBtnActive]  = useState(false);
-
-  const handleSuivant = () => {
-    if (!selected) return;
-    onNext();
-  };
 
   return (
     <div className="bg-[#EAE3F4] flex flex-col select-none overflow-hidden relative" style={{ width: W, height: H }}>
@@ -105,7 +105,7 @@ function GenreScreen({ onNext }: { onNext: () => void }) {
               return (
                 <button
                   key={id}
-                  onClick={() => setSelected(id)}
+                  onClick={() => setSelected(id as "male" | "female" | "other")}
                   onMouseEnter={() => setHovered(id)}
                   onMouseLeave={() => setHovered(null)}
                   className="flex flex-col items-center cursor-pointer"
@@ -125,7 +125,7 @@ function GenreScreen({ onNext }: { onNext: () => void }) {
           </div>
 
           <button
-            onClick={handleSuivant}
+            onClick={() => { if (selected) onNext(); }}
             onMouseEnter={() => setBtnHovered(true)}
             onMouseLeave={() => { setBtnHovered(false); setBtnActive(false); }}
             onMouseDown={() => setBtnActive(true)}
@@ -151,9 +151,30 @@ function GenreScreen({ onNext }: { onNext: () => void }) {
 }
 
 // ─── Screen 2: On va courir ? ─────────────────────────────────────────────────
-function RunScreen() {
+const AUTO_RESET_DELAY = 5000; // ms avant reset auto
+
+function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }) {
   const [btnHovered, setBtnHovered] = useState(false);
   const [btnActive,  setBtnActive]  = useState(false);
+  const dimmingRef = useRef(false);
+
+  const triggerDimReset = () => {
+    if (dimmingRef.current) return;
+    dimmingRef.current = true;
+    onReset(); // le wrapper gère tout le timing
+  };
+
+  // Remet à zéro quand on quitte l'écran
+  useEffect(() => {
+    if (!active) dimmingRef.current = false;
+  }, [active]);
+
+  // Démarre le timer uniquement quand l'écran est visible
+  useEffect(() => {
+    if (!active) return;
+    const t = setTimeout(triggerDimReset, AUTO_RESET_DELAY);
+    return () => clearTimeout(t);
+  }, [active]);
 
   return (
     <div className="bg-[#EAE3F4] select-none overflow-hidden relative" style={{ width: W, height: H }}>
@@ -198,6 +219,7 @@ function RunScreen() {
 
       {/* C'est parti button */}
       <button
+        onClick={triggerDimReset}
         onMouseEnter={() => setBtnHovered(true)}
         onMouseLeave={() => { setBtnHovered(false); setBtnActive(false); }}
         onMouseDown={() => setBtnActive(true)}
@@ -219,6 +241,7 @@ function RunScreen() {
       >
         C'est parti !
       </button>
+
     </div>
   );
 }
@@ -226,9 +249,10 @@ function RunScreen() {
 // ─── Wrapper: scale + screen transitions ─────────────────────────────────────
 export default function AppMockup({ className }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scale,  setScale]  = useState(1);
-  const [screen, setScreen] = useState<"genre" | "run">("genre");
-  const [animating, setAnimating] = useState(false);
+  const [scale,    setScale]    = useState(1);
+  const [screen,   setScreen]   = useState<"genre" | "run">("genre");
+  const [blackout, setBlackout] = useState(false);
+  const [selected, setSelected] = useState<"male" | "female" | "other" | null>(null);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -241,12 +265,21 @@ export default function AppMockup({ className }: { className?: string }) {
   }, []);
 
   const goToRun = () => {
-    if (animating) return;
-    setAnimating(true);
+    setScreen("run");
+  };
+
+  // Appelé par RunScreen quand le reset est déclenché (clic ou auto)
+  // À ce moment le noir est déjà en train de se faire dans RunScreen —
+  // on prend la main : noir global → cut → fade-in
+  const goToGenre = () => {
+    setBlackout(true);
+    // Cut instantané pendant qu'on est dans le noir
     setTimeout(() => {
-      setScreen("run");
-      setAnimating(false);
-    }, 320);
+      setScreen("genre");
+      setSelected(null);
+    }, 420);
+    // Puis on rallume
+    setTimeout(() => setBlackout(false), 500);
   };
 
   return (
@@ -264,23 +297,36 @@ export default function AppMockup({ className }: { className?: string }) {
           transform: `scale(${scale})`,
         }}
       >
-        {/* Slide container */}
+        {/* Slide genre → run uniquement */}
         <div
           style={{
             display: "flex",
             width: W * 2,
             height: H,
             transform: `translateX(${screen === "run" ? -W : 0}px)`,
-            transition: "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+            transition: screen === "run" ? "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
           }}
         >
           <div style={{ width: W, height: H, flexShrink: 0 }}>
-            <GenreScreen onNext={goToRun} />
+            <GenreScreen selected={selected} setSelected={setSelected} onNext={goToRun} />
           </div>
           <div style={{ width: W, height: H, flexShrink: 0 }}>
-            <RunScreen />
+            <RunScreen onReset={goToGenre} active={screen === "run"} />
           </div>
         </div>
+
+        {/* Noir global — couvre tout pendant le reset */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "black",
+            opacity: blackout ? 1 : 0,
+            transition: blackout ? "opacity 0.35s ease" : "opacity 0.35s ease 0.1s",
+            pointerEvents: "none",
+            zIndex: 100,
+          }}
+        />
       </div>
     </div>
   );
