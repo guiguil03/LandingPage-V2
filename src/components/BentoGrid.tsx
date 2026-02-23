@@ -9,10 +9,11 @@ import imgArtHurLocal from "../assets/arthur.png";
 import imgMaaathildaLocal from "../assets/mathilda.png";
 import imgMapSm from "../assets/map-sm.jpg";
 import imgMapLg from "../assets/map.jpg";
+import imgShieldLocal from "../assets/shield.png";
 const imgArtHur = imgArtHurLocal;
 const imgMaaathilda = imgMaaathildaLocal;
 const imgHandshake = imgMatchmaking;
-const imgShield = "";
+const imgShield = imgShieldLocal;
 const imgPin1 = imgArtHurLocal;
 const imgPin2 = imgMaaathildaLocal;
 
