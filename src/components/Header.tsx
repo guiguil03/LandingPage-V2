@@ -39,7 +39,7 @@ const Header: React.FC = () => {
   return (
     <header className="relative w-full min-h-screen bg-[#353331] flex flex-col">
       {/* ── Navbar ── */}
-      <div className="relative z-50 w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
+      <div className="w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
         <div className="flex items-center gap-3">
           <svg className="h-9 sm:h-11 w-auto" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
