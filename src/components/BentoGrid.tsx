@@ -151,7 +151,7 @@ const BentoGrid: React.FC = () => {
           </h3>
           <div className="flex-1 relative mt-4 min-h-[260px] -mb-8">
             <div className="absolute inset-x-0 bottom-0 -top-4 flex items-end justify-center overflow-hidden">
-              <AppMockup className="h-full translate-y-[22%]" />
+              <AppMockup className="w-[88%] translate-y-[22%]" />
             </div>
           </div>
         </div>
@@ -168,12 +168,14 @@ const BentoGrid: React.FC = () => {
             Matche en<br />quelques secondes.
           </h3>
           <div className="bg-[#eae3f4] rounded-xl overflow-hidden divide-y divide-[#d4cce8]">
+            <div className="px-3 py-2">
+              <span className="text-[#7d80f4] font-extrabold text-sm">Autour de vous</span>
+            </div>
             <ProfileRow img={imgArtHur} name="Art_hur" distance="350 m" />
             <ProfileRow img={imgMaaathilda} name="Maaathilda" distance="1.2 km" />
             <ProfileRow img={imgQuentin} name="Quentin" distance="2.4 km" />
             <ProfileRow img={imgLaure} name="Laure" distance="3.1 km" />
           </div>
-          <span className="text-[#7d80f4] font-extrabold text-sm">Autour de vous</span>
         </div>
 
         {/* 3. Matchmaking instantané — colonne droite, haut */}

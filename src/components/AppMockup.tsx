@@ -116,7 +116,7 @@ function GenreScreen({
   const [btnActive,  setBtnActive]  = useState(false);
 
   return (
-    <div className="bg-[#EAE3F4] flex flex-col select-none overflow-hidden relative" style={{ width: W, height: H }}>
+    <div className="bg-[#EAE3F4] flex flex-col select-none overflow-hidden relative" style={{ width: W, height: H, borderRadius: SCREEN_R }}>
       <ProgressBar pct={80} drapeau={imgDrapeau1} />
 
       <div className="flex-1 flex items-center justify-center">
@@ -206,7 +206,7 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
   }, [active]);
 
   return (
-    <div className="bg-[#EAE3F4] select-none overflow-hidden relative" style={{ width: W, height: H }}>
+    <div className="bg-[#EAE3F4] select-none overflow-hidden relative" style={{ width: W, height: H, borderRadius: SCREEN_R }}>
       <ProgressBar pct={100} drapeau={imgDrapeau2} />
 
       <div style={{ position: "absolute", top: 224, left: 19, width: 304 }}>
