@@ -8,7 +8,6 @@ const imgDrapeau1   = "https://www.figma.com/api/mcp/asset/f6152656-e797-400f-91
 
 // ─── Screen 2: Run assets ─────────────────────────────────────────────────────
 const imgDrapeau2   = "https://www.figma.com/api/mcp/asset/ff7975d2-ad17-4a91-bacc-8eeee010aed4";
-// illustration pieces (positioned via Figma inset percentages)
 const run: Record<string, string> = {
   g:    "https://www.figma.com/api/mcp/asset/ef729c80-0852-4609-8aae-73663ef43a8f",
   g1:   "https://www.figma.com/api/mcp/asset/a4359b26-fe08-4bd4-b1bd-7aab92e2dbaf",
@@ -41,11 +40,26 @@ const run: Record<string, string> = {
   g23:  "https://www.figma.com/api/mcp/asset/0cc7c606-e051-4ac4-9089-166bcaf4b38a",
 };
 
-// Figma reference dimensions
+// ─── Dimensions ───────────────────────────────────────────────────────────────
+// Screen (Figma reference)
 const W = 390;
 const H = 844;
 
-// Convert Figma inset percentages → absolute px style
+// Phone frame bezels
+const FRAME_X      = 14;   // left + right bezel
+const FRAME_TOP    = 16;   // top bezel
+const FRAME_BOTTOM = 26;   // bottom bezel (room for USB-C)
+const PHONE_W      = W + FRAME_X * 2;         // 418
+const PHONE_H      = H + FRAME_TOP + FRAME_BOTTOM; // 886
+const FRAME_R      = 54;   // outer corner radius
+const SCREEN_R     = 44;   // screen corner radius
+
+// Dynamic Island
+const DI_W   = 126;
+const DI_H   = 37;
+const DI_TOP = 13; // from top of screen area
+
+// Convert Figma inset percentages → absolute px style (within W×H canvas)
 function pos(tPct: number, rPct: number, bPct: number, lPct: number): React.CSSProperties {
   const left   = (lPct / 100) * W;
   const top    = (tPct / 100) * H;
@@ -151,7 +165,7 @@ function GenreScreen({
 }
 
 // ─── Screen 2: On va courir ? ─────────────────────────────────────────────────
-const AUTO_RESET_DELAY = 5000; // ms avant reset auto
+const AUTO_RESET_DELAY = 5000;
 
 function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }) {
   const [btnHovered, setBtnHovered] = useState(false);
@@ -161,15 +175,13 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
   const triggerDimReset = () => {
     if (dimmingRef.current) return;
     dimmingRef.current = true;
-    onReset(); // le wrapper gère tout le timing
+    onReset();
   };
 
-  // Remet à zéro quand on quitte l'écran
   useEffect(() => {
     if (!active) dimmingRef.current = false;
   }, [active]);
 
-  // Démarre le timer uniquement quand l'écran est visible
   useEffect(() => {
     if (!active) return;
     const t = setTimeout(triggerDimReset, AUTO_RESET_DELAY);
@@ -180,13 +192,11 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
     <div className="bg-[#EAE3F4] select-none overflow-hidden relative" style={{ width: W, height: H }}>
       <ProgressBar pct={100} drapeau={imgDrapeau2} />
 
-      {/* Title */}
       <div style={{ position: "absolute", top: 224, left: 19, width: 304 }}>
         <p className="font-semibold text-[#A9A0F3]" style={{ fontSize: 24, lineHeight: "43px" }}>Tout est prêt !</p>
         <h2 className="font-black text-[#7D80F4]" style={{ fontSize: 36, lineHeight: "43px" }}>On va courir ?</h2>
       </div>
 
-      {/* Illustration — pieces positionnées aux coordonnées Figma exactes */}
       <img alt="" src={run.g}   style={pos(42.03, 21.31, 52.79, 67.38)} />
       <img alt="" src={run.g1}  style={pos(58.20, 44.67, 35.44, 43.73)} />
       <img alt="" src={run.v}   style={pos(59.78, 48.85, 35.42, 43.59)} />
@@ -217,7 +227,6 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
       <img alt="" src={run.g22} style={pos(41.58, 53.80, 55.53, 41.05)} />
       <img alt="" src={run.g23} style={pos(44.84, 45.62, 50.86, 39.05)} />
 
-      {/* C'est parti button */}
       <button
         onClick={triggerDimReset}
         onMouseEnter={() => setBtnHovered(true)}
@@ -241,8 +250,137 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
       >
         C'est parti !
       </button>
-
     </div>
+  );
+}
+
+// ─── iPhone 17 Pro chrome ─────────────────────────────────────────────────────
+function PhoneChrome() {
+  return (
+    <>
+      {/* Main body — Black Titanium finish */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: FRAME_R,
+        background: "linear-gradient(150deg, #2c2c2e 0%, #1c1c1e 45%, #131315 100%)",
+        boxShadow: [
+          "inset 0 0 0 0.5px rgba(255,255,255,0.10)",
+          "inset 0 1px 0 rgba(255,255,255,0.07)",
+          "inset 0 -1px 0 rgba(0,0,0,0.4)",
+          "0 0 0 1px rgba(0,0,0,0.55)",
+          "0 24px 64px rgba(0,0,0,0.55)",
+        ].join(", "),
+      }} />
+
+      {/* Left-edge specular highlight */}
+      <div style={{
+        position: "absolute",
+        top: FRAME_R * 0.6,
+        bottom: FRAME_R * 0.6,
+        left: 0,
+        width: 1,
+        background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.14) 25%, rgba(255,255,255,0.07) 75%, transparent)",
+        pointerEvents: "none",
+      }} />
+
+      {/* Right-edge specular highlight */}
+      <div style={{
+        position: "absolute",
+        top: FRAME_R * 0.6,
+        bottom: FRAME_R * 0.6,
+        right: 0,
+        width: 1,
+        background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.07) 25%, rgba(255,255,255,0.04) 75%, transparent)",
+        pointerEvents: "none",
+      }} />
+
+      {/* Action button — left side */}
+      <div style={{
+        position: "absolute",
+        top: FRAME_TOP + 42,
+        left: 2,
+        width: FRAME_X - 2,
+        height: 36,
+        borderRadius: "3px 2px 2px 3px",
+        background: "linear-gradient(to left, #252527, #2e2e30)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), -1px 0 0 rgba(255,255,255,0.04)",
+      }} />
+
+      {/* Volume Up — left side */}
+      <div style={{
+        position: "absolute",
+        top: FRAME_TOP + 104,
+        left: 2,
+        width: FRAME_X - 2,
+        height: 60,
+        borderRadius: "3px 2px 2px 3px",
+        background: "linear-gradient(to left, #252527, #2e2e30)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), -1px 0 0 rgba(255,255,255,0.04)",
+      }} />
+
+      {/* Volume Down — left side */}
+      <div style={{
+        position: "absolute",
+        top: FRAME_TOP + 178,
+        left: 2,
+        width: FRAME_X - 2,
+        height: 60,
+        borderRadius: "3px 2px 2px 3px",
+        background: "linear-gradient(to left, #252527, #2e2e30)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), -1px 0 0 rgba(255,255,255,0.04)",
+      }} />
+
+      {/* Power / Side button — right side */}
+      <div style={{
+        position: "absolute",
+        top: FRAME_TOP + 126,
+        right: 2,
+        width: FRAME_X - 2,
+        height: 74,
+        borderRadius: "2px 3px 3px 2px",
+        background: "linear-gradient(to right, #252527, #2e2e30)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.35), 1px 0 0 rgba(255,255,255,0.04)",
+      }} />
+
+      {/* USB-C port */}
+      <div style={{
+        position: "absolute",
+        bottom: 9,
+        left: PHONE_W / 2 - 27,
+        width: 54,
+        height: 10,
+        borderRadius: 5,
+        background: "#0a0a0c",
+        boxShadow: "inset 0 2px 3px rgba(0,0,0,0.95), 0 1px 0 rgba(255,255,255,0.05)",
+      }} />
+
+      {/* Speaker dots — left of USB-C */}
+      <div style={{ position: "absolute", bottom: 11, left: PHONE_W / 2 - 82, display: "flex", gap: 4 }}>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div key={i} style={{
+            width: 4,
+            height: 6,
+            borderRadius: 2,
+            background: "#0c0c0e",
+            boxShadow: "inset 0 1px 2px rgba(0,0,0,0.9)",
+          }} />
+        ))}
+      </div>
+
+      {/* Speaker dots — right of USB-C */}
+      <div style={{ position: "absolute", bottom: 11, left: PHONE_W / 2 + 50, display: "flex", gap: 4 }}>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div key={i} style={{
+            width: 4,
+            height: 6,
+            borderRadius: 2,
+            background: "#0c0c0e",
+            boxShadow: "inset 0 1px 2px rgba(0,0,0,0.9)",
+          }} />
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -258,73 +396,99 @@ export default function AppMockup({ className }: { className?: string }) {
     const el = containerRef.current;
     if (!el) return;
     const ro = new ResizeObserver((entries) => {
-      setScale(entries[0].contentRect.width / W);
+      setScale(entries[0].contentRect.width / PHONE_W);
     });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  const goToRun = () => {
-    setScreen("run");
-  };
+  const goToRun = () => setScreen("run");
 
-  // Appelé par RunScreen quand le reset est déclenché (clic ou auto)
-  // À ce moment le noir est déjà en train de se faire dans RunScreen —
-  // on prend la main : noir global → cut → fade-in
   const goToGenre = () => {
     setBlackout(true);
-    // Cut instantané pendant qu'on est dans le noir
     setTimeout(() => {
       setScreen("genre");
       setSelected(null);
     }, 420);
-    // Puis on rallume
     setTimeout(() => setBlackout(false), 500);
   };
 
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden ${className ?? ""}`}
-      style={{ aspectRatio: `${W} / ${H}` }}
+      className={`relative overflow-visible ${className ?? ""}`}
+      style={{ aspectRatio: `${PHONE_W} / ${PHONE_H}` }}
     >
       <div
         style={{
           position: "absolute",
-          top: 0, left: 0,
-          width: W, height: H,
+          top: 0,
+          left: 0,
+          width: PHONE_W,
+          height: PHONE_H,
           transformOrigin: "top left",
           transform: `scale(${scale})`,
         }}
       >
-        {/* Slide genre → run uniquement */}
-        <div
-          style={{
-            display: "flex",
-            width: W * 2,
-            height: H,
-            transform: `translateX(${screen === "run" ? -W : 0}px)`,
-            transition: screen === "run" ? "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
-          }}
-        >
-          <div style={{ width: W, height: H, flexShrink: 0 }}>
-            <GenreScreen selected={selected} setSelected={setSelected} onNext={goToRun} />
-          </div>
-          <div style={{ width: W, height: H, flexShrink: 0 }}>
-            <RunScreen onReset={goToGenre} active={screen === "run"} />
-          </div>
-        </div>
+        {/* ── Phone chrome (behind screen) ── */}
+        <PhoneChrome />
 
-        {/* Noir global — couvre tout pendant le reset */}
+        {/* ── Screen area with rounded clip ── */}
         <div
           style={{
             position: "absolute",
-            inset: 0,
-            background: "black",
-            opacity: blackout ? 1 : 0,
-            transition: blackout ? "opacity 0.35s ease" : "opacity 0.35s ease 0.1s",
-            pointerEvents: "none",
-            zIndex: 100,
+            top: FRAME_TOP,
+            left: FRAME_X,
+            width: W,
+            height: H,
+            borderRadius: SCREEN_R,
+            overflow: "hidden",
+          }}
+        >
+          {/* Slide container: genre → run */}
+          <div
+            style={{
+              display: "flex",
+              width: W * 2,
+              height: H,
+              transform: `translateX(${screen === "run" ? -W : 0}px)`,
+              transition: screen === "run" ? "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
+            }}
+          >
+            <div style={{ width: W, height: H, flexShrink: 0 }}>
+              <GenreScreen selected={selected} setSelected={setSelected} onNext={goToRun} />
+            </div>
+            <div style={{ width: W, height: H, flexShrink: 0 }}>
+              <RunScreen onReset={goToGenre} active={screen === "run"} />
+            </div>
+          </div>
+
+          {/* Blackout — within screen only */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "black",
+              opacity: blackout ? 1 : 0,
+              transition: blackout ? "opacity 0.35s ease" : "opacity 0.35s ease 0.1s",
+              pointerEvents: "none",
+              zIndex: 100,
+            }}
+          />
+        </div>
+
+        {/* ── Dynamic Island — above screen content ── */}
+        <div
+          style={{
+            position: "absolute",
+            top: FRAME_TOP + DI_TOP,
+            left: FRAME_X + (W - DI_W) / 2,
+            width: DI_W,
+            height: DI_H,
+            borderRadius: DI_H / 2,
+            background: "#000",
+            zIndex: 30,
+            boxShadow: "0 0 0 2px rgba(0,0,0,0.6)",
           }}
         />
       </div>
