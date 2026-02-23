@@ -37,7 +37,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="relative w-full h-dvh md:min-h-screen bg-[#353331] overflow-hidden flex flex-col">
+    <header className="relative w-full h-screen bg-[#353331] overflow-hidden flex flex-col">
       {/* ── Navbar ── */}
       <div className="relative z-50 w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
