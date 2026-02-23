@@ -43,13 +43,10 @@ const Header: React.FC = () => {
       <div className="relative z-50 w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
         <div className="flex items-center gap-3">
-          <div className="h-9 sm:h-11 w-9 sm:w-11 shrink-0">
-            <img
-              src={Logo}
-              alt="Logo Unify"
-              className="h-full w-auto object-contain"
-            />
-          </div>
+          <svg className="h-9 sm:h-11 w-auto" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="#7D80F4" strokeWidth="3"/>
+            <path d="M12 28 L20 12 L28 28" stroke="#7D80F4" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
           <span className="text-xl sm:text-2xl font-extrabold text-white tracking-[-0.02em]">
             UNIFY<span className="text-primary-500">.</span>
           </span>
