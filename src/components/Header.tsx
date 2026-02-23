@@ -43,14 +43,13 @@ const Header: React.FC = () => {
       <div className="relative z-50 w-full px-6 sm:px-8 pt-6 sm:pt-8 flex justify-between items-center max-w-7xl mx-auto">
         {/* Left — Logo + Title */}
         <div className="flex items-center gap-3">
-          <img
-            src={Logo}
-            alt="Logo Unify"
-            className="h-9 sm:h-11 w-auto object-contain"
-            decoding="sync"
-            fetchPriority="high"
-            style={{ backgroundColor: '#353331' }}
-          />
+          <div className="h-9 sm:h-11 w-9 sm:w-11 shrink-0">
+            <img
+              src={Logo}
+              alt="Logo Unify"
+              className="h-full w-auto object-contain"
+            />
+          </div>
           <span className="text-xl sm:text-2xl font-extrabold text-white tracking-[-0.02em]">
             UNIFY<span className="text-primary-500">.</span>
           </span>
