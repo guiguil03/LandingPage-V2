@@ -46,7 +46,7 @@ const Header: React.FC = () => {
           <img
             src={Logo}
             alt="Logo Unify"
-            className="h-9 sm:h-11 w-auto object-contain"
+            className="h-9 sm:h-11 w-auto object-contain mix-blend-screen"
           />
           <span className="text-xl sm:text-2xl font-extrabold text-white tracking-[-0.02em]">
             UNIFY<span className="text-primary-500">.</span>

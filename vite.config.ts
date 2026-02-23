@@ -46,6 +46,7 @@ ${urls}
 export default defineConfig({
   plugins: [react(), sitemapPlugin()],
   build: {
+    assetsInlineLimit: 8192, // inline assets < 8KB as base64 (logo.png = 4.3KB)
     rollupOptions: {
       output: {
         manualChunks: {
