@@ -44,7 +44,7 @@ function ProfileRow({
   };
 
   return (
-    <div className="@container flex items-center justify-between px-3 py-2">
+    <div className="@container flex items-center justify-between px-6 py-2.5">
       <div className="flex items-center gap-3">
         <img src={img} alt={name} className="w-10 h-10 rounded-full object-cover" />
         <span className="font-extrabold text-[#201a41] text-sm">{name}</span>
@@ -134,95 +134,103 @@ function DraggableMap({ srcSm, srcLg, children }: { srcSm: string; srcLg: string
 const BentoGrid: React.FC = () => {
   return (
     <section id="bento" className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col">
-      {/* Desktop: grid 3 colonnes, Mobile: stack */}
-      <div
-        className="grid gap-3 grid-cols-1 md:grid-cols-3 flex-1 min-h-0"
-      >
-        {/* 1. Modes de connexion — colonne gauche, pleine hauteur */}
-        <div
-          className="md:row-span-3 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(0,0,0,0) 60%), rgba(153,153,153,0.25)",
-          }}
-        >
-          <h3 className="text-white font-black uppercase text-[28px] leading-tight shrink-0">
-            Tu choisis<br />avec qui tu cours.
-          </h3>
-          <div className="flex-1 relative mt-4 min-h-[260px] -mb-8">
-            <div className="absolute inset-x-0 bottom-0 -top-4 flex items-end justify-center overflow-hidden">
-              <AppMockup className="w-[88%] translate-y-[22%]" />
+      {/* 3 Colonnes verticales indépendantes pour un effet bento non aligné */}
+      <div className="flex flex-col md:flex-row gap-3 flex-1 min-h-0">
+        
+        {/* COLONNE 1 — Tu choisis avec qui tu cours */}
+        <div className="flex-1 flex flex-col">
+          <div
+            className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(0,0,0,0) 60%), rgba(153,153,153,0.25)",
+            }}
+          >
+            <h3 className="text-white font-black uppercase text-[28px] leading-tight shrink-0">
+              Tu choisis<br />avec qui tu cours.
+            </h3>
+            <div className="flex-1 relative mt-4 min-h-[260px] -mb-8">
+              <div className="absolute inset-x-0 bottom-0 -top-4 flex items-end justify-center overflow-hidden">
+                <AppMockup className="w-[88%] translate-y-[22%]" />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* 2. Nombre de rencontre limitée à 2 — colonne centrale, haut */}
-        <div
-          className="rounded-[30px] overflow-hidden relative flex flex-col p-6 gap-4 min-h-[220px] md:min-h-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(51,51,51,0.7) 0%, rgba(51,51,51,0) 100%), rgba(153,153,153,0.25)",
-          }}
-        >
-          <h3 className="text-white font-black uppercase text-[22px] leading-tight">
-            Matche en<br />quelques secondes.
-          </h3>
-          <div className="bg-[#eae3f4] rounded-xl overflow-hidden divide-y divide-[#d4cce8]">
-            <div className="px-3 py-2">
-              <span className="text-[#7d80f4] font-extrabold text-sm">Autour de vous</span>
-            </div>
-            <ProfileRow img={imgArtHur} name="Art_hur" distance="350 m" />
-            <ProfileRow img={imgMaaathilda} name="Maaathilda" distance="1.2 km" />
-            <ProfileRow img={imgQuentin} name="Quentin" distance="2.4 km" />
-            <ProfileRow img={imgLaure} name="Laure" distance="3.1 km" />
+        {/* COLONNE 2 — Match en quelques secondes + Vois qui court */}
+        <div className="flex-1 flex flex-col gap-3">
+          {/* Matche en quelques secondes */}
+          <div
+            className="rounded-[30px] overflow-hidden relative flex flex-col p-8 gap-6 min-h-[240px] md:min-h-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(51,51,51,0.7) 0%, rgba(51,51,51,0) 100%), rgba(153,153,153,0.25)",
+            }}
+          >
+            <h3 className="text-white font-black uppercase text-[22px] leading-tight">
+              Matche en<br />quelques secondes.
+            </h3>
+            <div className="flex flex-col">
+              <div className="flex items-end">
+                <div className="bg-[#eae3f4] px-7 py-2.5 rounded-t-[22px] relative z-10 after:content-[''] after:absolute after:bottom-0 after:-right-[22px] after:w-[22px] after:h-[22px] after:rounded-bl-[22px] after:shadow-[-10px_10px_0_10px_#eae3f4] after:pointer-events-none">
+                  <span className="text-[#7d80f4] font-extrabold text-sm">Autour de vous</span>
+                </div>
+              </div>
+              <div className="bg-[#eae3f4] w-full rounded-b-[22px] rounded-tr-[22px] overflow-hidden flex flex-col relative z-0">
+                <div className="divide-y divide-[#d4cce8] flex flex-col">
+                                      <ProfileRow img={imgArtHur} name="Art_hur" distance="350 m" />
+                                      <ProfileRow img={imgMaaathilda} name="Maaathilda" distance="1.2 km" />
+                                      <ProfileRow img={imgQuentin} name="Quentin" distance="2.4 km" />
+                                      <ProfileRow img={imgLaure} name="Laure" distance="3.1 km" />
+                                    </div>
+                                  </div>
+                                </div>          </div>
+
+          {/* Vois qui court en ce moment */}
+          <div className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-6 min-h-[320px] md:min-h-0">
+            <DraggableMap srcSm={imgMapSm} srcLg={imgMapLg}>
+              <img src={imgPin1} alt="" draggable={false} className="absolute top-[38%] left-[35%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
+              <img src={imgPin2} alt="" draggable={false} className="absolute top-[55%] left-[62%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
+            </DraggableMap>
+            <div className="absolute inset-0 bg-gradient-to-b from-[rgba(53,51,49,0.7)] via-transparent to-transparent pointer-events-none z-20" />
+            <h3 className="relative z-20 text-white font-black uppercase text-[28px] leading-tight pointer-events-none">
+              Vois qui court<br />en ce moment.
+            </h3>
           </div>
         </div>
 
-        {/* 3. Matchmaking instantané — colonne droite, haut */}
-        <div
-          className="rounded-[30px] overflow-hidden relative flex items-center gap-5 p-6 min-h-[160px] md:min-h-0"
-          style={{ background: "rgba(153,153,153,0.25)" }}
-        >
-          <img src={imgHandshake} alt="" className="w-20 h-20 shrink-0 opacity-70" />
-          <h3 className="text-white font-medium text-[22px] leading-tight">
-            Matchmaking<br />instantané
-          </h3>
+        {/* COLONNE 3 — Matchmaking + Vérification + Assistance */}
+        <div className="flex-1 flex flex-col gap-3">
+          <div
+            className="flex-[0.9] rounded-[30px] overflow-hidden relative flex items-center gap-5 p-6 min-h-[140px] md:min-h-0"
+            style={{ background: "rgba(153,153,153,0.25)" }}
+          >
+            <img src={imgHandshake} alt="" className="w-16 h-16 shrink-0 opacity-70" />
+            <h3 className="text-white font-medium text-[22px] leading-tight">
+              Matchmaking<br />instantané
+            </h3>
+          </div>
+
+          <div
+            className="flex-1 rounded-[30px] overflow-hidden relative flex items-center justify-between p-6 min-h-[160px] md:min-h-0"
+            style={{ background: "rgba(153,153,153,0.25)" }}
+          >
+            <h3 className="text-white font-medium text-[22px] leading-tight">
+              Vérification<br />d'identité
+            </h3>
+            <img src={imgShield} alt="" className="w-20 h-20 shrink-0 opacity-70" />
+          </div>
+
+          <div className="flex-[1.1] rounded-[30px] overflow-hidden relative flex items-end p-6 min-h-[180px] md:min-h-0">
+            <picture className="absolute inset-0 w-full h-full">
+              <source srcSet={imgAssistanceLg} media="(min-width: 768px)" />
+              <img src={imgAssistanceSm} alt="Assistance" className="w-full h-full object-cover" />
+            </picture>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <h3 className="relative z-10 text-white font-medium text-[22px]">Assistance</h3>
+          </div>
         </div>
 
-        {/* 4. Partage de position — colonne centrale, bas (row-span-2) */}
-        <div
-          className="md:row-span-2 rounded-[30px] overflow-hidden relative flex flex-col p-6 min-h-[320px] md:min-h-0"
-        >
-          <DraggableMap srcSm={imgMapSm} srcLg={imgMapLg}>
-            <img src={imgPin1} alt="" draggable={false} className="absolute top-[35%] left-[35%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
-            <img src={imgPin2} alt="" draggable={false} className="absolute top-[55%] left-[62%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
-          </DraggableMap>
-          <div className="absolute inset-0 bg-gradient-to-b from-[rgba(53,51,49,0.7)] via-transparent to-transparent pointer-events-none z-20" />
-          <h3 className="relative z-20 text-white font-black uppercase text-[28px] leading-tight pointer-events-none">
-            Vois qui court<br />en ce moment.
-          </h3>
-        </div>
-
-        {/* 5. Vérification d'identité — colonne droite, milieu */}
-        <div
-          className="rounded-[30px] overflow-hidden relative flex items-center justify-between p-6 min-h-[160px] md:min-h-0"
-          style={{ background: "rgba(153,153,153,0.25)" }}
-        >
-          <h3 className="text-white font-medium text-[22px] leading-tight">
-            Vérification<br />d'identité
-          </h3>
-          <img src={imgShield} alt="" className="w-24 h-24 shrink-0 opacity-70" />
-        </div>
-
-        {/* 6. Assistance — colonne droite, bas */}
-        <div className="rounded-[30px] overflow-hidden relative flex items-end p-6 min-h-[160px] md:min-h-0">
-          <picture className="absolute inset-0 w-full h-full">
-            <source srcSet={imgAssistanceLg} media="(min-width: 768px)" />
-            <img src={imgAssistanceSm} alt="Assistance" className="w-full h-full object-cover" />
-          </picture>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <h3 className="relative z-10 text-white font-medium text-[22px]">Assistance</h3>
-        </div>
       </div>
     </section>
   );
