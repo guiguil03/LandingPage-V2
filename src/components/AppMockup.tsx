@@ -116,7 +116,7 @@ function GenreScreen({
   const [btnActive,  setBtnActive]  = useState(false);
 
   return (
-    <div className="bg-[#EAE3F4] flex flex-col select-none overflow-hidden relative" style={{ width: W, height: H, borderRadius: SCREEN_R }}>
+    <div className="bg-[#EAE3F4] flex flex-col select-none overflow-hidden relative" style={{ width: W, height: H }}>
       <ProgressBar pct={80} drapeau={imgDrapeau1} />
 
       <div className="flex-1 flex items-center justify-center">
@@ -206,7 +206,7 @@ function RunScreen({ onReset, active }: { onReset: () => void; active: boolean }
   }, [active]);
 
   return (
-    <div className="bg-[#EAE3F4] select-none overflow-hidden relative" style={{ width: W, height: H, borderRadius: SCREEN_R }}>
+    <div className="bg-[#EAE3F4] select-none overflow-hidden relative" style={{ width: W, height: H }}>
       <ProgressBar pct={100} drapeau={imgDrapeau2} />
 
       <div style={{ position: "absolute", top: 224, left: 19, width: 304 }}>
@@ -296,7 +296,15 @@ function PhoneChrome() {
           "inset 0 -1px 0 rgba(0,0,0,0.45)",
           "0 0 0 1px rgba(0,0,0,0.6)",
         ].join(", "),
-      }} />
+      }}>
+        {/* ── 2. Glass bezel (absorbs sub-pixel bleeding from screen mask) ── */}
+        <div style={{
+          position: "absolute",
+          inset: 1,
+          borderRadius: FRAME_R - 1,
+          background: "#000",
+        }} />
+      </div>
 
       {/* ── 3. Edge specular highlights — after body, naturally on top ── */}
       <div style={{
@@ -405,7 +413,8 @@ export default function AppMockup({ className }: { className?: string }) {
             overflow: "hidden",
             background: "#000",
             willChange: "transform",
-            boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.9)",
+            transform: "translateZ(0)",
+            WebkitMaskImage: "-webkit-radial-gradient(white, black)",
           }}
         >
           {/* Slide container: genre → run */}
@@ -430,12 +439,13 @@ export default function AppMockup({ className }: { className?: string }) {
           <div
             style={{
               position: "absolute",
-              inset: 0,
+              inset: -5,
               background: "black",
               opacity: blackout ? 1 : 0,
               transition: blackout ? "opacity 0.35s ease" : "opacity 0.35s ease 0.1s",
               pointerEvents: "none",
               zIndex: 100,
+              transform: "translateZ(0)",
             }}
           />
         </div>
