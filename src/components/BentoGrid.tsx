@@ -189,7 +189,7 @@ const BentoGrid: React.FC = () => {
           {/* Vois qui court en ce moment */}
           <div className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-6 min-h-[320px] md:min-h-0">
             <DraggableMap srcSm={imgMapSm} srcLg={imgMapLg}>
-              <img src={imgPin1} alt="" draggable={false} className="absolute top-[38%] left-[35%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
+              <img src={imgPin1} alt="" draggable={false} className="absolute top-[41%] left-[35%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
               <img src={imgPin2} alt="" draggable={false} className="absolute top-[55%] left-[62%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
             </DraggableMap>
             <div className="absolute inset-0 bg-gradient-to-b from-[rgba(53,51,49,0.7)] via-transparent to-transparent pointer-events-none z-20" />
