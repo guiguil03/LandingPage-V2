@@ -108,7 +108,7 @@ const Header: React.FC = () => {
             <span className="text-[#7D80F4]">commence ici.</span>
           </h1>
           <p className="mt-8 text-white text-lg max-w-md leading-relaxed">
-            Match instantané avec des coureurs à ton niveau. Rejoins-les maintenant.
+            Match instantané avec des coureurs de ton niveau. Rejoins-les maintenant.
           </p>
           <div className="mt-10 flex items-center gap-4">
             <button
@@ -142,7 +142,7 @@ const Header: React.FC = () => {
             <span className="text-[#7D80F4]">commence ici.</span>
           </h1>
           <p className="text-white/80 text-sm leading-relaxed max-w-xs">
-            Match instantané avec des coureurs à ton niveau. Rejoins-les maintenant.
+            Match instantané avec des coureurs de ton niveau. Rejoins-les maintenant.
           </p>
           <div className="flex items-center gap-3">
             <button

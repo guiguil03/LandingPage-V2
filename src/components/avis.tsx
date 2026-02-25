@@ -306,7 +306,7 @@ const DesktopStack: React.FC<{ items: Avis[] }> = ({ items }) => {
       const totalCards = cards.length;
 
       cards.forEach((card) => {
-        gsap.set(card, { yPercent: 150, opacity: 1, scale: 0.92 });
+        gsap.set(card, { y: () => window.innerHeight * 1.1, opacity: 1, scale: 0.92 });
       });
 
       const imgLoadPromises = Array.from(document.images)
@@ -343,10 +343,10 @@ const DesktopStack: React.FC<{ items: Avis[] }> = ({ items }) => {
         const rotation = i % 2 === 0 ? -2.5 : 2.5;
         const stackOffsetY = -i * 6;
 
-        tl.to(
+        tl.fromTo(
           card,
+          { y: () => window.innerHeight * 1.1, scale: 0.92 },
           {
-            yPercent: 0,
             y: stackOffsetY,
             rotation: rotation,
             scale: 1,
