@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { flushSync } from "react-dom";
-import { FiSearch, FiX, FiPhone, FiAlertTriangle, FiMessageCircle } from "react-icons/fi";
+import { FiSearch, FiX, FiPhone, FiAlertTriangle, FiMessageCircle, FiUsers, FiZap, FiShield, FiCheckCircle } from "react-icons/fi";
 import { gsap } from "gsap";
 import { Flip } from "gsap/all";
 gsap.registerPlugin(Flip);
@@ -123,32 +123,40 @@ function DraggableMap({ srcSm, srcLg, children }: { srcSm: string; srcLg: string
 
 const BentoGrid: React.FC = () => {
   const bentoInnerRef     = useRef<HTMLDivElement>(null);
-  const assistanceCardRef = useRef<HTMLDivElement>(null);
-  const thumbnailRef      = useRef<HTMLDivElement>(null);
+  const matchmakingRef    = useRef<HTMLDivElement>(null);
+  const verificationRef   = useRef<HTMLDivElement>(null);
+  const assistanceRef     = useRef<HTMLDivElement>(null);
+  const matchmakingThumbRef  = useRef<HTMLDivElement>(null);
+  const verificationThumbRef = useRef<HTMLDivElement>(null);
+  const assistanceThumbRef   = useRef<HTMLDivElement>(null);
   const overlayContentRef = useRef<HTMLDivElement>(null);
-  const isOpenRef  = useRef(false);
+  const activeCardRef     = useRef<string | null>(null);
   const isAutoScrollingRef = useRef(false);
-  const [isOpen, setIsOpen]     = useState(false);
+  const [activeCard, setActiveCard] = useState<string | null>(null);
 
-  const closeAssistance = useCallback(() => {
-    if (!isOpenRef.current || isAutoScrollingRef.current) return;
-    isOpenRef.current = false;
+  const closeCard = useCallback(() => {
+    if (!activeCardRef.current || isAutoScrollingRef.current) return;
+    const currentId = activeCardRef.current;
+    activeCardRef.current = null;
 
-    const card    = assistanceCardRef.current;
-    const content = overlayContentRef.current;
-    const thumb   = thumbnailRef.current;
+    let card: HTMLDivElement | null = null;
+    let thumb: HTMLDivElement | null = null;
+    if (currentId === "matchmaking") { card = matchmakingRef.current; thumb = matchmakingThumbRef.current; }
+    if (currentId === "verification") { card = verificationRef.current; thumb = verificationThumbRef.current; }
+    if (currentId === "assistance") { card = assistanceRef.current; thumb = assistanceThumbRef.current; }
+    
     if (!card) return;
 
     const doClose = () => {
       const state = Flip.getState(card);
-      flushSync(() => setIsOpen(false));
+      flushSync(() => setActiveCard(null));
 
       if (thumb) {
         gsap.to(thumb, { opacity: 1, duration: 0.5, ease: "power2.inOut" });
       }
 
       Flip.from(state, {
-        duration: 0.65,
+        duration: 0.6,
         ease: "power4.inOut",
         absolute: true,
         zIndex: 50,
@@ -159,19 +167,22 @@ const BentoGrid: React.FC = () => {
       });
     };
 
-    if (content) {
-      gsap.to(content, { autoAlpha: 0, y: 15, duration: 0.2, ease: "power2.in", onComplete: doClose });
+    if (overlayContentRef.current) {
+      gsap.to(overlayContentRef.current, { autoAlpha: 0, y: 15, duration: 0.2, ease: "power2.in", onComplete: doClose });
     } else {
       doClose();
     }
   }, []);
 
-  const openAssistance = useCallback(() => {
-    if (isOpenRef.current) return;
-    isOpenRef.current = true;
+  const openCard = useCallback((id: string) => {
+    if (activeCardRef.current) return;
+    activeCardRef.current = id;
 
-    const card  = assistanceCardRef.current;
-    const thumb = thumbnailRef.current;
+    let card: HTMLDivElement | null = null;
+    let thumb: HTMLDivElement | null = null;
+    if (id === "matchmaking") { card = matchmakingRef.current; thumb = matchmakingThumbRef.current; }
+    if (id === "verification") { card = verificationRef.current; thumb = verificationThumbRef.current; }
+    if (id === "assistance") { card = assistanceRef.current; thumb = assistanceThumbRef.current; }
     if (!card) return;
 
     // Scroll automatique avec verrou
@@ -179,28 +190,23 @@ const BentoGrid: React.FC = () => {
     if (bentoSection) {
       isAutoScrollingRef.current = true;
       const lenis = (window as any).lenis;
-      
       if (lenis) {
-        lenis.scrollTo(bentoSection, { 
-          duration: 1.2,
-          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        });
+        lenis.scrollTo(bentoSection, { duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
       } else {
         const offset = bentoSection.getBoundingClientRect().top + window.scrollY;
         window.scrollTo({ top: offset, behavior: "smooth" });
       }
-      
       setTimeout(() => { isAutoScrollingRef.current = false; }, 1200);
     }
 
     const state = Flip.getState(card);
-    flushSync(() => setIsOpen(true));
+    flushSync(() => setActiveCard(id));
+
+    if (overlayContentRef.current) gsap.set(overlayContentRef.current, { autoAlpha: 0, y: 20 });
 
     if (thumb) {
       gsap.to(thumb, { opacity: 0, duration: 0.4, ease: "power2.out" });
     }
-
-    if (overlayContentRef.current) gsap.set(overlayContentRef.current, { autoAlpha: 0, y: 20 });
 
     Flip.from(state, {
       duration: 0.75,
@@ -213,24 +219,23 @@ const BentoGrid: React.FC = () => {
         }
       },
     });
-  }, [closeAssistance]);
+  }, []);
 
   useEffect(() => {
-    const onActive = () => { 
-      if (isOpenRef.current && !isAutoScrollingRef.current) closeAssistance(); 
-    };
+    const onActive = () => { if (activeCardRef.current && !isAutoScrollingRef.current) closeCard(); };
     window.addEventListener("wheel",     onActive, { passive: true });
     window.addEventListener("touchmove", onActive, { passive: true });
     return () => {
       window.removeEventListener("wheel",     onActive);
       window.removeEventListener("touchmove", onActive);
     };
-  }, [closeAssistance]);
+  }, [closeCard]);
 
   return (
     <section id="bento" className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col font-sans">
       <div ref={bentoInnerRef} className="relative flex flex-col md:flex-row gap-3 flex-1 min-h-0">
 
+        {/* COLONNE 1 */}
         <div className="flex-1 flex flex-col">
           <div
             className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
@@ -247,6 +252,7 @@ const BentoGrid: React.FC = () => {
           </div>
         </div>
 
+        {/* COLONNE 2 */}
         <div className="flex-1 flex flex-col gap-3">
           <div
             className="rounded-[30px] overflow-hidden relative flex flex-col p-8 gap-6 min-h-[240px] md:min-h-0"
@@ -284,35 +290,115 @@ const BentoGrid: React.FC = () => {
           </div>
         </div>
 
+        {/* COLONNE 3 */}
         <div className="flex-1 flex flex-col gap-3">
-          <div
-            className="flex-[0.9] rounded-[30px] overflow-hidden relative flex items-center gap-5 p-6 min-h-[140px] md:min-h-0"
-            style={{ background: "rgba(153,153,153,0.25)" }}
-          >
-            <img src={imgHandshake} alt="" className="w-16 h-16 shrink-0 opacity-70" />
-            <h3 className="text-white font-medium text-[22px] leading-tight">Matchmaking<br />instantané</h3>
-          </div>
-
-          <div
-            className="flex-1 rounded-[30px] overflow-hidden relative flex items-center justify-between p-6 min-h-[160px] md:min-h-0"
-            style={{ background: "rgba(153,153,153,0.25)" }}
-          >
-            <h3 className="text-white font-medium text-[22px] leading-tight">Vérification<br />d'identité</h3>
-            <img src={imgShield} alt="" className="w-20 h-20 shrink-0 opacity-70" />
-          </div>
-
-          <div className={`flex-[1.1] min-h-[180px] md:min-h-0 ${isOpen ? "" : "relative"}`}>
+          
+          {/* Matchmaking */}
+          <div className={`flex-[0.9] min-h-[140px] md:min-h-0 ${activeCard === "matchmaking" ? "" : "relative"}`}>
             <div
-              ref={assistanceCardRef}
-              onClick={!isOpen ? openAssistance : undefined}
+              ref={matchmakingRef}
+              onClick={() => openCard("matchmaking")}
               className={
-                isOpen
+                activeCard === "matchmaking"
+                  ? "absolute inset-0 z-50 overflow-hidden rounded-[30px] bg-white"
+                  : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-center p-6 cursor-pointer"
+              }
+              style={{ background: activeCard === "matchmaking" ? "#FFFFFF" : "rgba(153,153,153,0.25)" }}
+            >
+              <div ref={matchmakingThumbRef} className="flex items-center gap-5 w-full" style={{ opacity: activeCard === "matchmaking" ? 0 : 1 }}>
+                <img src={imgHandshake} alt="" className="w-16 h-16 shrink-0 opacity-70 transition-transform group-hover:scale-110" />
+                <h3 className="text-white font-medium text-[22px] leading-tight">Matchmaking<br />instantané</h3>
+              </div>
+              
+              {activeCard === "matchmaking" && (
+                <div ref={overlayContentRef} className="relative z-10 h-full flex flex-col p-6 md:px-10 md:py-12 w-full max-w-6xl mx-auto overflow-y-auto">
+                  <button onClick={(e) => { e.stopPropagation(); closeCard(); }} className="absolute top-6 right-6 w-12 h-12 rounded-full bg-[#f3f4f6] flex items-center justify-center text-[#201a41] hover:bg-[#201a41] hover:text-white transition-all z-20">
+                    <FiX size={24} />
+                  </button>
+                  <div className="mb-10 pr-12">
+                    <h2 className="text-[#201a41] text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-tight">VOTRE RYTHME,<br /><span className="text-[#7d80f4]">VOTRE MATCH.</span></h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center"><FiZap size={24} className="text-[#7d80f4]" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Vitesse Éclair.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium">Trouvez un partenaire en moins de 30 secondes grâce à notre algorithme optimisé.</p>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#201a41]/5 flex items-center justify-center"><FiUsers size={24} className="#201a41" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Affinités.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium">On ne matche pas que le chrono, mais aussi vos objectifs et votre philosophie de course.</p>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center"><FiCheckCircle size={24} className="text-[#7d80f4]" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Fiabilité.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium">98% de satisfaction sur les rencontres Unify. Courez avec l'esprit tranquille.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Vérification */}
+          <div className={`flex-1 min-h-[160px] md:min-h-0 ${activeCard === "verification" ? "" : "relative"}`}>
+            <div
+              ref={verificationRef}
+              onClick={() => openCard("verification")}
+              className={
+                activeCard === "verification"
+                  ? "absolute inset-0 z-50 overflow-hidden rounded-[30px] bg-white"
+                  : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-center p-6 cursor-pointer"
+              }
+              style={{ background: activeCard === "verification" ? "#FFFFFF" : "rgba(153,153,153,0.25)" }}
+            >
+              <div ref={verificationThumbRef} className="flex items-center justify-between w-full" style={{ opacity: activeCard === "verification" ? 0 : 1 }}>
+                <h3 className="text-white font-medium text-[22px] leading-tight">Vérification<br />d'identité</h3>
+                <img src={imgShield} alt="" className="w-20 h-20 shrink-0 opacity-70 transition-transform group-hover:scale-110" />
+              </div>
+              
+              {activeCard === "verification" && (
+                <div ref={overlayContentRef} className="relative z-10 h-full flex flex-col p-6 md:px-10 md:py-12 w-full max-w-6xl mx-auto overflow-y-auto">
+                  <button onClick={(e) => { e.stopPropagation(); closeCard(); }} className="absolute top-6 right-6 w-12 h-12 rounded-full bg-[#f3f4f6] flex items-center justify-center text-[#201a41] hover:bg-[#201a41] hover:text-white transition-all z-20">
+                    <FiX size={24} />
+                  </button>
+                  <div className="mb-10 pr-12">
+                    <h2 className="text-[#201a41] text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-tight">CONFIANCE<br /><span className="text-[#7d80f4]">CERTIFIÉE.</span></h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center"><FiShield size={24} className="text-[#7d80f4]" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Profils Réels.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium">Chaque membre passe par un processus de vérification strict pour garantir une communauté saine.</p>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#201a41]/5 flex items-center justify-center"><FiCheckCircle size={24} className="#201a41" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Badge Unify.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium">Le badge bleu certifie que vous courez avec un profil authentifié et respectueux des règles.</p>
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center"><FiAlertTriangle size={24} className="text-[#7d80f4]" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Modération.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium">Une équipe dédiée surveille les signalements 24/7 pour maintenir l'intégrité de la plateforme.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Assistance */}
+          <div className={`flex-[1.1] min-h-[180px] md:min-h-0 ${activeCard === "assistance" ? "" : "relative"}`}>
+            <div
+              ref={assistanceRef}
+              onClick={() => openCard("assistance")}
+              className={
+                activeCard === "assistance"
                   ? "absolute inset-0 z-50 overflow-hidden rounded-[30px] bg-white"
                   : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-end p-6 cursor-pointer bg-white"
               }
             >
-              {/* Miniature */}
-              <div ref={thumbnailRef} className="absolute inset-0" style={{ opacity: isOpen ? 0 : 1 }}>
+              <div ref={assistanceThumbRef} className="absolute inset-0" style={{ opacity: activeCard === "assistance" ? 0 : 1 }}>
                 <picture className="absolute inset-0 w-full h-full">
                   <source srcSet={imgAssistanceLg} media="(min-width: 768px)" />
                   <img src={imgAssistanceSm} alt="Assistance" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -326,79 +412,45 @@ const BentoGrid: React.FC = () => {
                 </div>
               </div>
 
-              {isOpen && (
+              {activeCard === "assistance" && (
                 <div ref={overlayContentRef} className="relative z-10 h-full flex flex-col p-6 md:px-10 md:py-12 w-full max-w-6xl mx-auto overflow-y-auto">
-                  {/* Bouton Fermer Absolu */}
-                  <button
-                    onClick={(e) => { e.stopPropagation(); closeAssistance(); }}
-                    className="group absolute top-6 right-6 md:top-8 md:right-8 w-12 h-12 rounded-full bg-[#f3f4f6] flex items-center justify-center text-[#201a41] hover:bg-[#201a41] hover:text-white transition-all duration-300 z-20"
-                    aria-label="Fermer"
-                  >
-                    <FiX size={24} className="group-hover:rotate-90 transition-transform duration-500" />
+                  <button onClick={(e) => { e.stopPropagation(); closeCard(); }} className="absolute top-6 right-6 w-12 h-12 rounded-full bg-[#f3f4f6] flex items-center justify-center text-[#201a41] hover:bg-[#201a41] hover:text-white transition-all z-20">
+                    <FiX size={24} />
                   </button>
-
-                  {/* Header */}
-                  <div className="mb-10 pr-12">
-                    <h2 className="text-[#201a41] text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
-                      VOTRE ANGE<br />
-                      <span className="text-[#7d80f4]">GARDIEN.</span>
-                    </h2>
-                  </div>
-
-                  {/* Feature Grid */}
+                  <div className="mb-10 pr-12"><h2 className="text-[#201a41] text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-tight">VOTRE ANGE<br /><span className="text-[#7d80f4]">GARDIEN.</span></h2></div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 flex-1">
                     <div className="flex flex-col gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center">
-                        <FiPhone size={24} className="text-[#7d80f4]" />
-                      </div>
-                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Urgence<br />SOS 24/7.</h3>
-                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">
-                        Un problème ? Un bouton dédié alerte instantanément nos équipes et vos contacts d'urgence.
-                      </p>
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center"><FiPhone size={24} className="text-[#7d80f4]" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Urgence SOS 24/7.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">Un problème ? Un bouton dédié alerte instantanément nos équipes et vos contacts d'urgence.</p>
                     </div>
-
                     <div className="flex flex-col gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-[#201a41]/5 flex items-center justify-center">
-                        <FiAlertTriangle size={24} className="#201a41" />
-                      </div>
-                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Signalement<br />Direct.</h3>
-                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">
-                        Signalez tout incident ou comportement inapproprié sur votre parcours.
-                      </p>
+                      <div className="w-12 h-12 rounded-2xl bg-[#201a41]/5 flex items-center justify-center"><FiAlertTriangle size={24} className="#201a41" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Signalement Direct.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">Signalez tout incident ou comportement inapproprié sur votre parcours.</p>
                     </div>
-
                     <div className="flex flex-col gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center">
-                        <FiMessageCircle size={24} className="text-[#7d80f4]" />
-                      </div>
-                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Support<br />Humain.</h3>
-                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">
-                        Zéro bots. Chattez avec notre équipe pour toute question, à chaque kilomètre.
-                      </p>
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center"><FiMessageCircle size={24} className="text-[#7d80f4]" /></div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Support Humain.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">Zéro bots. Chattez avec notre équipe pour toute question, à chaque kilomètre.</p>
                     </div>
                   </div>
-
-                  {/* Footer */}
                   <div className="mt-10 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8">
                     <div className="flex items-center gap-4">
                       <div className="flex -space-x-3">
                         {[imgArtHur, imgMaaathilda, imgQuentin, imgLaure].map((img, i) => (
-                          <img key={i} src={img} alt="" className="w-10 h-10 rounded-full border-2 border-white object-cover" />
+                          <img key={i} src={img} alt="" className="w-12 h-12 rounded-full border-2 border-white object-cover shadow-sm" />
                         ))}
                       </div>
-                      <p className="text-[#201a41] font-bold text-sm md:text-base">
-                        REJOIGNEZ <span className="text-[#7d80f4]">12,000+</span> COUREURS.
-                      </p>
+                      <p className="text-[#201a41] font-bold text-sm md:text-base">REJOIGNEZ <span className="text-[#7d80f4]">12,000+</span> COUREURS.</p>
                     </div>
-                    
-                    <button className="w-full md:w-auto px-8 py-4 bg-[#7d80f4] text-white rounded-2xl font-extrabold uppercase tracking-widest text-xs hover:bg-[#6b6fe8] transition-all">
-                      CONSULTER LA FAQ
-                    </button>
+                    <button className="w-full md:w-auto px-8 py-4 bg-[#7d80f4] text-white rounded-2xl font-extrabold uppercase tracking-widest text-xs hover:bg-[#6b6fe8] transition-all">CONSULTER LA FAQ</button>
                   </div>
                 </div>
               )}
             </div>
           </div>
+
         </div>
 
       </div>
