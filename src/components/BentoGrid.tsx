@@ -241,7 +241,7 @@ const BentoGrid: React.FC = () => {
         <div className="flex-1 flex flex-col">
           <div
             className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
-            style={{ background: "linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(0,0,0,0) 60%), rgba(153,153,153,0.25)" }}
+            style={{ background: "linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(53,51,49,0.55) 20%, rgba(53,51,49,0.22) 40%, rgba(53,51,49,0.04) 55%, rgba(53,51,49,0) 65%), rgba(153,153,153,0.25)" }}
           >
             <h3 className="text-white font-extrabold uppercase text-[28px] leading-tight shrink-0">
               Tu choisis<br />avec qui tu cours.
@@ -258,7 +258,7 @@ const BentoGrid: React.FC = () => {
         <div className="flex-1 flex flex-col gap-3">
           <div
             className="rounded-[30px] overflow-hidden relative flex flex-col p-8 gap-6 min-h-[240px] md:min-h-0"
-            style={{ background: "linear-gradient(180deg, rgba(51,51,51,0.7) 0%, rgba(51,51,51,0) 100%), rgba(153,153,153,0.25)" }}
+            style={{ background: "linear-gradient(180deg, rgba(51,51,51,0.7) 0%, rgba(51,51,51,0.42) 22%, rgba(51,51,51,0.16) 45%, rgba(51,51,51,0.03) 60%, rgba(51,51,51,0) 70%), rgba(153,153,153,0.25)" }}
           >
             <h3 className="text-white font-extrabold uppercase text-[22px] leading-tight">
               Matche en<br />quelques secondes.
