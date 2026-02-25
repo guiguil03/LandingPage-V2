@@ -90,7 +90,7 @@ function ProgressBar({ pct, drapeau }: { pct: number; drapeau: string }) {
       <img src={drapeau} alt="" style={{ position: "absolute", top: 80, left: 328, width: 41.678, height: 51, zIndex: 2 }} />
       <div style={{ position: "absolute", top: 122, left: 52, width: 286, height: 7, zIndex: 1 }}>
         <div className="w-full h-full bg-[#D5CFFB] rounded-full overflow-hidden">
-          <div className="h-full bg-[#7D80F4] rounded-full" style={{ width: `${pct}%` }} />
+          <div className="h-full bg-[#7D80F4] rounded-full" style={{ width: `${pct}%`, transition: "width 0.45s cubic-bezier(0.4, 0, 0.2, 1)" }} />
         </div>
       </div>
     </>
@@ -105,11 +105,12 @@ const genders = [
 ];
 
 function GenreScreen({
-  selected, setSelected, onNext,
+  selected, setSelected, onNext, pct,
 }: {
   selected: "male" | "female" | "other" | null;
   setSelected: (v: "male" | "female" | "other" | null) => void;
   onNext: () => void;
+  pct: number;
 }) {
   const [hovered,    setHovered]    = useState<"male" | "female" | "other" | null>(null);
   const [btnHovered, setBtnHovered] = useState(false);
@@ -117,7 +118,7 @@ function GenreScreen({
 
   return (
     <div className="bg-[#EAE3F4] flex flex-col select-none overflow-hidden relative" style={{ width: W, height: H }}>
-      <ProgressBar pct={80} drapeau={imgDrapeau1} />
+      <ProgressBar pct={pct} drapeau={imgDrapeau1} />
 
       <div className="flex-1 flex items-center justify-center">
         <div className="flex flex-col items-center gap-[42px]" style={{ width: 295 }}>
@@ -358,6 +359,7 @@ export default function AppMockup({ className }: { className?: string }) {
   const [screen,   setScreen]   = useState<"genre" | "run">("genre");
   const [blackout, setBlackout] = useState(false);
   const [selected, setSelected] = useState<"male" | "female" | "other" | null>(null);
+  const [pct,      setPct]      = useState(80);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -369,10 +371,14 @@ export default function AppMockup({ className }: { className?: string }) {
     return () => ro.disconnect();
   }, []);
 
-  const goToRun = () => setScreen("run");
+  const goToRun = () => {
+    setPct(100);
+    setTimeout(() => setScreen("run"), 450);
+  };
 
   const goToGenre = () => {
     setBlackout(true);
+    setTimeout(() => setPct(80), 20);
     setTimeout(() => {
       setScreen("genre");
       setSelected(null);
@@ -417,20 +423,12 @@ export default function AppMockup({ className }: { className?: string }) {
             WebkitMaskImage: "-webkit-radial-gradient(white, black)",
           }}
         >
-          {/* Slide container: genre → run */}
-          <div
-            style={{
-              display: "flex",
-              width: W * 2,
-              height: H,
-              transform: `translateX(${screen === "run" ? -W : 0}px)`,
-              transition: screen === "run" ? "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
-            }}
-          >
-            <div style={{ width: W, height: H, flexShrink: 0 }}>
-              <GenreScreen selected={selected} setSelected={setSelected} onNext={goToRun} />
+          {/* Fade-in on top: genre reste opaque, run apparaît par-dessus → pas de dim */}
+          <div style={{ position: "relative", width: W, height: H }}>
+            <div style={{ position: "absolute", top: 0, left: 0, pointerEvents: screen === "run" ? "none" : "auto" }}>
+              <GenreScreen selected={selected} setSelected={setSelected} onNext={goToRun} pct={pct} />
             </div>
-            <div style={{ width: W, height: H, flexShrink: 0 }}>
+            <div style={{ position: "absolute", top: 0, left: 0, opacity: screen === "run" ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: screen === "run" ? "auto" : "none" }}>
               <RunScreen onReset={goToGenre} active={screen === "run"} />
             </div>
           </div>

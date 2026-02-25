@@ -121,6 +121,8 @@ function DraggableMap({ srcSm, srcLg, children }: { srcSm: string; srcLg: string
   );
 }
 
+const NOISE = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E")`;
+
 const BentoGrid: React.FC = () => {
   const bentoInnerRef     = useRef<HTMLDivElement>(null);
   const matchmakingRef    = useRef<HTMLDivElement>(null);
@@ -241,7 +243,7 @@ const BentoGrid: React.FC = () => {
         <div className="flex-1 flex flex-col">
           <div
             className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
-            style={{ background: "linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(53,51,49,0.55) 20%, rgba(53,51,49,0.22) 40%, rgba(53,51,49,0.04) 55%, rgba(53,51,49,0) 65%), rgba(153,153,153,0.25)" }}
+            style={{ background: `${NOISE}, linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(53,51,49,0) 65%), rgba(153,153,153,0.25)` }}
           >
             <h3 className="text-white font-extrabold uppercase text-[28px] leading-tight shrink-0">
               Tu choisis<br />avec qui tu cours.
@@ -258,9 +260,11 @@ const BentoGrid: React.FC = () => {
         <div className="flex-1 flex flex-col gap-3">
           <div
             className="rounded-[30px] overflow-hidden relative flex flex-col p-8 gap-6 min-h-[240px] md:min-h-0"
-            style={{ background: "linear-gradient(180deg, rgba(51,51,51,0.7) 0%, rgba(51,51,51,0.42) 22%, rgba(51,51,51,0.16) 45%, rgba(51,51,51,0.03) 60%, rgba(51,51,51,0) 70%), rgba(153,153,153,0.25)" }}
+            style={{ background: `${NOISE}, rgba(153,153,153,0.25)` }}
           >
-            <h3 className="text-white font-extrabold uppercase text-[22px] leading-tight">
+            <div className="absolute inset-0 pointer-events-none rounded-[30px]"
+              style={{ background: "linear-gradient(to bottom, rgba(51,51,51,0.72), rgba(51,51,51,0))" }} />
+            <h3 className="relative text-white font-extrabold uppercase text-[22px] leading-tight">
               Matche en<br />quelques secondes.
             </h3>
             <div className="flex flex-col">
@@ -285,7 +289,7 @@ const BentoGrid: React.FC = () => {
               <img src={imgPin1} alt="" draggable={false} className="absolute top-[41%] left-[35%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
               <img src={imgPin2} alt="" draggable={false} className="absolute top-[55%] left-[62%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
             </DraggableMap>
-            <div className="absolute inset-0 bg-gradient-to-b from-[rgba(53,51,49,0.7)] via-transparent to-transparent pointer-events-none z-20" />
+            <div className="absolute inset-0 pointer-events-none z-20" style={{ background: "linear-gradient(to bottom, rgba(53,51,49,0.62), rgba(53,51,49,0))" }} />
             <h3 className="relative z-20 text-white font-extrabold uppercase text-[28px] leading-tight pointer-events-none">
               Vois qui court<br />en ce moment.
             </h3>
