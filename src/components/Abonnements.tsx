@@ -53,6 +53,8 @@ const Abonnements: React.FC = () => {
 
       gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
       gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
+      if (col1) gsap.set(col1, { willChange: "transform" });
+      if (col3) gsap.set(col3, { willChange: "transform" });
 
       requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
 
