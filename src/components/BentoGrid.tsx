@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { flushSync } from "react-dom";
-import { FiSearch, FiX, FiMessageCircle, FiAlertTriangle, FiPhone, FiHelpCircle } from "react-icons/fi";
+import { FiSearch, FiX, FiPhone, FiAlertTriangle, FiMessageCircle } from "react-icons/fi";
 import { gsap } from "gsap";
 import { Flip } from "gsap/all";
 gsap.registerPlugin(Flip);
@@ -24,15 +24,6 @@ const imgHandshake  = imgMatchmaking;
 const imgShield     = imgShieldLocal;
 const imgPin1       = imgArtHurLocal;
 const imgPin2       = imgMaaathildaLocal;
-
-const ASSISTANCE_ITEMS = [
-  { icon: FiMessageCircle, title: "Support",     desc: "Chat en direct avec l'équipe Unify" },
-  { icon: FiAlertTriangle, title: "Signaler",    desc: "Incident ou comportement lors d'un run" },
-  { icon: FiPhone,         title: "Urgence SOS", desc: "Numéro d'urgence disponible 24h/24" },
-  { icon: FiHelpCircle,   title: "FAQ",          desc: "Réponses aux questions fréquentes" },
-];
-
-const AUTO_CLOSE_MS = 60_000;
 
 function ProfileRow({ img, name, distance }: { img: string; name: string; distance: string }) {
   const [loading, setLoading] = useState(false);
@@ -137,17 +128,11 @@ const BentoGrid: React.FC = () => {
   const overlayContentRef = useRef<HTMLDivElement>(null);
   const isOpenRef  = useRef(false);
   const isAutoScrollingRef = useRef(false);
-  const timerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const intervalRef= useRef<ReturnType<typeof setInterval> | null>(null);
   const [isOpen, setIsOpen]     = useState(false);
-  const [countdown, setCountdown] = useState(60);
 
   const closeAssistance = useCallback(() => {
     if (!isOpenRef.current || isAutoScrollingRef.current) return;
     isOpenRef.current = false;
-
-    if (timerRef.current)    { clearTimeout(timerRef.current);    timerRef.current   = null; }
-    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
 
     const card    = assistanceCardRef.current;
     const content = overlayContentRef.current;
@@ -184,7 +169,6 @@ const BentoGrid: React.FC = () => {
   const openAssistance = useCallback(() => {
     if (isOpenRef.current) return;
     isOpenRef.current = true;
-    setCountdown(60);
 
     const card  = assistanceCardRef.current;
     const thumb = thumbnailRef.current;
@@ -206,7 +190,6 @@ const BentoGrid: React.FC = () => {
         window.scrollTo({ top: offset, behavior: "smooth" });
       }
       
-      // On déverrouille après 1.2s quoi qu'il arrive
       setTimeout(() => { isAutoScrollingRef.current = false; }, 1200);
     }
 
@@ -230,9 +213,6 @@ const BentoGrid: React.FC = () => {
         }
       },
     });
-
-    timerRef.current    = setTimeout(closeAssistance, AUTO_CLOSE_MS);
-    intervalRef.current = setInterval(() => setCountdown((p) => Math.max(0, p - 1)), 1000);
   }, [closeAssistance]);
 
   useEffect(() => {
@@ -244,13 +224,11 @@ const BentoGrid: React.FC = () => {
     return () => {
       window.removeEventListener("wheel",     onActive);
       window.removeEventListener("touchmove", onActive);
-      if (timerRef.current)    clearTimeout(timerRef.current);
-      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [closeAssistance]);
 
   return (
-    <section id="bento" className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col">
+    <section id="bento" className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col font-sans">
       <div ref={bentoInnerRef} className="relative flex flex-col md:flex-row gap-3 flex-1 min-h-0">
 
         <div className="flex-1 flex flex-col">
@@ -258,7 +236,7 @@ const BentoGrid: React.FC = () => {
             className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
             style={{ background: "linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(0,0,0,0) 60%), rgba(153,153,153,0.25)" }}
           >
-            <h3 className="text-white font-black uppercase text-[28px] leading-tight shrink-0">
+            <h3 className="text-white font-extrabold uppercase text-[28px] leading-tight shrink-0">
               Tu choisis<br />avec qui tu cours.
             </h3>
             <div className="flex-1 relative mt-4 min-h-[260px] -mb-8">
@@ -274,7 +252,7 @@ const BentoGrid: React.FC = () => {
             className="rounded-[30px] overflow-hidden relative flex flex-col p-8 gap-6 min-h-[240px] md:min-h-0"
             style={{ background: "linear-gradient(180deg, rgba(51,51,51,0.7) 0%, rgba(51,51,51,0) 100%), rgba(153,153,153,0.25)" }}
           >
-            <h3 className="text-white font-black uppercase text-[22px] leading-tight">
+            <h3 className="text-white font-extrabold uppercase text-[22px] leading-tight">
               Matche en<br />quelques secondes.
             </h3>
             <div className="flex flex-col">
@@ -300,7 +278,7 @@ const BentoGrid: React.FC = () => {
               <img src={imgPin2} alt="" draggable={false} className="absolute top-[55%] left-[62%] w-10 h-10 rounded-full border-2 border-white object-cover shadow-lg transition-transform duration-200 hover:scale-125 hover:shadow-xl hover:border-[#7d80f4] cursor-pointer" />
             </DraggableMap>
             <div className="absolute inset-0 bg-gradient-to-b from-[rgba(53,51,49,0.7)] via-transparent to-transparent pointer-events-none z-20" />
-            <h3 className="relative z-20 text-white font-black uppercase text-[28px] leading-tight pointer-events-none">
+            <h3 className="relative z-20 text-white font-extrabold uppercase text-[28px] leading-tight pointer-events-none">
               Vois qui court<br />en ce moment.
             </h3>
           </div>
@@ -333,6 +311,7 @@ const BentoGrid: React.FC = () => {
                   : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-end p-6 cursor-pointer bg-white"
               }
             >
+              {/* Miniature */}
               <div ref={thumbnailRef} className="absolute inset-0" style={{ opacity: isOpen ? 0 : 1 }}>
                 <picture className="absolute inset-0 w-full h-full">
                   <source srcSet={imgAssistanceLg} media="(min-width: 768px)" />
@@ -348,42 +327,73 @@ const BentoGrid: React.FC = () => {
               </div>
 
               {isOpen && (
-                <div ref={overlayContentRef} className="relative z-10 h-full flex flex-col p-7 md:p-10 w-full">
-                  <div className="flex items-start justify-between mb-7">
-                    <div>
-                      <span className="text-[#7d80f4] text-[10px] uppercase tracking-[0.2em] font-semibold">Unify</span>
-                      <h2 className="text-[#201a41] text-3xl md:text-4xl font-black mt-0.5">Assistance</h2>
-                      <p className="text-[#201a41]/50 text-sm mt-1">Comment pouvons-nous vous aider ?</p>
+                <div ref={overlayContentRef} className="relative z-10 h-full flex flex-col p-6 md:px-10 md:py-12 w-full max-w-6xl mx-auto overflow-y-auto">
+                  {/* Bouton Fermer Absolu */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); closeAssistance(); }}
+                    className="group absolute top-6 right-6 md:top-8 md:right-8 w-12 h-12 rounded-full bg-[#f3f4f6] flex items-center justify-center text-[#201a41] hover:bg-[#201a41] hover:text-white transition-all duration-300 z-20"
+                    aria-label="Fermer"
+                  >
+                    <FiX size={24} className="group-hover:rotate-90 transition-transform duration-500" />
+                  </button>
+
+                  {/* Header */}
+                  <div className="mb-10 pr-12">
+                    <h2 className="text-[#201a41] text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
+                      VOTRE ANGE<br />
+                      <span className="text-[#7d80f4]">GARDIEN.</span>
+                    </h2>
+                  </div>
+
+                  {/* Feature Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 flex-1">
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center">
+                        <FiPhone size={24} className="text-[#7d80f4]" />
+                      </div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Urgence<br />SOS 24/7.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">
+                        Un problème ? Un bouton dédié alerte instantanément nos équipes et vos contacts d'urgence.
+                      </p>
                     </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); closeAssistance(); }}
-                      className="w-10 h-10 rounded-full bg-[#7d80f4]/10 border border-[#7d80f4]/20 flex items-center justify-center text-[#7d80f4] hover:bg-[#7d80f4] hover:text-white transition-all duration-200 shrink-0"
-                      aria-label="Fermer"
-                    >
-                      <FiX size={18} />
+
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#201a41]/5 flex items-center justify-center">
+                        <FiAlertTriangle size={24} className="#201a41" />
+                      </div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Signalement<br />Direct.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">
+                        Signalez tout incident ou comportement inapproprié sur votre parcours.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#7d80f4]/10 flex items-center justify-center">
+                        <FiMessageCircle size={24} className="text-[#7d80f4]" />
+                      </div>
+                      <h3 className="text-[#201a41] text-xl font-extrabold uppercase tracking-tight">Support<br />Humain.</h3>
+                      <p className="text-[#201a41]/60 leading-relaxed font-medium text-sm md:text-base">
+                        Zéro bots. Chattez avec notre équipe pour toute question, à chaque kilomètre.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="mt-10 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="flex items-center gap-4">
+                      <div className="flex -space-x-3">
+                        {[imgArtHur, imgMaaathilda, imgQuentin, imgLaure].map((img, i) => (
+                          <img key={i} src={img} alt="" className="w-10 h-10 rounded-full border-2 border-white object-cover" />
+                        ))}
+                      </div>
+                      <p className="text-[#201a41] font-bold text-sm md:text-base">
+                        REJOIGNEZ <span className="text-[#7d80f4]">12,000+</span> COUREURS.
+                      </p>
+                    </div>
+                    
+                    <button className="w-full md:w-auto px-8 py-4 bg-[#7d80f4] text-white rounded-2xl font-extrabold uppercase tracking-widest text-xs hover:bg-[#6b6fe8] transition-all">
+                      CONSULTER LA FAQ
                     </button>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
-                    {ASSISTANCE_ITEMS.map(({ icon: Icon, title, desc }) => (
-                      <button
-                        key={title}
-                        className="bg-white border border-[#7d80f4]/15 rounded-2xl p-4 md:p-5 flex flex-col items-start gap-2 hover:border-[#7d80f4]/40 hover:shadow-sm active:scale-[0.97] transition-all duration-200 text-left"
-                      >
-                        <span className="w-9 h-9 rounded-xl bg-[#7d80f4]/10 flex items-center justify-center">
-                          <Icon size={18} className="text-[#7d80f4]" />
-                        </span>
-                        <span className="text-[#201a41] font-bold text-sm md:text-base leading-tight">{title}</span>
-                        <span className="text-[#201a41]/50 text-xs leading-snug">{desc}</span>
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="select-none mt-5">
-                    <div className="w-full h-[2px] bg-[#7d80f4]/20 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#7d80f4] rounded-full transition-[width] duration-1000 ease-linear" style={{ width: `${(countdown / 60) * 100}%` }} />
-                    </div>
-                    <p className="text-[#201a41]/30 text-[11px] text-center mt-2">Fermeture automatique dans {countdown}s</p>
                   </div>
                 </div>
               )}
