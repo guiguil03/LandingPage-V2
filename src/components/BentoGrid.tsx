@@ -112,8 +112,8 @@ function DraggableMap({ srcSm, srcLg, children }: { srcSm: string; srcLg: string
     >
       <div ref={contentRef} className="absolute inset-0 scale-[1.6] origin-center">
         <picture className="absolute inset-0 w-full h-full pointer-events-none">
-          <source srcSet={srcLg} media="(min-width: 768px)" />
-          <img src={srcSm} alt="Carte" draggable={false} className="w-full h-full object-cover" />
+          <source srcSet={imgMapLg} media="(min-width: 768px)" />
+          <img src={imgMapSm} alt="Carte" draggable={false} className="w-full h-full object-cover" />
         </picture>
         {children}
       </div>
@@ -156,7 +156,7 @@ const BentoGrid: React.FC = () => {
       }
 
       Flip.from(state, {
-        duration: 0.6,
+        duration: 0.65,
         ease: "power4.inOut",
         absolute: true,
         zIndex: 50,
@@ -185,7 +185,6 @@ const BentoGrid: React.FC = () => {
     if (id === "assistance") { card = assistanceRef.current; thumb = assistanceThumbRef.current; }
     if (!card) return;
 
-    // Scroll automatique avec verrou
     const bentoSection = document.getElementById("bento");
     if (bentoSection) {
       isAutoScrollingRef.current = true;
@@ -232,7 +231,10 @@ const BentoGrid: React.FC = () => {
   }, [closeCard]);
 
   return (
-    <section id="bento" className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col font-sans">
+    <section 
+      id="bento" 
+      className={`px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col font-sans transition-colors duration-500 ${activeCard ? 'bg-white' : 'bg-gray-100'}`}
+    >
       <div ref={bentoInnerRef} className="relative flex flex-col md:flex-row gap-3 flex-1 min-h-0">
 
         {/* COLONNE 1 */}
@@ -303,7 +305,10 @@ const BentoGrid: React.FC = () => {
                   ? "absolute inset-0 z-50 overflow-hidden rounded-[30px] bg-white"
                   : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-center p-6 cursor-pointer"
               }
-              style={{ background: activeCard === "matchmaking" ? "#FFFFFF" : "rgba(153,153,153,0.25)" }}
+              style={{ 
+                background: activeCard === "matchmaking" ? "#FFFFFF" : "rgba(153,153,153,0.25)",
+                boxShadow: activeCard === "matchmaking" ? "0 0 0 2px white" : "none"
+              }}
             >
               <div ref={matchmakingThumbRef} className="flex items-center gap-5 w-full" style={{ opacity: activeCard === "matchmaking" ? 0 : 1 }}>
                 <img src={imgHandshake} alt="" className="w-16 h-16 shrink-0 opacity-70 transition-transform group-hover:scale-110" />
@@ -350,7 +355,10 @@ const BentoGrid: React.FC = () => {
                   ? "absolute inset-0 z-50 overflow-hidden rounded-[30px] bg-white"
                   : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-center p-6 cursor-pointer"
               }
-              style={{ background: activeCard === "verification" ? "#FFFFFF" : "rgba(153,153,153,0.25)" }}
+              style={{ 
+                background: activeCard === "verification" ? "#FFFFFF" : "rgba(153,153,153,0.25)",
+                boxShadow: activeCard === "verification" ? "0 0 0 2px white" : "none"
+              }}
             >
               <div ref={verificationThumbRef} className="flex items-center justify-between w-full" style={{ opacity: activeCard === "verification" ? 0 : 1 }}>
                 <h3 className="text-white font-medium text-[22px] leading-tight">Vérification<br />d'identité</h3>
@@ -397,6 +405,9 @@ const BentoGrid: React.FC = () => {
                   ? "absolute inset-0 z-50 overflow-hidden rounded-[30px] bg-white"
                   : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-end p-6 cursor-pointer bg-white"
               }
+              style={{ 
+                boxShadow: activeCard === "assistance" ? "0 0 0 2px white" : "none"
+              }}
             >
               <div ref={assistanceThumbRef} className="absolute inset-0" style={{ opacity: activeCard === "assistance" ? 0 : 1 }}>
                 <picture className="absolute inset-0 w-full h-full">
