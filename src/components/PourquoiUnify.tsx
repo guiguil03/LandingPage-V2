@@ -17,13 +17,13 @@ const PourquoiUnify: React.FC = () => {
         dont les coureurs se connectent. En plus de permettre l'enregistrement
         de vos courses, Unify vous aide à rencontrer d'autres passionnés de
         course à pied en fonction de votre niveau, de vos centres d'intérêt et
-        bien plus encore. Avec un focus sur l'aspect social et la visibilité des
-        autres utilisateurs, Unify transforme chaque course en une opportunité
-        de partager, d'échanger et de tisser des liens.
+        bien plus encore. Parce que les meilleures courses ne se font jamais
+        seul, Unify transforme chaque sortie en une occasion de partager,
+        d'échanger et de tisser des liens.
       </p>
       <div className="flex gap-3 flex-wrap">
         <button className="bg-[#7D80F4] text-white font-semibold text-[15px] px-12 py-[10px] rounded-full hover:bg-[#7D80F4]/85 transition-colors duration-300">
-          Télécharger
+          Je m'inscris
         </button>
         <button
           onClick={() => document.getElementById("bento")?.scrollIntoView({ behavior: "smooth" })}

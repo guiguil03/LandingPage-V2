@@ -28,7 +28,7 @@ export default function Map() {
               </h1>
             </div>
             <p className="text-white text-sm md:text-base lg:text-lg mb-8 md:mb-12">
-              Unify est une application de running social qui révolutionne la façon dont les coureurs se connectent. En plus de permettre l'enregistrement de vos courses, Unify vous aide à rencontrer d'autres passionnés de course à pied en fonction de votre niveau, de vos centres d'intérêt et bien plus encore. Avec un focus sur l'aspect social et la visibilité des autres utilisateurs, Unify transforme chaque course en une opportunité de partager, d'échanger et de tisser des liens.
+              Unify est une application de running social qui révolutionne la façon dont les coureurs se connectent. En plus de permettre l'enregistrement de vos courses, Unify vous aide à rencontrer d'autres passionnés de course à pied en fonction de votre niveau, de vos centres d'intérêt et bien plus encore. Parce que les meilleures courses ne se font jamais seul, Unify transforme chaque sortie en une occasion de partager, d'échanger et de tisser des liens.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-start gap-4">
               <button 
