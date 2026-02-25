@@ -32,7 +32,7 @@ const premiumFeatures: { label: string; highlight?: string }[] = [
 
 const PIN_SCROLL_DISTANCE = 800;
 
-const SUBTITLE_WORDS = ["Gratuit", "pour", "commencer,", "Premium", "pour", "aller", "plus", "loin."];
+const SUBTITLE_WORDS = ["Sans", "engagement.", "Sans", "mauvaise", "surprise."];
 
 const Abonnements: React.FC = () => {
   const sectionRef   = useRef<HTMLDivElement>(null);

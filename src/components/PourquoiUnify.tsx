@@ -10,7 +10,7 @@ const PourquoiUnify: React.FC = () => {
         <br />
         dont tu auras besoin.
         <br />
-        <span className="opacity-50">Promis.</span>
+        <span className="text-[#7D80F4]">Promis.</span>
       </h2>
       <p className="text-[#fbfbfb] text-[15px] leading-relaxed">
         Unify est une application de running social qui révolutionne la façon
