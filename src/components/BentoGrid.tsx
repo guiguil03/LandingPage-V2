@@ -233,14 +233,14 @@ const BentoGrid: React.FC = () => {
   }, [closeCard]);
 
   return (
-    <section 
-      id="bento" 
-      className={`px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col font-sans transition-colors duration-500 ${activeCard ? 'bg-white' : 'bg-gray-100'}`}
+    <section
+      id="bento"
+      className={`px-4 md:px-[52px] pt-12 pb-12 md:pb-[80px] min-h-screen md:h-screen flex flex-col font-sans transition-colors duration-500 overflow-visible ${activeCard ? 'bg-white' : 'bg-gray-100'}`}
     >
-      <div ref={bentoInnerRef} className="relative flex flex-col md:flex-row gap-3 flex-1 min-h-0">
+      <div ref={bentoInnerRef} className="relative flex flex-col md:flex-row gap-3 flex-1 min-h-0 overflow-visible">
 
         {/* COLONNE 1 */}
-        <div className="flex-1 flex flex-col">
+        <div id="bento-col-1" className="flex-1 flex flex-col">
           <div
             className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
             style={{ background: `${NOISE}, linear-gradient(180deg, rgba(53,51,49,0.85) 0%, rgba(53,51,49,0) 65%), rgba(153,153,153,0.25)` }}
@@ -297,7 +297,7 @@ const BentoGrid: React.FC = () => {
         </div>
 
         {/* COLONNE 3 */}
-        <div className="flex-1 flex flex-col gap-3">
+        <div id="bento-col-3" className="flex-1 flex flex-col gap-3">
           
           {/* Matchmaking */}
           <div className={`flex-[0.9] min-h-[140px] md:min-h-0 ${activeCard === "matchmaking" ? "" : "relative"}`}>

@@ -48,9 +48,12 @@ const Abonnements: React.FC = () => {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
+      const col1 = document.getElementById("bento-col-1");
+      const col3 = document.getElementById("bento-col-3");
+
       gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
       gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
-      
+
       requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
 
       const ro = new ResizeObserver(() => ScrollTrigger.refresh());
@@ -71,11 +74,25 @@ const Abonnements: React.FC = () => {
       tl.to(gratuit, { y: 0, rotation: -1, duration: 1, ease: "power2.out" }, 0);
       tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0);
 
+      // Animate bento columns before the pin — while they're still visible
+      const bentoSt = col1 && col3 ? gsap.to([col1, col3], {
+        y: 60,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "top top",
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+        },
+      }) : null;
+
       return () => {
         ro.disconnect();
         tl.scrollTrigger?.kill();
         tl.kill();
-        gsap.set([gratuit, premium], { clearProps: "all" });
+        bentoSt?.scrollTrigger?.kill();
+        gsap.set([gratuit, premium, col1, col3].filter(Boolean), { clearProps: "all" });
       };
     });
 
