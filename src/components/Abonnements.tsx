@@ -51,14 +51,6 @@ const Abonnements: React.FC = () => {
       gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
       gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
       
-      // Setup initial pour le sticker "flottant" avant la pose
-      gsap.set(logoEl, { 
-        scale: 1.8,
-        rotation: -15,
-        y: -40,
-        filter: "drop-shadow(15px 25px 15px rgba(0,0,0,0.25))"
-      });
-
       requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
 
       const ro = new ResizeObserver(() => ScrollTrigger.refresh());
@@ -79,46 +71,12 @@ const Abonnements: React.FC = () => {
       tl.to(gratuit, { y: 0, rotation: -1, duration: 1, ease: "power2.out" }, 0);
       tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0);
 
-      // Animation "Slap" : le sticker se pose à plat
-      tl.to(logoEl, {
-        scale: 1,
-        rotation: 0,
-        y: 0,
-        filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.05))",
-        duration: 0.8,
-        ease: "power2.inOut"
-      }, 0.2);
-
       return () => {
         ro.disconnect();
         tl.scrollTrigger?.kill();
         tl.kill();
-        gsap.set([gratuit, premium, logoEl], { clearProps: "all" });
+        gsap.set([gratuit, premium], { clearProps: "all" });
       };
-    });
-
-    // Version mobile simplifiée
-    mm.add("(max-width: 767px)", () => {
-      gsap.fromTo(logoEl,
-        { 
-          scale: 1.5, 
-          rotation: -10, 
-          y: -20,
-          filter: "drop-shadow(10px 15px 10px rgba(0,0,0,0.2))"
-        },
-        { 
-          scale: 1, 
-          rotation: 0, 
-          y: 0,
-          filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.05))",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            end: "top 30%",
-            scrub: true,
-          }
-        }
-      );
     });
 
     return () => mm.revert();
@@ -143,7 +101,7 @@ const Abonnements: React.FC = () => {
               </span>
               
               <div className="relative inline-block h-10 sm:h-14 w-auto overflow-visible ml-1">
-                <div ref={logoRef} className="relative z-10 will-change-transform">
+                <div ref={logoRef} className="relative z-10">
                   <img src={logo} alt="Unify" className="h-10 sm:h-14 w-auto" decoding="sync" />
                 </div>
               </div>
