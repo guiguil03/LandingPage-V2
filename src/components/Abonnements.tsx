@@ -32,11 +32,14 @@ const premiumFeatures: { label: string; highlight?: string }[] = [
 
 const PIN_SCROLL_DISTANCE = 800;
 
+const SUBTITLE_WORDS = ["Gratuit", "pour", "commencer,", "Premium", "pour", "aller", "plus", "loin."];
+
 const Abonnements: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const gratuitRef = useRef<HTMLDivElement>(null);
-  const premiumRef = useRef<HTMLDivElement>(null);
-  const logoRef    = useRef<HTMLDivElement>(null);
+  const sectionRef   = useRef<HTMLDivElement>(null);
+  const gratuitRef   = useRef<HTMLDivElement>(null);
+  const premiumRef   = useRef<HTMLDivElement>(null);
+  const logoRef      = useRef<HTMLDivElement>(null);
+  const subtitleRef  = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -48,13 +51,16 @@ const Abonnements: React.FC = () => {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
-      const col1 = document.getElementById("bento-col-1");
-      const col3 = document.getElementById("bento-col-3");
+      const col1     = document.getElementById("bento-col-1");
+      const col3     = document.getElementById("bento-col-3");
+      const subtitle = subtitleRef.current;
+      const wordEls  = subtitle ? Array.from(subtitle.querySelectorAll<HTMLElement>("span")) : [];
 
       gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
       gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
       if (col1) gsap.set(col1, { willChange: "transform" });
       if (col3) gsap.set(col3, { willChange: "transform" });
+      if (wordEls.length) gsap.set(wordEls, { opacity: 0, filter: "blur(4px)" });
 
       requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
 
@@ -75,6 +81,14 @@ const Abonnements: React.FC = () => {
 
       tl.to(gratuit, { y: 0, rotation: -1, duration: 1, ease: "power2.out" }, 0);
       tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0);
+      if (wordEls.length) {
+        tl.fromTo(
+          wordEls,
+          { opacity: 0, filter: "blur(4px)" },
+          { opacity: 1, filter: "blur(0px)", stagger: 0.04, ease: "none", duration: 0.4 },
+          0
+        );
+      }
 
       // Animate bento columns before the pin — while they're still visible
       const bentoSt = col1 && col3 ? gsap.to([col1, col3], {
@@ -94,7 +108,7 @@ const Abonnements: React.FC = () => {
         tl.scrollTrigger?.kill();
         tl.kill();
         bentoSt?.scrollTrigger?.kill();
-        gsap.set([gratuit, premium, col1, col3].filter(Boolean), { clearProps: "all" });
+        gsap.set([gratuit, premium, col1, col3, ...wordEls].filter(Boolean), { clearProps: "all" });
       };
     });
 
@@ -126,8 +140,13 @@ const Abonnements: React.FC = () => {
               </div>
             </div>
           </div>
-          <p className="mt-1.5 md:mt-3 text-[#353331]/60 text-xs md:text-lg">
-            Gratuit pour commencer, Premium pour aller plus loin.
+          <p ref={subtitleRef} className="mt-1.5 md:mt-3 text-[#353331]/60 text-xs md:text-lg">
+            {SUBTITLE_WORDS.map((word, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && " "}
+                <span className="inline-block">{word}</span>
+              </React.Fragment>
+            ))}
           </p>
         </div>
 
