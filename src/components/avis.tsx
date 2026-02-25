@@ -11,25 +11,53 @@ interface AvisGridProps {
 }
 
 /* ── Shared title ── */
-const SectionTitle = () => (
-  <div className="pt-10 sm:pt-16 pb-4 sm:pb-6 flex flex-col items-center px-4 flex-shrink-0">
-    <div className="w-full max-w-[560px] flex flex-col items-center text-center">
-      <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
-        Ils ont adopté
-      </span>
-      <div className="flex items-center justify-center gap-2 flex-wrap">
-        <span className="font-bold text-3xl sm:text-[52px] sm:leading-[65px] tracking-tight text-[#353331]">
-          la course avec
+const SectionTitle = () => {
+  const unifyRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = unifyRef.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el,
+        { scale: 0.7, opacity: 0 },
+        {
+          scale: 1, opacity: 1,
+          duration: 0.55, ease: "back.out(2.5)",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 60%",
+            once: true,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div className="pt-10 sm:pt-16 pb-4 sm:pb-6 flex flex-col items-center px-4 flex-shrink-0">
+      <div className="w-full max-w-[560px] flex flex-col items-center text-center">
+        <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
+          Ils ont adopté
         </span>
-        <span
-          className="font-bold text-3xl sm:text-[50px] sm:leading-[59px] tracking-tight text-white bg-[#7D80F4] px-3 py-0.5 rounded-xl shadow-[0_8px_24px_rgba(125,128,244,0.35)]"
-        >
-          UNIFY
-        </span>
+        <div className="flex items-end justify-center gap-2 flex-wrap">
+          <span className="font-bold text-3xl sm:text-[52px] sm:leading-[65px] tracking-tight text-[#353331]">
+            la course avec
+          </span>
+          <span
+            ref={unifyRef}
+            className="inline-block font-bold text-3xl sm:text-[50px] sm:leading-[59px] tracking-tight text-white bg-[#7D80F4] px-3 py-0.5 rounded-xl shadow-[0_8px_24px_rgba(125,128,244,0.35)]"
+          >
+            UNIFY
+          </span>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 /* ═══════════════════════════════════════════════════
    MOBILE — SWIPEABLE CARD STACK + AVATAR NAV

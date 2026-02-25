@@ -81,6 +81,20 @@ const Abonnements: React.FC = () => {
 
       tl.to(gratuit, { y: 0, rotation: -1, duration: 1, ease: "power2.out" }, 0);
       tl.to(premium, { y: 0, rotation: 1.5, duration: 1, ease: "power2.out" }, 0);
+      gsap.set(logoEl, { rotation: 0 });
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        once: true,
+        onEnter: () => {
+          gsap.timeline()
+            .to(logoEl, { rotation:  8, duration: 0.12, ease: "power2.out"   })
+            .to(logoEl, { rotation: -7, duration: 0.12, ease: "power2.inOut" })
+            .to(logoEl, { rotation:  5, duration: 0.10, ease: "power2.inOut" })
+            .to(logoEl, { rotation: -3, duration: 0.10, ease: "power2.inOut" })
+            .to(logoEl, { rotation:  0, duration: 0.08, ease: "power2.in"    });
+        },
+      });
       if (wordEls.length) {
         tl.fromTo(
           wordEls,

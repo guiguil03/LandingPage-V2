@@ -235,7 +235,7 @@ const BentoGrid: React.FC = () => {
   return (
     <section
       id="bento"
-      className={`px-4 md:px-[52px] pt-12 pb-12 md:pb-[80px] min-h-screen md:h-screen flex flex-col font-sans transition-colors duration-500 overflow-visible ${activeCard ? 'bg-white' : 'bg-gray-100'}`}
+      className={`px-4 md:px-[52px] pt-20 md:pt-24 pb-12 md:pb-[80px] min-h-screen md:h-screen flex flex-col font-sans transition-colors duration-500 overflow-visible ${activeCard ? 'bg-white' : 'bg-gray-100'}`}
     >
       <div ref={bentoInnerRef} className="relative flex flex-col md:flex-row gap-3 flex-1 min-h-0 overflow-visible">
 
