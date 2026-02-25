@@ -112,8 +112,8 @@ function DraggableMap({ srcSm, srcLg, children }: { srcSm: string; srcLg: string
     >
       <div ref={contentRef} className="absolute inset-0 scale-[1.6] origin-center">
         <picture className="absolute inset-0 w-full h-full pointer-events-none">
-          <source srcSet={imgMapLg} media="(min-width: 768px)" />
-          <img src={imgMapSm} alt="Carte" draggable={false} className="w-full h-full object-cover" />
+          <source srcSet={srcLg} media="(min-width: 768px)" />
+          <img src={srcSm} alt="Carte" draggable={false} className="w-full h-full object-cover" />
         </picture>
         {children}
       </div>
