@@ -59,7 +59,6 @@ const Abonnements: React.FC = () => {
       gsap.set(gratuit, { y: 380, rotation: 0, willChange: "transform" });
       gsap.set(premium, { y: 520, rotation: 0, willChange: "transform" });
       if (col1) gsap.set(col1, { willChange: "transform" });
-      if (col3) gsap.set(col3, { willChange: "transform" });
       if (wordEls.length) gsap.set(wordEls, { opacity: 0, filter: "blur(4px)" });
 
       requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
@@ -104,8 +103,11 @@ const Abonnements: React.FC = () => {
         );
       }
 
-      // Animate bento columns before the pin — while they're still visible
-      const bentoSt = col1 && col3 ? gsap.to([col1, col3], {
+      // Animate bento columns before the pin.
+      // col-3 contains Flip cards: GSAP transform (even y:0) creates a CSS containing block that breaks Flip.
+      // Fix: clear col-3 transform via onLeaveBack so it's gone when user returns to bento.
+      const bentoTargets = [col1, col3].filter(Boolean) as HTMLElement[];
+      const bentoSt = bentoTargets.length ? gsap.to(bentoTargets, {
         y: 60,
         ease: "power2.out",
         scrollTrigger: {
@@ -114,6 +116,9 @@ const Abonnements: React.FC = () => {
           end: "top top",
           scrub: 0.5,
           invalidateOnRefresh: true,
+          onLeaveBack: () => {
+            gsap.set(bentoTargets, { clearProps: "transform" });
+          },
         },
       }) : null;
 
@@ -122,7 +127,7 @@ const Abonnements: React.FC = () => {
         tl.scrollTrigger?.kill();
         tl.kill();
         bentoSt?.scrollTrigger?.kill();
-        gsap.set([gratuit, premium, col1, col3, ...wordEls].filter(Boolean), { clearProps: "all" });
+        gsap.set([gratuit, premium, ...bentoTargets, ...wordEls].filter(Boolean), { clearProps: "all" });
       };
     });
 

@@ -250,7 +250,7 @@ const BentoGrid: React.FC = () => {
             </h3>
             <div className="flex-1 relative mt-4 min-h-[260px] -mb-8">
               <div className="absolute inset-x-0 bottom-0 -top-4 flex items-end justify-center overflow-hidden">
-                <AppMockup className="w-[88%] md:w-[min(88%,42vh)] translate-y-[22%]" />
+                <AppMockup className="w-[88%] md:w-[min(88%,calc(42vh_-_48px))] translate-y-[22%]" />
               </div>
             </div>
           </div>
