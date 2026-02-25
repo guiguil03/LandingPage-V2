@@ -43,7 +43,7 @@ const SectionTitle = () => {
         <span className="font-bold text-3xl sm:text-[50px] sm:leading-[65px] tracking-tight text-[#353331]">
           Ils ont adopté
         </span>
-        <div className="flex items-end justify-center gap-2 flex-wrap">
+        <div className="flex items-end justify-center gap-3 flex-wrap">
           <span className="font-bold text-3xl sm:text-[52px] sm:leading-[65px] tracking-tight text-[#353331]">
             la course avec
           </span>
