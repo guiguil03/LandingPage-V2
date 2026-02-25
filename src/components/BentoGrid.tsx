@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { flushSync } from "react-dom";
 import { FiSearch, FiX, FiMessageCircle, FiAlertTriangle, FiPhone, FiHelpCircle } from "react-icons/fi";
 import { gsap } from "gsap";
-import { Flip } from "gsap/Flip";
+import { Flip } from "gsap/all";
 gsap.registerPlugin(Flip);
 import AppMockup from "./AppMockup";
 
@@ -131,30 +131,19 @@ function DraggableMap({ srcSm, srcLg, children }: { srcSm: string; srcLg: string
 }
 
 const BentoGrid: React.FC = () => {
-  const bentoInnerRef     = useRef<HTMLDivElement>(null);     // conteneur position:relative
-  const col3Ref           = useRef<HTMLDivElement>(null);     // verrouillage layout
+  const bentoInnerRef     = useRef<HTMLDivElement>(null);
   const assistanceCardRef = useRef<HTMLDivElement>(null);
-  const placeholderRef    = useRef<HTMLDivElement>(null);
+  const thumbnailRef      = useRef<HTMLDivElement>(null);
   const overlayContentRef = useRef<HTMLDivElement>(null);
   const isOpenRef  = useRef(false);
+  const isAutoScrollingRef = useRef(false);
   const timerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
   const intervalRef= useRef<ReturnType<typeof setInterval> | null>(null);
   const [isOpen, setIsOpen]     = useState(false);
   const [countdown, setCountdown] = useState(60);
 
-  const unlockCol3 = useCallback(() => {
-    if (col3Ref.current) gsap.set(col3Ref.current, { clearProps: "height" });
-  }, []);
-
-  const lockCol3 = useCallback(() => {
-    const col3 = col3Ref.current;
-    if (!col3) return;
-    // Figer la hauteur en pixels → Matchmaking & Vérification ne bougent plus
-    gsap.set(col3, { height: col3.getBoundingClientRect().height });
-  }, []);
-
   const closeAssistance = useCallback(() => {
-    if (!isOpenRef.current) return;
+    if (!isOpenRef.current || isAutoScrollingRef.current) return;
     isOpenRef.current = false;
 
     if (timerRef.current)    { clearTimeout(timerRef.current);    timerRef.current   = null; }
@@ -162,77 +151,80 @@ const BentoGrid: React.FC = () => {
 
     const card    = assistanceCardRef.current;
     const content = overlayContentRef.current;
+    const thumb   = thumbnailRef.current;
     if (!card) return;
 
     const doClose = () => {
-      const placeholder = placeholderRef.current;
-      const bentoInner  = bentoInnerRef.current;
+      const state = Flip.getState(card);
+      flushSync(() => setIsOpen(false));
 
-      lockCol3();
-
-      if (!placeholder || !bentoInner) {
-        // fallback sans animation
-        flushSync(() => setIsOpen(false));
-        unlockCol3();
-        return;
+      if (thumb) {
+        gsap.to(thumb, { opacity: 1, duration: 0.5, ease: "power2.inOut" });
       }
 
-      const phRect    = placeholder.getBoundingClientRect();
-      const bentoRect = bentoInner.getBoundingClientRect();
-
-      // Convertir inset-0 (CSS) en px explicites — même rendu visuel
-      gsap.set(card, {
-        position: "absolute",
-        top:    0,
-        left:   0,
-        right:  "auto",
-        bottom: "auto",
-        width:  bentoRect.width,
-        height: bentoRect.height,
-      });
-
-      // Animer vers la position exacte du placeholder
-      gsap.to(card, {
-        top:      phRect.top  - bentoRect.top,
-        left:     phRect.left - bentoRect.left,
-        width:    phRect.width,
-        height:   phRect.height,
+      Flip.from(state, {
         duration: 0.65,
-        ease:     "power4.inOut",
+        ease: "power4.inOut",
+        absolute: true,
+        zIndex: 50,
         onComplete: () => {
-          flushSync(() => setIsOpen(false));
           gsap.set(card, { clearProps: "all" });
-          unlockCol3();
+          if (thumb) gsap.set(thumb, { clearProps: "all" });
         },
       });
     };
 
     if (content) {
-      gsap.to(content, { autoAlpha: 0, y: 10, duration: 0.18, ease: "power2.in", onComplete: doClose });
+      gsap.to(content, { autoAlpha: 0, y: 15, duration: 0.2, ease: "power2.in", onComplete: doClose });
     } else {
       doClose();
     }
-  }, [lockCol3, unlockCol3]);
+  }, []);
 
   const openAssistance = useCallback(() => {
     if (isOpenRef.current) return;
     isOpenRef.current = true;
     setCountdown(60);
 
-    const card = assistanceCardRef.current;
+    const card  = assistanceCardRef.current;
+    const thumb = thumbnailRef.current;
     if (!card) return;
 
-    lockCol3(); // fige avant le Flip
+    // Scroll automatique avec verrou
+    const bentoSection = document.getElementById("bento");
+    if (bentoSection) {
+      isAutoScrollingRef.current = true;
+      const lenis = (window as any).lenis;
+      
+      if (lenis) {
+        lenis.scrollTo(bentoSection, { 
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      } else {
+        const offset = bentoSection.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+      }
+      
+      // On déverrouille après 1.2s quoi qu'il arrive
+      setTimeout(() => { isAutoScrollingRef.current = false; }, 1200);
+    }
+
     const state = Flip.getState(card);
     flushSync(() => setIsOpen(true));
+
+    if (thumb) {
+      gsap.to(thumb, { opacity: 0, duration: 0.4, ease: "power2.out" });
+    }
 
     if (overlayContentRef.current) gsap.set(overlayContentRef.current, { autoAlpha: 0, y: 20 });
 
     Flip.from(state, {
-      duration: 0.72,
+      duration: 0.75,
       ease: "power4.out",
+      absolute: true,
+      zIndex: 50,
       onComplete: () => {
-        unlockCol3();
         if (overlayContentRef.current) {
           gsap.to(overlayContentRef.current, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" });
         }
@@ -241,11 +233,12 @@ const BentoGrid: React.FC = () => {
 
     timerRef.current    = setTimeout(closeAssistance, AUTO_CLOSE_MS);
     intervalRef.current = setInterval(() => setCountdown((p) => Math.max(0, p - 1)), 1000);
-  }, [lockCol3, unlockCol3, closeAssistance]);
+  }, [closeAssistance]);
 
-  // Fermeture sur scroll actif (pas l'inertie Lenis)
   useEffect(() => {
-    const onActive = () => { if (isOpenRef.current) closeAssistance(); };
+    const onActive = () => { 
+      if (isOpenRef.current && !isAutoScrollingRef.current) closeAssistance(); 
+    };
     window.addEventListener("wheel",     onActive, { passive: true });
     window.addEventListener("touchmove", onActive, { passive: true });
     return () => {
@@ -260,7 +253,6 @@ const BentoGrid: React.FC = () => {
     <section id="bento" className="bg-gray-100 px-4 md:px-[52px] py-12 min-h-screen md:h-screen flex flex-col">
       <div ref={bentoInnerRef} className="relative flex flex-col md:flex-row gap-3 flex-1 min-h-0">
 
-        {/* COLONNE 1 */}
         <div className="flex-1 flex flex-col">
           <div
             className="flex-1 rounded-[30px] overflow-hidden relative flex flex-col p-8 min-h-[420px] md:min-h-0"
@@ -277,7 +269,6 @@ const BentoGrid: React.FC = () => {
           </div>
         </div>
 
-        {/* COLONNE 2 */}
         <div className="flex-1 flex flex-col gap-3">
           <div
             className="rounded-[30px] overflow-hidden relative flex flex-col p-8 gap-6 min-h-[240px] md:min-h-0"
@@ -315,8 +306,7 @@ const BentoGrid: React.FC = () => {
           </div>
         </div>
 
-        {/* COLONNE 3 — hauteur verrouillée pendant les animations */}
-        <div ref={col3Ref} className="flex-1 flex flex-col gap-3">
+        <div className="flex-1 flex flex-col gap-3">
           <div
             className="flex-[0.9] rounded-[30px] overflow-hidden relative flex items-center gap-5 p-6 min-h-[140px] md:min-h-0"
             style={{ background: "rgba(153,153,153,0.25)" }}
@@ -333,85 +323,71 @@ const BentoGrid: React.FC = () => {
             <img src={imgShield} alt="" className="w-20 h-20 shrink-0 opacity-70" />
           </div>
 
-          {/* Placeholder invisible — maintient la place quand la carte est en absolute */}
-          {isOpen && (
-            <div ref={placeholderRef} className="flex-[1.1] min-h-[180px] md:min-h-0 invisible" />
-          )}
-
-          {/* ── Carte Assistance — vrai morph GSAP Flip ── */}
-          <div
-            ref={assistanceCardRef}
-            onClick={!isOpen ? openAssistance : undefined}
-            className={
-              isOpen
-                ? "absolute inset-0 z-50 overflow-hidden rounded-[30px]"
-                : "group flex-[1.1] rounded-[30px] overflow-hidden relative flex items-end p-6 min-h-[180px] md:min-h-0 cursor-pointer"
-            }
-            style={{ background: isOpen ? "#EAE3F4" : undefined }}
-          >
-            {/* Face fermée */}
-            {!isOpen && (
-              <>
-                <picture className="absolute inset-0 w-full h-full transition-[transform,filter] duration-500 group-hover:scale-105 group-hover:blur-sm">
+          <div className={`flex-[1.1] min-h-[180px] md:min-h-0 ${isOpen ? "" : "relative"}`}>
+            <div
+              ref={assistanceCardRef}
+              onClick={!isOpen ? openAssistance : undefined}
+              className={
+                isOpen
+                  ? "absolute inset-0 z-50 overflow-hidden rounded-[30px] bg-white"
+                  : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-end p-6 cursor-pointer bg-white"
+              }
+            >
+              <div ref={thumbnailRef} className="absolute inset-0" style={{ opacity: isOpen ? 0 : 1 }}>
+                <picture className="absolute inset-0 w-full h-full">
                   <source srcSet={imgAssistanceLg} media="(min-width: 768px)" />
-                  <img src={imgAssistanceSm} alt="Assistance" className="w-full h-full object-cover" />
+                  <img src={imgAssistanceSm} alt="Assistance" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </picture>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-300 group-hover:from-black/75" />
-                <div className="relative z-10 flex items-center justify-between w-full">
+                <div className="relative z-10 flex items-center justify-between w-full h-full p-6">
                   <h3 className="text-white font-medium text-[22px]">Assistance</h3>
-                  <span className="flex items-center justify-center w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:scale-110 group-hover:shadow-lg">
+                  <span className="flex items-center justify-center w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:scale-110">
                     <FiSearch size={16} strokeWidth={2.5} />
                   </span>
                 </div>
-              </>
-            )}
-
-            {/* Face ouverte */}
-            {isOpen && (
-              <div ref={overlayContentRef} className="relative z-10 h-full flex flex-col p-7 md:p-10">
-                <div className="flex items-start justify-between mb-7">
-                  <div>
-                    <span className="text-[#7d80f4] text-[10px] uppercase tracking-[0.2em] font-semibold">Unify</span>
-                    <h2 className="text-[#201a41] text-3xl md:text-4xl font-black mt-0.5">Assistance</h2>
-                    <p className="text-[#201a41]/50 text-sm mt-1">Comment pouvons-nous vous aider ?</p>
-                  </div>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); closeAssistance(); }}
-                    className="w-10 h-10 rounded-full bg-[#7d80f4]/10 border border-[#7d80f4]/20 flex items-center justify-center text-[#7d80f4] hover:bg-[#7d80f4] hover:text-white transition-all duration-200 shrink-0"
-                    aria-label="Fermer"
-                  >
-                    <FiX size={18} />
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
-                  {ASSISTANCE_ITEMS.map(({ icon: Icon, title, desc }) => (
-                    <button
-                      key={title}
-                      className="bg-white border border-[#7d80f4]/15 rounded-2xl p-4 md:p-5 flex flex-col items-start gap-2 hover:border-[#7d80f4]/40 hover:shadow-sm active:scale-[0.97] transition-all duration-200 text-left"
-                    >
-                      <span className="w-9 h-9 rounded-xl bg-[#7d80f4]/10 flex items-center justify-center">
-                        <Icon size={18} className="text-[#7d80f4]" />
-                      </span>
-                      <span className="text-[#201a41] font-bold text-sm md:text-base leading-tight">{title}</span>
-                      <span className="text-[#201a41]/50 text-xs leading-snug">{desc}</span>
-                    </button>
-                  ))}
-                </div>
-
-                <div className="mt-5 select-none">
-                  <div className="w-full h-[2px] bg-[#7d80f4]/20 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-[#7d80f4] rounded-full transition-[width] duration-1000 ease-linear"
-                      style={{ width: `${(countdown / 60) * 100}%` }}
-                    />
-                  </div>
-                  <p className="text-[#201a41]/30 text-[11px] text-center mt-2">
-                    Fermeture automatique dans {countdown}s
-                  </p>
-                </div>
               </div>
-            )}
+
+              {isOpen && (
+                <div ref={overlayContentRef} className="relative z-10 h-full flex flex-col p-7 md:p-10 w-full">
+                  <div className="flex items-start justify-between mb-7">
+                    <div>
+                      <span className="text-[#7d80f4] text-[10px] uppercase tracking-[0.2em] font-semibold">Unify</span>
+                      <h2 className="text-[#201a41] text-3xl md:text-4xl font-black mt-0.5">Assistance</h2>
+                      <p className="text-[#201a41]/50 text-sm mt-1">Comment pouvons-nous vous aider ?</p>
+                    </div>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); closeAssistance(); }}
+                      className="w-10 h-10 rounded-full bg-[#7d80f4]/10 border border-[#7d80f4]/20 flex items-center justify-center text-[#7d80f4] hover:bg-[#7d80f4] hover:text-white transition-all duration-200 shrink-0"
+                      aria-label="Fermer"
+                    >
+                      <FiX size={18} />
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
+                    {ASSISTANCE_ITEMS.map(({ icon: Icon, title, desc }) => (
+                      <button
+                        key={title}
+                        className="bg-white border border-[#7d80f4]/15 rounded-2xl p-4 md:p-5 flex flex-col items-start gap-2 hover:border-[#7d80f4]/40 hover:shadow-sm active:scale-[0.97] transition-all duration-200 text-left"
+                      >
+                        <span className="w-9 h-9 rounded-xl bg-[#7d80f4]/10 flex items-center justify-center">
+                          <Icon size={18} className="text-[#7d80f4]" />
+                        </span>
+                        <span className="text-[#201a41] font-bold text-sm md:text-base leading-tight">{title}</span>
+                        <span className="text-[#201a41]/50 text-xs leading-snug">{desc}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="select-none mt-5">
+                    <div className="w-full h-[2px] bg-[#7d80f4]/20 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#7d80f4] rounded-full transition-[width] duration-1000 ease-linear" style={{ width: `${(countdown / 60) * 100}%` }} />
+                    </div>
+                    <p className="text-[#201a41]/30 text-[11px] text-center mt-2">Fermeture automatique dans {countdown}s</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
