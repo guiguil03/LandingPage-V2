@@ -200,6 +200,12 @@ const BentoGrid: React.FC = () => {
       setTimeout(() => { isAutoScrollingRef.current = false; }, 1200);
     }
 
+    // Clear any residual GSAP transform on col-3 before Flip captures state.
+    // A CSS transform (even translateY(0)) creates a containing block that confines absolute children.
+    // When bento is in view, col-3 is always at y=0 so this clearProps is invisible.
+    const col3El = document.getElementById("bento-col-3");
+    if (col3El) gsap.set(col3El, { clearProps: "transform" });
+
     const state = Flip.getState(card);
     flushSync(() => setActiveCard(id));
 

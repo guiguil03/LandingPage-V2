@@ -116,9 +116,6 @@ const Abonnements: React.FC = () => {
           end: "top top",
           scrub: 0.5,
           invalidateOnRefresh: true,
-          onLeaveBack: () => {
-            gsap.set(bentoTargets, { clearProps: "transform" });
-          },
         },
       }) : null;
 
