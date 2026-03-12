@@ -3,7 +3,6 @@ import Logo from "../assets/logo.png";
 import {
   FaInstagram,
   FaLinkedin,
-  FaTiktok,
   FaEnvelope,
   FaAppStore,
   FaGooglePlay,
@@ -104,10 +103,7 @@ export default function Footer() {
             <SocialLink href="https://www.linkedin.com/company/unifyconnect/" label="LinkedIn">
               <FaLinkedin size={16} />
             </SocialLink>
-            <SocialLink href="https://tiktok.com" label="TikTok">
-              <FaTiktok size={16} />
-            </SocialLink>
-            <SocialLink href="mailto:contact@unify-run.com" label="Email">
+<SocialLink href="mailto:contact@unify-run.com" label="Email">
               <FaEnvelope size={16} />
             </SocialLink>
             </div>

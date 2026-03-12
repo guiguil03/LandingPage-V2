@@ -212,7 +212,7 @@ const Abonnements: React.FC = () => {
                 </h3>
                 <div className="flex items-baseline gap-1">
                   <span className="text-xl md:text-5xl font-bold tracking-tight text-white">
-                    4,99€
+                    9,99€
                   </span>
                   <span className="text-[10px] md:text-xs font-semibold text-white/60">
                     /mois
