@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 const imgGroup65    = "/img/homme.png";
 const imgGroup66    = "/img/femme.png";
 const imgGroup67    = "/img/autre.png";
-const imgDrapeau1   = "https://www.figma.com/api/mcp/asset/f6152656-e797-400f-9142-5dcaab294b69";
+const imgDrapeau1   = "/img/drapeau.png";
 
 // ─── Screen 2: Run assets ─────────────────────────────────────────────────────
 const imgDrapeau2   = "https://www.figma.com/api/mcp/asset/ff7975d2-ad17-4a91-bacc-8eeee010aed4";
