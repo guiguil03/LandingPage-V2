@@ -316,7 +316,7 @@ const BentoGrid: React.FC = () => {
                   : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-center p-6 cursor-pointer"
               }
               style={{ 
-                background: activeCard === "matchmaking" ? "#FFFFFF" : "rgba(153,153,153,0.25)",
+                background: activeCard === "matchmaking" ? "#FFFFFF" : `${NOISE}, linear-gradient(160deg, rgba(53,51,49,0.8) 0%, rgba(53,51,49,0.6) 100%), rgba(153,153,153,0.25)`,
                 boxShadow: activeCard === "matchmaking" ? "0 0 0 2px white" : "none"
               }}
             >
@@ -366,7 +366,7 @@ const BentoGrid: React.FC = () => {
                   : "absolute inset-0 group rounded-[30px] overflow-hidden flex items-center p-6 cursor-pointer"
               }
               style={{ 
-                background: activeCard === "verification" ? "#FFFFFF" : "rgba(153,153,153,0.25)",
+                background: activeCard === "verification" ? "#FFFFFF" : `${NOISE}, linear-gradient(160deg, rgba(53,51,49,0.8) 0%, rgba(53,51,49,0.6) 100%), rgba(153,153,153,0.25)`,
                 boxShadow: activeCard === "verification" ? "0 0 0 2px white" : "none"
               }}
             >

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 
 // ─── Screen 1: Genre assets ───────────────────────────────────────────────────
-const imgGroup65    = "https://www.figma.com/api/mcp/asset/b52d00d4-4c52-456f-b97f-d57e3393eac6";
-const imgGroup66    = "https://www.figma.com/api/mcp/asset/8b54b069-1e67-445e-a5b9-c8273f586b3e";
-const imgGroup67    = "https://www.figma.com/api/mcp/asset/bb90ce18-2a07-404b-94a4-5f7e1e3e56ca";
+const imgGroup65    = "/img/homme.png";
+const imgGroup66    = "/img/femme.png";
+const imgGroup67    = "/img/autre.png";
 const imgDrapeau1   = "https://www.figma.com/api/mcp/asset/f6152656-e797-400f-9142-5dcaab294b69";
 
 // ─── Screen 2: Run assets ─────────────────────────────────────────────────────
